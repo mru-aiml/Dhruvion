@@ -3,7 +3,7 @@
 **Navigate Mars. Understand the Terrain. Protect Every Mission.**
 
 DHRUVION is an AI-powered Martian Mission Intelligence Platform
-prototype created for the NASA Space Apps Challenge --- **Interplanetary
+prototype created for the NASA Space Apps Challenge — **Interplanetary
 Survival Guide: Martian Map**.
 
 It combines a Mars map workspace, terrain intelligence, science target
@@ -16,226 +16,332 @@ rerouting simulation, and a tool-using AI mission assistant.
 > safe. Observed, derived, simulated, and unavailable data must remain
 > clearly distinguished.
 
-## Product capabilities
+## Screenshots
 
--   **Mission Overview:** mission status, terrain summary, alerts, and
-    next actions.
--   **Martian Map:** region map, data layers, feature inspector, route
-    and hazard overlays.
--   **Route Planner:** shortest, lowest-estimated-risk, and balanced
-    route candidates.
--   **Science Explorer:** geological target discovery and evidence
-    inspection.
--   **Emergency Navigation:** simulated obstruction and
-    alternative-route calculation.
--   **AI Mission Assistant:** natural-language interface to
-    deterministic mission tools.
--   **Mission Reports:** traceable summary of objectives, route,
-    terrain, science, hazards, and sources.
+### Landing Page
+![Landing Page](docs/landing-verification/desktop-1920x1080.png)
 
-## Technology direction
+### Mission Overview Dashboard
+![Mission Overview](docs/landing-verification/hero-1917x901-mars-globe.png)
 
-The proposed stack is: - Frontend: React, Vite, TypeScript, Tailwind
-CSS. - Mapping: a geospatial map renderer verified against the chosen
-Mars CRS and data format. - Backend: Python, FastAPI, Pydantic. -
-Geospatial processing: NumPy, Rasterio/GDAL, GeoPandas, SciPy as
-needed. - Route planning: A\* or another documented graph-search
-implementation. - Optional persistence: SQLite. - AI assistant: local
-Ollama or configured model endpoint, with application-controlled tools.
+### Martian Map with Layer Controls
+![Martian Map](docs/landing-verification/view-terrain.png)
 
-The exact package versions and run commands should be recorded in the
-frontend and backend package manifests as the implementation is
-finalized.
+### Route Planner
+![Route Planner](docs/landing-verification/hero-1440x900-mission-data.png)
 
-## Repository layout
+### Mobile Responsive
+![Mobile](docs/landing-verification/mobile-390x844.png)
 
-``` text
-dhruvion/
-├── frontend/              # React application
-├── backend/               # FastAPI application
-├── data/
-│   ├── raw/                # Immutable downloaded source products
-│   ├── processed/          # Derived rasters and outputs
-│   ├── vectors/            # GeoJSON and vector products
-│   └── manifests/          # Layer/source metadata
-├── scripts/                # Data preparation and utility scripts
-├── tests/                  # Shared or project-level tests
-├── prd.md
-├── architecture.md
-├── code_style.md
-├── testing.md
-├── agents.md
-├── security.md
-├── database.md
-├── api.md
-└── design.md
+## Features
+
+| Module | Status | Description |
+|--------|--------|-------------|
+| **Mission Overview** | ✅ Implemented | Mission status, terrain summary, alerts, next actions |
+| **Martian Map** | ✅ Implemented | Region map, data layers, feature inspector, route overlays |
+| **Route Planner** | ✅ Implemented | Shortest, safest-estimated, balanced route candidates |
+| **Science Explorer** | ✅ Implemented | Geological target discovery and evidence inspection |
+| **Emergency Navigation** | ✅ Implemented | Simulated obstruction and alternative-route calculation |
+| **AI Mission Assistant** | ⚠️ Simulated | Natural-language interface to deterministic mission tools |
+| **Mission Reports** | ⚠️ Simulated | Traceable summary of objectives, route, terrain, science |
+| **Settings** | ✅ Implemented | Units, coordinate format, simulated labels, reduced motion |
+
+### Feature Status Key
+- ✅ **Implemented** — Fully functional with backend integration
+- ⚠️ **Simulated** — UI complete, backend returns fallback/mock data
+- 🚫 **Unavailable** — Not connected or outside coverage
+
+## Technology Stack
+
+| Layer | Technology |
+|-------|------------|
+| **Frontend** | React 19, TypeScript 7, Vite 8, Tailwind CSS 3 |
+| **Routing** | React Router DOM 7 |
+| **Maps** | Leaflet 1.9, React-Leaflet 5, Custom Mars CRS |
+| **Charts** | Recharts 3 |
+| **Icons** | Lucide React |
+| **State** | React Context, localStorage, Zustand |
+| **Backend** | FastAPI, SQLAlchemy, Pydantic, SQLite |
+| **Auth** | JWT (HttpOnly cookies), bcrypt |
+| **Geospatial** | NumPy, Rasterio, custom Mars CRS (IAU 2000:104905) |
+| **Testing** | pytest (backend), TypeScript strict mode |
+
+## Architecture Overview
+
+```
+React + TypeScript UI
+        |
+        | HTTPS / JSON / GeoJSON
+        v
+FastAPI Application
+  ├── API Routers + Pydantic Schemas
+  ├── Mission Application Services
+  │    ├── Terrain Service
+  │    ├── Hazard/Difficulty Service
+  │    ├── Science Target Service
+  │    ├── Route Planner (A*)
+  │    ├── Mission Feasibility
+  │    └── Report Service
+  ├── AI Assistant Orchestration
+  │    └── Allowlisted Tools → Application Services
+  ├── Data Access / Repositories
+  └── NASA Data Adapters + Local Dataset Catalog
+        |
+        ├── Raster/Vector Files (GeoTIFF, GeoJSON)
+        ├── Metadata Manifests (JSON)
+        └── SQLite (Optional Persistence)
 ```
 
-## Quick start
+**Key Principles:**
+- **Deterministic core** — Raster processing, hazard scoring, route search in Python
+- **LLM as interface** — AI assistant calls tools, explains results; does not calculate
+- **Provenance by design** — Source metadata travels with every layer, route, report
+- **Missing data is unknown** — NoData never coerced to zero
 
-The commands below are a template. Confirm the actual entry points and
-package scripts in the checked-out repository before using them.
+## Installation
 
 ### Prerequisites
 
--   Python 3.11 or later (or the version pinned by the backend project).
--   Node.js LTS and npm.
--   Git.
--   Optional: QGIS for inspecting planetary geospatial products.
--   Optional: Ollama or a configured hosted LLM endpoint for the
-    assistant.
+- **Python 3.11+** (backend)
+- **Node.js 20+** and **npm** (frontend)
+- **Git**
+- Optional: **QGIS** for inspecting planetary geospatial products
+- Optional: **Ollama** or configured LLM endpoint for AI assistant
 
-### Backend
+### Backend Setup
 
-``` bash
+```bash
 cd backend
 python -m venv .venv
-```
 
-Activate the environment:
-
-Windows PowerShell:
-
-``` powershell
+# Windows PowerShell:
 .venv\Scripts\Activate.ps1
-```
 
-macOS/Linux:
-
-``` bash
+# macOS/Linux:
 source .venv/bin/activate
-```
 
-Install dependencies using the project's declared dependency file. If
-`requirements.txt` exists:
-
-``` bash
 pip install -r requirements.txt
 ```
 
-Start the API using the actual FastAPI module path. Example only:
+Configure environment:
+```bash
+cp .env.example .env
+# Edit .env with your settings (see Environment Configuration below)
+```
 
-``` bash
+Start the API server:
+```bash
 uvicorn app.main:app --reload
 ```
 
-The API health endpoint should be available at
-`http://localhost:8000/api/health` if the configured route prefix
-matches this documentation. FastAPI's OpenAPI UI is typically at
-`http://localhost:8000/docs`.
+The API will be available at `http://localhost:8000`.
+- Health check: `http://localhost:8000/api/health`
+- OpenAPI docs: `http://localhost:8000/docs`
 
-### Frontend
+### Frontend Setup
 
-``` bash
+```bash
 cd frontend
 npm install
+```
+
+Configure environment:
+```bash
+cp .env.example .env
+# Edit .env if needed (default points to localhost:8000/api)
+```
+
+Start the development server:
+```bash
 npm run dev
 ```
 
-Configure the frontend API base URL using the environment variable
-defined by the frontend implementation. Do not put private backend
-credentials in frontend environment variables.
+The frontend will be available at `http://localhost:5173`.
 
-## Environment configuration
+## Environment Configuration
 
-Create local environment files from the checked-in example when
-available. Typical backend settings may include:
+### Backend (`backend/.env`)
 
-``` env
-APP_ENV=development
-API_HOST=127.0.0.1
-API_PORT=8000
-NASA_DATA_DIR=../data
+```env
+# Database
 DATABASE_URL=sqlite:///./dhruvion.db
-LLM_PROVIDER=ollama
-LLM_BASE_URL=http://localhost:11434
-LLM_MODEL=
+
+# JWT Authentication (REQUIRED for production)
+JWT_SECRET_KEY=your-secure-random-string-here
+JWT_ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=60
+COOKIE_NAME=dhruvion_access_token
+
+# CORS
+FRONTEND_ORIGIN=http://localhost:5173
 ```
 
-These are suggested names, not guaranteed implemented settings. Keep
-`.env` out of Git. Never commit API keys or secrets.
+**Generate a secure JWT secret:**
+```bash
+# Linux/macOS
+openssl rand -hex 32
 
-## NASA data and provenance
-
-Potential source discovery starting points: - NASA Mars Trek:
-https://trek.nasa.gov/mars/ - NASA Planetary Data System:
-https://pds.nasa.gov/ - PDS Geosciences Node:
-https://pds-geosciences.wustl.edu/ - USGS Astrogeology:
-https://astrogeology.usgs.gov/ - PDS Orbital Data Explorer:
-https://ode.rsl.wustl.edu/
-
-Prioritize one region with verified coverage. MOLA elevation is a
-practical starting layer; slope and roughness may be derived if the data
-and processing method support them. HiRISE/CTX imagery, THEMIS thermal,
-and CRISM spectral products are optional extensions.
-
-For every dataset, record source product, instrument/provider, source
-URI, CRS, bounds, resolution, units, nodata, acquisition/processing date
-when known, and any transformations. Never invent missing metadata. Keep
-raw data immutable and place processed products in a separate directory.
-
-## Core mission calculation
-
-Mission feasibility uses:
-
-``` text
-T_total = T_outbound + T_exploration + T_return + T_reserve
+# PowerShell
+[System.Convert]::ToBase64String((1..32 | ForEach-Object { Get-Random -Maximum 256 }))
 ```
 
-The result must be `UNVERIFIED` when required information such as a
-return route or travel assumption is missing. A route described as
-"safest" means lowest estimated cost under the documented model; it is
-not a guarantee of safety.
+### Frontend (`frontend/.env`)
 
-## Development workflow
+```env
+VITE_API_BASE_URL=http://localhost:8000/api
+```
 
-1.  Read `prd.md`, `architecture.md`, `design.md`, and the relevant
-    specialized docs.
-2.  Agree on the selected region, Mars CRS, coordinate order, units, and
-    layer manifest.
-3.  Implement backend schemas before parallel frontend integration.
-4.  Keep geospatial and feasibility logic deterministic.
-5.  Add tests for nodata, route constraints, return-time calculations,
-    and failure states.
-6.  Keep observed, derived, simulated, unavailable, and prototype
-    information distinct.
-7.  Update `api.md` and `database.md` when contracts or persistence
-    change.
-8.  Run tests and rehearse the complete demo path before release.
+## Data Sources and Attribution
 
-## Documentation
+DHRUVION uses NASA public domain datasets with proper attribution:
 
-  -----------------------------------------------------------------------
-  File                                Purpose
-  ----------------------------------- -----------------------------------
-  `prd.md`                            Product scope, requirements, use
-                                      cases, acceptance criteria
+| Dataset | Source | Status | Attribution |
+|---------|--------|--------|-------------|
+| MOLA Elevation (MEGDR) | NASA PDS Geosciences | OBSERVED / DERIVED | MGS MOLA MEGDR · NASA PDS |
+| CTX Imagery Mosaic | NASA Mars Trek / JPL | OBSERVED | NASA Mars Trek · Gale_CTX_BlockAdj_dd |
+| Mars Rotation Video | NASA SVS 30338 | OBSERVED | NASA SVS / JPL · not live footage |
+| Slope/Roughness | Derived from MOLA | DERIVED | Computed by DHRUVION |
+| Science Targets | Demo catalogue | SIMULATED | Not verified observations |
+| Hazards | None connected | UNAVAILABLE | No observed dataset |
 
-  `architecture.md`                   System components, data flow,
-                                      geospatial and AI design
+See `docs/data-sources.md` for complete documentation.
 
-  `code_style.md`                     Coding and repository conventions
+**Key Principle:** Never present simulated data as verified observations. All UI elements display explicit status badges.
 
-  `testing.md`                        Unit, integration, E2E, and release
-                                      tests
+## Running the Application
 
-  `agents.md`                         Team ownership and coding-agent
-                                      rules
+### Development Mode
 
-  `security.md`                       API, file, LLM, and mission-safety
-                                      controls
+```bash
+# Terminal 1 - Backend
+cd backend
+.venv\Scripts\Activate.ps1  # Windows
+uvicorn app.main:app --reload
 
-  `database.md`                       Logical data model and persistence
-                                      strategy
+# Terminal 2 - Frontend
+cd frontend
+npm run dev
+```
 
-  `api.md`                            HTTP API contract
+Visit `http://localhost:5173` — you should see the landing page with rotating Mars globe.
 
-  `design.md`                         Visual system and screen-level UI
-                                      specification
-  -----------------------------------------------------------------------
+### Demo Credentials
 
-## License and attribution
+| Email | Password |
+|-------|----------|
+| `demo@dhruvion.io` | `Mission2026!` |
 
-Add the project's chosen license before public release. Follow the
-source dataset's own attribution, citation, redistribution, and usage
-requirements. Do not imply NASA endorsement or certification.
+### Production Build
+
+```bash
+# Frontend
+cd frontend
+npm run build
+# Output in frontend/dist/
+
+# Backend
+cd backend
+# Use a production ASGI server like Gunicorn/Uvicorn
+gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.main:app
+```
+
+## Testing
+
+### Backend Tests
+
+```bash
+cd backend
+python -m pytest tests/ -v
+```
+
+### Frontend Checks
+
+```bash
+cd frontend
+npx tsc --noEmit      # TypeScript compilation
+npm run lint          # oxlint
+npm run build         # Production build verification
+```
+
+## Project Structure
+
+```
+dhruvion/
+├── frontend/                 # React + Vite application
+│   ├── src/
+│   │   ├── features/         # Page components (10 pages)
+│   │   ├── components/       # Shared UI (common, layout, map)
+│   │   ├── context/          # AuthContext
+│   │   ├── services/         # API client + endpoints
+│   │   ├── data/             # Demo data
+│   │   └── types/            # TypeScript types
+│   ├── public/               # NASA assets (videos, images)
+│   └── package.json
+├── backend/                  # FastAPI application
+│   ├── app/
+│   │   ├── api/              # Routes + auth
+│   │   ├── core/             # Config, security, database, models
+│   │   └── schemas/          # Pydantic models
+│   └── tests/                # pytest tests
+├── scripts/                  # Data processing (MOLA, landing assets)
+├── data/                     # Excluded from Git (downloaded/generated)
+│   ├── raw/                  # Immutable source products
+│   ├── processed/            # Derived rasters and outputs
+│   └── vectors/              # GeoJSON and vector products
+├── docs/
+│   ├── landing-verification/ # Responsive design screenshots
+│   └── data-sources.md       # Data catalog and attribution
+├── CONTRIBUTING.md
+├── .gitignore
+└── README.md
+```
+
+## Known Limitations
+
+| Limitation | Impact | Mitigation |
+|------------|--------|------------|
+| AI Assistant backend | Returns fallback only | Implement tool routing in `AssistantService` |
+| Reports export | Simulated data only | Connect to real mission data |
+| Hazard catalogue | No observed dataset | Mark UNAVAILABLE; never fabricate |
+| Science targets | Demo catalogue only | Mark SIMULATED; no verified API |
+| Large data files | Not in repo | Download via scripts at build time |
+| Prototype CRS | Approximate projection | Document IAU 2000:104905 limitations |
+
+## License
+
+**Apache License 2.0** — See [LICENSE](LICENSE) file.
+
+This license was chosen because:
+- Permits commercial and non-commercial use
+- Requires attribution (critical for NASA data provenance)
+- Provides patent grant
+- Compatible with NASA public domain data usage
+- Industry standard for open-source geospatial tools
+
+## NASA Data Usage Compliance
+
+- All NASA datasets used are public domain
+- Attribution provided per NASA Media Guidelines
+- No NASA endorsement implied
+- Simulated features clearly labeled
+- Raw data kept immutable; processed outputs separate
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for:
+- Development workflow
+- Code style guidelines
+- Pull request process
+- Architecture guidelines
+- Security requirements
+
+## Support
+
+- **Issues**: GitHub Issues for bugs and feature requests
+- **Security**: GitHub Security Advisories for vulnerabilities
+- **Questions**: GitHub Discussions
+
+---
+
+**Built for the NASA Space Apps Challenge 2026**  
+*Interplanetary Survival Guide: Martian Map*
