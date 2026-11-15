@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import { Check, Clock, Gauge, Loader2, MapPin, Play, RotateCcw, Route as RouteIcon } from "lucide-react";
-import { MapContainer, Marker, Polyline, TileLayer, useMap, useMapEvents } from "react-leaflet";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -11,7 +10,8 @@ import StatusPill from "../../components/common/StatusPill";
 import { ErrorState } from "../../components/common/States";
 import { TextInput } from "../../components/common/Field";
 import { FeasibilityBadge, ProvenanceBadge } from "../../components/common/StatusBadge";
-import { LAYER_TILE_URLS, MarsCRS, MOLA_ATTRIBUTION, MOLA_BASEMAP_URL } from "../../components/map/mars";
+import { LAYER_TILE_URLS, MOLA_ATTRIBUTION, MOLA_BASEMAP_URL } from "../../components/map/mars";
+import { MarsMap } from "../../components/map/MarsMap";
 import { endpoints } from "../../services/api/endpoints";
 import { apiErrorMessage } from "../../services/api/client";
 import { clearMission, saveMission } from "../../services/missionStore";
@@ -193,6 +193,51 @@ export default function RoutePlannerPage() {
       slope_deg: point.values.slope_deg,
     }));
 
+  // Build markers for start and destination
+  const startMarker = {
+    id: "start",
+    position: [startLat, startLon] as [number, number],
+    icon: L.divIcon({
+      className: "dhruvion-marker-start",
+      html: '<span style="display:block;width:14px;height:14px;border-radius:50%;background:#F06B3D;border:2px solid #fff;"></span>',
+      iconSize: [14, 14],
+      iconAnchor: [7, 7],
+    }),
+    draggable: true,
+    onDragEnd: (lat: number, lng: number) => {
+      setStartLat(lat);
+      setStartLon(lng);
+    },
+    title: "Start point (draggable)",
+  };
+
+  const destMarker = {
+    id: "destination",
+    position: [destLat, destLon] as [number, number],
+    icon: L.divIcon({
+      className: "dhruvion-marker-dest",
+      html: '<span style="display:block;width:14px;height:14px;border-radius:50%;background:#38bdf8;border:2px solid #fff;"></span>',
+      iconSize: [14, 14],
+      iconAnchor: [7, 7],
+    }),
+    draggable: true,
+    onDragEnd: (lat: number, lng: number) => {
+      setDestLat(lat);
+      setDestLon(lng);
+    },
+    title: "Destination point (draggable)",
+  };
+
+  // Build polylines for routes
+  const routePolylines = routes.map((route) => ({
+    id: route.id,
+    positions: route.geometry.coordinates.map(([lon, lat]) => [lat, lon] as [number, number]),
+    color: route.id === selectedRoute?.id ? "#F06B3D" : "#9AA5B1",
+    weight: route.id === selectedRoute?.id ? 3.5 : 1.5,
+    opacity: route.id === selectedRoute?.id ? 1 : 0.55,
+    visible: true,
+  }));
+
   return (
     <div className="space-y-5">
       <PageHeader
@@ -257,75 +302,45 @@ export default function RoutePlannerPage() {
           flush
         >
           <div className="relative h-[320px] sm:h-[400px] xl:h-[440px]">
-            <MapContainer
-              crs={MarsCRS}
+            <MarsMap
               center={[-5.4, 137.4]}
               zoom={6}
               minZoom={0}
               maxZoom={8}
-              style={{ height: "100%", width: "100%", background: "#14100c" }}
-              zoomControl={false}
-              attributionControl
               scrollWheelZoom={false}
-              className="dhruvion-map"
-            >
-              <TileLayer
-                url={LAYER_TILE_URLS[basemap] ?? MOLA_BASEMAP_URL}
-                attribution={MOLA_ATTRIBUTION}
-                tileSize={256}
-                maxZoom={8}
-              />
-              <MapInteraction
-                onMapClick={(lat, lon) => {
-                  if (selectMode === "start") {
-                    setStartLat(lat);
-                    setStartLon(lon);
-                    setSelectMode(null);
-                  } else if (selectMode === "destination") {
-                    setDestLat(lat);
-                    setDestLon(lon);
-                    setSelectMode(null);
-                  }
-                }}
-                onPointerMove={(lat, lon) => setPointer({ lat, lon })}
-              />
-              <Marker
-                position={[startLat, startLon]}
-                draggable
-                icon={L.divIcon({ className: "dhruvion-marker-start", html: '<span style="display:block;width:14px;height:14px;border-radius:50%;background:#F06B3D;border:2px solid #fff;"></span>' })}
-                eventHandlers={{
-                  dragend: (event) => {
-                    const latlng = event.target.getLatLng();
-                    setStartLat(latlng.lat);
-                    setStartLon(latlng.lng);
-                  },
-                }}
-              />
-              <Marker
-                position={[destLat, destLon]}
-                draggable
-                icon={L.divIcon({ className: "dhruvion-marker-dest", html: '<span style="display:block;width:14px;height:14px;border-radius:50%;background:#38bdf8;border:2px solid #fff;"></span>' })}
-                eventHandlers={{
-                  dragend: (event) => {
-                    const latlng = event.target.getLatLng();
-                    setDestLat(latlng.lat);
-                    setDestLon(latlng.lng);
-                  },
-                }}
-              />
-              {routes.map((route) => (
-                <Polyline
-                  key={route.id}
-                  positions={route.geometry.coordinates.map(([lon, lat]) => [lat, lon] as [number, number])}
-                  pathOptions={
-                    route.id === selectedRoute?.id
-                      ? { color: "#F06B3D", weight: 3.5, opacity: 1 }
-                      : { color: "#9AA5B1", weight: 1.5, opacity: 0.55 }
-                  }
-                />
-              ))}
-              <FitRoutes routes={routes} />
-            </MapContainer>
+              zoomControl={false}
+              attributionControl={true}
+              containerHeight="100%"
+              tileLayers={[
+                {
+                  id: basemap,
+                  url: LAYER_TILE_URLS[basemap] ?? MOLA_BASEMAP_URL,
+                  attribution: MOLA_ATTRIBUTION,
+                  maxZoom: 8,
+                  tileSize: 256,
+                  visible: true,
+                },
+              ]}
+              markers={[
+                startMarker,
+                destMarker,
+              ]}
+              polylines={routePolylines}
+              onMapClick={(lat, lon) => {
+                if (selectMode === "start") {
+                  setStartLat(lat);
+                  setStartLon(lon);
+                  setSelectMode(null);
+                } else if (selectMode === "destination") {
+                  setDestLat(lat);
+                  setDestLon(lon);
+                  setSelectMode(null);
+                }
+              }}
+              onPointerMove={(lat, lon) => setPointer({ lat, lon })}
+              fitBounds={routes.length > 0 ? routes.flatMap((r) => r.geometry.coordinates.map(([lon, lat]) => [lat, lon] as [number, number])) : null}
+              fitBoundsTrigger={routes.length > 0 ? (selectedRoute?.id.split("").reduce((a, c) => a + c.charCodeAt(0), 0) ?? 0) : 0}
+            />
             <div className="pointer-events-none absolute left-3 top-3 rounded border border-line/80 bg-black/65 px-2 py-1 backdrop-blur-sm">
               <div className="text-[9px] uppercase tracking-[0.1em] text-text-muted">
                 Gale Crater · Mars equirectangular
@@ -688,37 +703,6 @@ export default function RoutePlannerPage() {
       </div>
     </div>
   );
-}
-
-function MapInteraction({
-  onMapClick,
-  onPointerMove,
-}: {
-  onMapClick: (lat: number, lon: number) => void;
-  onPointerMove: (lat: number, lon: number) => void;
-}) {
-  useMapEvents({
-    click: (event) => {
-      onMapClick(event.latlng.lat, event.latlng.lng);
-    },
-    mousemove: (event) => {
-      onPointerMove(event.latlng.lat, event.latlng.lng);
-    },
-  });
-  return null;
-}
-
-function FitRoutes({ routes }: { routes: Route[] }) {
-  const map = useMap();
-  useEffect(() => {
-    const points = routes.flatMap((route) =>
-      route.geometry.coordinates.map(([lon, lat]) => L.latLng(lat, lon)),
-    );
-    if (points.length > 1) {
-      map.fitBounds(L.latLngBounds(points), { padding: [28, 28], maxZoom: 9 });
-    }
-  }, [map, routes]);
-  return null;
 }
 
 function fmt(value: number | null | undefined): string {

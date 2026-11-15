@@ -1,14 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
-  Crosshair,
-  Layers,
   Loader2,
-  Minus,
-  Plus,
   RotateCcw,
   Target,
 } from "lucide-react";
-import { ImageOverlay, MapContainer, Marker, Polyline, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import PageHeader from "../../components/common/PageHeader";
@@ -22,13 +17,12 @@ import {
   GALE_BOUNDS,
   MOLA_ATTRIBUTION,
   MOLA_BASEMAP_URL,
-  MARS_BOUNDS,
-  MarsCRS,
   assetUrl,
   boundsCenter,
   layerLeafletBounds,
   toLeafletBounds,
 } from "../../components/map/mars";
+import { MarsMap } from "../../components/map/MarsMap";
 import { endpoints } from "../../services/api/endpoints";
 import { pushNotification } from "../../utils/notifications";
 import { apiErrorMessage } from "../../services/api/client";
@@ -235,6 +229,59 @@ export default function MartianMapPage() {
     [],
   );
 
+  // Build tile layer configs for MarsMap
+  const baseTileLayer = {
+    id: "mars_trek_mola_colorshade",
+    name: basemap?.name ?? "Mars Trek MOLA Color-Shaded Relief",
+    url: basemapUrl,
+    maxZoom: basemap?.max_zoom ?? 8,
+    status: "observed" as const,
+    resolutionM: null,
+    warnings: undefined,
+  };
+
+  const tileLayerConfigs = [
+    baseTileLayer,
+    ...tileLayers,
+  ].map((layer) => ({
+    id: layer.id,
+    url: layer.url,
+    attribution: layer.id === "mars_trek_mola_colorshade" ? MOLA_ATTRIBUTION : "NASA Mars Trek",
+    maxZoom: layer.maxZoom,
+    tileSize: 256,
+    visible: enabled[layer.id] ?? false,
+  }));
+
+  const overlayConfigs = overlays.map((layer) => ({
+    id: layer.id,
+    url: layer.url as string,
+    bounds: layer.bounds,
+    opacity: layer.id === "gale_ctx_local" ? 0.9 : 0.62,
+    visible: enabled[layer.id] ?? false,
+  }));
+
+  const demoTargetMarkers = showDemoTargets
+    ? DEMO_TARGETS.map((target) => ({
+        id: target.id,
+        position: [target.geometry.coordinates[1], target.geometry.coordinates[0]] as [number, number],
+        icon: markerIcon(),
+        title: `${target.name} (simulated target)`,
+        onClick: () => setSelected(target),
+      }))
+    : [];
+
+  const demoRoutePolyline = showDemoRoute
+    ? [{
+        id: "demo_route",
+        positions: DEMO_ROUTE_COORDS.map(([x, y]) => [y, x] as [number, number]),
+        color: "#F06B3D",
+        weight: 3,
+        opacity: 0.9,
+        dashArray: "1 0",
+        visible: true,
+      }]
+    : [];
+
   return (
     <div className="flex flex-col gap-4 lg:h-[calc(100vh-10.75rem)] lg:min-h-[560px]">
       <PageHeader
@@ -270,69 +317,24 @@ export default function MartianMapPage() {
             </div>
           )}
 
-          <MapContainer
-            crs={MarsCRS}
+          <MarsMap
             center={center}
             zoom={5}
             minZoom={0}
             maxZoom={8}
-            style={{ height: "100%", width: "100%", background: "#14100c" }}
+            scrollWheelZoom={false}
             zoomControl={false}
-            attributionControl
-            className="dhruvion-map"
-          >
-            {enabled.mars_trek_mola_colorshade && (
-              <TileLayer
-                url={basemapUrl}
-                attribution={MOLA_ATTRIBUTION}
-                tileSize={256}
-                maxZoom={basemap?.max_zoom ?? 8}
-              />
-            )}
-            {tileLayers
-              .filter((layer) => enabled[layer.id])
-              .map((layer) => (
-                <TileLayer
-                  key={layer.id}
-                  url={layer.url}
-                  attribution="NASA Mars Trek"
-                  tileSize={256}
-                  maxZoom={layer.maxZoom}
-                />
-              ))}
-            {overlays
-              .filter((layer) => enabled[layer.id])
-              .map((layer) => (
-                <ImageOverlay
-                  key={layer.id}
-                  url={layer.url as string}
-                  bounds={layer.bounds}
-                  opacity={layer.id === "gale_ctx_local" ? 0.9 : 0.62}
-                />
-              ))}
-
-            {showDemoRoute && (
-              <Polyline
-                positions={DEMO_ROUTE_COORDS.map(([x, y]) => [y, x]) as L.LatLngExpression[]}
-                pathOptions={{ color: "#F06B3D", weight: 3, opacity: 0.9, dashArray: "1 0" }}
-              />
-            )}
-
-            {showDemoTargets &&
-              DEMO_TARGETS.map((target) => (
-                <Marker
-                  key={target.id}
-                  position={[target.geometry.coordinates[1], target.geometry.coordinates[0]]}
-                  icon={markerIcon()}
-                  title={`${target.name} (simulated target)`}
-                  eventHandlers={{ click: () => setSelected(target) }}
-                />
-              ))}
-
-            <MapClick setCoords={setCoords} />
-            <MapControls center={center} />
-            <MapReadout coordinate={coords} />
-          </MapContainer>
+            attributionControl={true}
+            tileLayers={tileLayerConfigs}
+            imageOverlays={overlayConfigs}
+            markers={demoTargetMarkers}
+            polylines={demoRoutePolyline}
+            onMapClick={(x, y) => setCoords({ x, y })}
+            onPointerMove={(_lat, _lng) => {
+              // Could update a coordinate readout here
+            }}
+            fitBounds={regionBounds}
+          />
 
           <div className="pointer-events-none absolute left-3 top-3 z-[900] flex flex-wrap items-center gap-1.5">
             <span className="rounded border border-line/80 bg-black/65 px-2 py-1 text-[9px] uppercase tracking-[0.1em] text-text-secondary backdrop-blur-sm">
@@ -497,8 +499,8 @@ export default function MartianMapPage() {
                       terrain?.availability === "available"
                         ? "observed"
                         : terrain?.availability === "partial"
-                          ? "caution"
-                          : "unavailable"
+                        ? "caution"
+                        : "unavailable"
                     }
                   >
                     {terrain?.availability ?? "pending"}
@@ -585,115 +587,6 @@ export default function MartianMapPage() {
   );
 }
 
-function MapClick({ setCoords }: { setCoords: (coords: { x: number; y: number }) => void }) {
-  const map = useMap();
-  useEffect(() => {
-    const handler = (event: L.LeafletMouseEvent) => {
-      setCoords({ x: event.latlng.lng, y: event.latlng.lat });
-    };
-    map.on("click", handler);
-    return () => {
-      map.off("click", handler);
-    };
-  }, [map, setCoords]);
-  return null;
-}
-
-function MapControls({ center }: { center: L.LatLngExpression }) {
-  const map = useMap();
-  return (
-    <div className="absolute right-3 top-14 z-[1000] flex flex-col overflow-hidden rounded-control border border-line/80 bg-surface1/90 backdrop-blur-sm">
-      <MapButton label="Zoom in" onClick={() => map.zoomIn()}>
-        <Plus size={15} />
-      </MapButton>
-      <MapButton label="Zoom out" onClick={() => map.zoomOut()}>
-        <Minus size={15} />
-      </MapButton>
-      <MapButton label="Recenter on Gale Crater" onClick={() => map.fitBounds(GALE_BOUNDS)}>
-        <Crosshair size={15} />
-      </MapButton>
-      <MapButton label="Fit Mars" onClick={() => map.fitBounds(MARS_BOUNDS)}>
-        <Layers size={15} />
-      </MapButton>
-      <MapButton label="Center on region metadata" onClick={() => map.setView(center, 5)}>
-        <Target size={15} />
-      </MapButton>
-    </div>
-  );
-}
-
-function MapButton({
-  label,
-  onClick,
-  children,
-}: {
-  label: string;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={label}
-      title={label}
-      className="grid h-8 w-8 place-items-center border-b border-line/60 text-text-secondary transition-colors last:border-b-0 hover:bg-surface3 hover:text-text-primary"
-    >
-      {children}
-    </button>
-  );
-}
-
-function MapReadout({ coordinate }: { coordinate: { x: number; y: number } | null }) {
-  const map = useMap();
-  const [view, setView] = useState(() => ({
-    zoom: map.getZoom(),
-    lat: map.getCenter().lat,
-    lng: map.getCenter().lng,
-  }));
-
-  useEffect(() => {
-    const update = () =>
-      setView({ zoom: map.getZoom(), lat: map.getCenter().lat, lng: map.getCenter().lng });
-    map.on("moveend zoomend", update);
-    update();
-    return () => {
-      map.off("moveend zoomend", update);
-    };
-  }, [map]);
-
-  return (
-    <div className="pointer-events-none absolute bottom-6 left-3 z-[900] rounded border border-line/80 bg-black/65 px-2 py-1 text-[9px] uppercase tracking-[0.08em] text-text-secondary backdrop-blur-sm">
-      <span className="tabular">
-        {coordinate ? `lon ${coordinate.x.toFixed(3)} · lat ${coordinate.y.toFixed(3)}` : "Click map for point query"}
-      </span>
-      <span className="mx-1.5 text-text-muted">/</span>
-      <span className="tabular text-text-muted">
-        z{view.zoom} · {view.lat.toFixed(2)}°, {view.lng.toFixed(2)}°
-      </span>
-    </div>
-  );
-}
-
-function CoverageLine({ coverage }: { coverage: CoverageClass }) {
-  return (
-    <div className="mt-1.5 rounded border border-line/60 bg-surface1/50 px-1.5 py-1 text-[9px] leading-relaxed text-text-muted">
-      <span className="uppercase tracking-[0.08em]">Coverage class {coverage.class ?? "—"}</span>
-      <span className="mx-1">·</span>
-      {coverage.label}
-    </div>
-  );
-}
-
-function StatusRow({ label, value, tone }: { label: string; value: number | string; tone: string }) {
-  return (
-    <div className="flex items-center justify-between gap-2">
-      <dt className="text-text-muted">{label}</dt>
-      <dd className={`tabular ${tone}`}>{value}</dd>
-    </div>
-  );
-}
-
 function LayerGroup({
   title,
   hint,
@@ -749,10 +642,10 @@ function LayerRow({
               tone === "observed"
                 ? "bg-safe-green"
                 : tone === "derived"
-                  ? "bg-cyan"
-                  : tone === "simulated"
-                    ? "bg-amber"
-                    : "bg-text-muted"
+                ? "bg-cyan"
+                : tone === "simulated"
+                ? "bg-amber"
+                : "bg-text-muted"
             }`}
           />
           <span className="truncate text-[11px] text-text-primary">{name}</span>
@@ -806,6 +699,25 @@ function LegendItem({
       )}
       <span className="text-text-secondary">{label}</span>
     </li>
+  );
+}
+
+function StatusRow({ label, value, tone }: { label: string; value: number | string; tone: string }) {
+  return (
+    <div className="flex items-center justify-between gap-2">
+      <dt className="text-text-muted">{label}</dt>
+      <dd className={`tabular ${tone}`}>{value}</dd>
+    </div>
+  );
+}
+
+function CoverageLine({ coverage }: { coverage: CoverageClass }) {
+  return (
+    <div className="mt-1.5 rounded border border-line/60 bg-surface1/50 px-1.5 py-1 text-[9px] leading-relaxed text-text-muted">
+      <span className="uppercase tracking-[0.08em]">Coverage class {coverage.class ?? "—"}</span>
+      <span className="mx-1">·</span>
+      {coverage.label}
+    </div>
   );
 }
 

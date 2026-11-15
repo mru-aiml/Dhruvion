@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   ChevronDown,
   Crosshair,
@@ -12,7 +12,6 @@ import {
   Target,
   X,
 } from "lucide-react";
-import { MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import PageHeader from "../../components/common/PageHeader";
@@ -26,8 +25,9 @@ import { ProvenanceBadge, SimulatedLabel } from "../../components/common/StatusB
 import {
   MOLA_ATTRIBUTION,
   MOLA_BASEMAP_URL,
-  MarsCRS,
+  GALE_BOUNDS,
 } from "../../components/map/mars";
+import { MarsMap } from "../../components/map/MarsMap";
 import { DEMO_TARGETS } from "../../data/demo";
 import type { ScienceTarget } from "../../types";
 
@@ -107,6 +107,24 @@ export default function ScienceExplorerPage() {
     setTypeFilter("all");
     setPriorityFilter("all");
     setVisitedFilter("all");
+  };
+
+  // Handle map click to select target
+  const handleMapClick = (lat: number, lng: number) => {
+    // Find closest target
+    let closest: ScienceTarget | null = null;
+    let minDist = Infinity;
+    for (const target of DEMO_TARGETS) {
+      const [tLng, tLat] = target.geometry.coordinates;
+      const dist = Math.hypot(lat - tLat, lng - tLng);
+      if (dist < minDist) {
+        minDist = dist;
+        closest = target;
+      }
+    }
+    if (closest && minDist < 0.05) { // ~5km threshold
+      setSelected(closest);
+    }
   };
 
   return (
@@ -332,41 +350,41 @@ export default function ScienceExplorerPage() {
                 </div>
               </div>
 
-              <MapContainer
-                crs={MarsCRS}
+              <MarsMap
                 center={MAP_CENTER}
                 zoom={7}
                 minZoom={0}
                 maxZoom={8}
-                style={{ height: "100%", width: "100%", background: "#14100c" }}
-                zoomControl={false}
-                attributionControl
                 scrollWheelZoom={false}
-                className="dhruvion-map"
-              >
-                <TileLayer
-                  url={MOLA_BASEMAP_URL}
-                  attribution={MOLA_ATTRIBUTION}
-                  tileSize={256}
-                  maxZoom={8}
-                />
-                {DEMO_TARGETS.map((target) => {
+                zoomControl={false}
+                attributionControl={true}
+                containerHeight="100%"
+                tileLayers={[
+                  {
+                    id: "mola_basemap",
+                    url: MOLA_BASEMAP_URL,
+                    attribution: MOLA_ATTRIBUTION,
+                    maxZoom: 8,
+                    tileSize: 256,
+                    visible: true,
+                  },
+                ]}
+                markers={DEMO_TARGETS.map((target) => {
                   const active = selected?.id === target.id;
-                  return (
-                    <Marker
-                      key={target.id}
-                      position={[
-                        target.geometry.coordinates[1],
-                        target.geometry.coordinates[0],
-                      ]}
-                      icon={active ? SELECTED_TARGET_ICON : TARGET_ICON}
-                      title={`${target.name} (simulated target)`}
-                      eventHandlers={{ click: () => setSelected(target) }}
-                    />
-                  );
+                  return {
+                    id: target.id,
+                    position: [
+                      target.geometry.coordinates[1],
+                      target.geometry.coordinates[0],
+                    ] as [number, number],
+                    icon: active ? SELECTED_TARGET_ICON : TARGET_ICON,
+                    title: `${target.name} (simulated target)`,
+                    onClick: () => setSelected(target),
+                  };
                 })}
-                <FocusSelected target={selected} />
-              </MapContainer>
+                onMapClick={handleMapClick}
+                fitBounds={GALE_BOUNDS}
+              />
 
               <div className="pointer-events-none absolute bottom-2 right-2 z-[900] flex flex-wrap items-center gap-1 bg-black/60 px-1.5 py-1 backdrop-blur-sm">
                 <span className="text-[8px] uppercase tracking-[0.08em] text-text-muted">
@@ -536,27 +554,6 @@ function InspectorRow({ label, value }: { label: string; value: React.ReactNode 
       <dd className="mt-0.5 truncate text-[11px] tabular text-text-secondary">{value}</dd>
     </div>
   );
-}
-
-function FocusSelected({ target }: { target: ScienceTarget | null }) {
-  const map = useMap();
-  useEffect(() => {
-    if (!target) return;
-    const reduceMotion =
-      document.documentElement.dataset.reducedMotion === "true" ||
-      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    const destination: [number, number] = [
-      target.geometry.coordinates[1],
-      target.geometry.coordinates[0],
-    ];
-    const zoom = Math.max(map.getZoom(), 8);
-    if (reduceMotion) {
-      map.setView(destination, zoom, { animate: false });
-    } else {
-      map.flyTo(destination, zoom, { duration: 0.6 });
-    }
-  }, [map, target]);
-  return null;
 }
 
 function formatPriority(priority: number | null) {

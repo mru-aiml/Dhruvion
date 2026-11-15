@@ -12,8 +12,6 @@ import {
   ShieldCheck,
   X,
 } from "lucide-react";
-import { MapContainer, Polyline, TileLayer, useMap } from "react-leaflet";
-import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import PageHeader from "../../components/common/PageHeader";
 import SectionCard from "../../components/common/SectionCard";
@@ -21,7 +19,8 @@ import StatCard from "../../components/common/StatCard";
 import StatusPill from "../../components/common/StatusPill";
 import Button from "../../components/common/Button";
 import { FeasibilityBadge, ProvenanceBadge, SimulatedLabel } from "../../components/common/StatusBadge";
-import { MarsCRS, MOLA_ATTRIBUTION, MOLA_BASEMAP_URL } from "../../components/map/mars";
+import { MOLA_ATTRIBUTION, MOLA_BASEMAP_URL } from "../../components/map/mars";
+import { MarsMap } from "../../components/map/MarsMap";
 import { endpoints } from "../../services/api/endpoints";
 import { apiErrorMessage } from "../../services/api/client";
 import { loadMission, saveMission } from "../../services/missionStore";
@@ -572,37 +571,39 @@ function RouteMap({
           critical ? "border-critical-red/40" : "border-safe-green/40"
         }`}
       >
-        <MapContainer
-          crs={MarsCRS}
+        <MarsMap
           center={center}
           zoom={7}
-          style={{ height: "100%", width: "100%", background: "#14100c" }}
-          zoomControl={false}
-          attributionControl
+          minZoom={0}
+          maxZoom={8}
           scrollWheelZoom={false}
-          className="dhruvion-map"
-        >
-          <TileLayer
-            url={MOLA_BASEMAP_URL}
-            attribution={MOLA_ATTRIBUTION}
-            tileSize={256}
-            maxZoom={8}
-          />
-          {route.length > 1 && (
-            <>
-              <Polyline
-                positions={route}
-                pathOptions={{
+          zoomControl={false}
+          attributionControl={true}
+          tileLayers={[
+            {
+              id: "mola_basemap",
+              url: MOLA_BASEMAP_URL,
+              attribution: MOLA_ATTRIBUTION,
+              maxZoom: 8,
+              tileSize: 256,
+              visible: true,
+            },
+          ]}
+          polylines={
+            route.length > 1
+              ? [{
+                  id: kind,
+                  positions: route,
                   color,
                   weight: 3.5,
                   opacity: 0.95,
                   dashArray: critical ? undefined : "7 5",
-                }}
-              />
-              <FitRoute route={route} />
-            </>
-          )}
-        </MapContainer>
+                  visible: true,
+                }]
+              : []
+          }
+          fitBounds={route.length > 1 ? route : null}
+        />
         <div
           className={`pointer-events-none absolute left-2.5 top-2.5 rounded border bg-black/70 px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.1em] backdrop-blur-sm ${
             critical
@@ -794,19 +795,6 @@ function ConfirmReroute({
       </div>
     </div>
   );
-}
-
-function FitRoute({ route }: { route: [number, number][] }) {
-  const map = useMap();
-  useEffect(() => {
-    if (route.length > 1) {
-      map.fitBounds(L.latLngBounds(route.map(([lat, lon]) => L.latLng(lat, lon))), {
-        padding: [20, 20],
-        maxZoom: 9,
-      });
-    }
-  }, [map, route]);
-  return null;
 }
 
 async function planDefaultMission(): Promise<MissionPlanResponse> {

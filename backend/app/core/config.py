@@ -16,6 +16,19 @@ class Settings(BaseSettings):
 
     # CORS
     FRONTEND_ORIGIN: str = "http://localhost:5173"
+    # Additional allowed origins for production (comma-separated)
+    ADDITIONAL_ALLOWED_ORIGINS: str = "https://dhruvion.vercel.app"
+
+    @property
+    def allowed_origins(self) -> List[str]:
+        """Return list of allowed CORS origins including production fallback."""
+        origins = [self.FRONTEND_ORIGIN]
+        if self.ADDITIONAL_ALLOWED_ORIGINS:
+            for origin in self.ADDITIONAL_ALLOWED_ORIGINS.split(","):
+                origin = origin.strip()
+                if origin and origin not in origins:
+                    origins.append(origin)
+        return origins
 
     # API
     API_PREFIX: str = "/api"

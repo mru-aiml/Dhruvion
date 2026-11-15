@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { Download, FileText, Loader2 } from "lucide-react";
-import { MapContainer, Polyline, TileLayer, useMap } from "react-leaflet";
-import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Panel from "../../components/common/Panel";
 import { FeasibilityBadge, ProvenanceBadge } from "../../components/common/StatusBadge";
@@ -9,7 +7,8 @@ import StatusPill from "../../components/common/StatusPill";
 import { endpoints } from "../../services/api/endpoints";
 import { apiErrorMessage } from "../../services/api/client";
 import { loadMission, saveMission } from "../../services/missionStore";
-import { API_ORIGIN, MarsCRS, MOLA_ATTRIBUTION, MOLA_BASEMAP_URL } from "../../components/map/mars";
+import { MOLA_ATTRIBUTION, MOLA_BASEMAP_URL, API_ORIGIN } from "../../components/map/mars";
+import { MarsMap } from "../../components/map/MarsMap";
 import { pushNotification } from "../../utils/notifications";
 import type {
   CoverageSummary,
@@ -17,7 +16,6 @@ import type {
   RadDetectorSummary,
   RemsMeasurement,
   ReportResponse,
-  Route,
 } from "../../types";
 
 const REGION_ID = "gale_crater";
@@ -302,29 +300,41 @@ export default function ReportsPage() {
               {route && route.geometry?.coordinates?.length > 1 ? (
                 <>
                   <div className="mb-2 h-32 overflow-hidden rounded-md border border-line">
-                    <MapContainer
-                      crs={MarsCRS}
+                    <MarsMap
                       center={[-5.4, 137.4]}
                       zoom={6}
-                      style={{ height: "100%", width: "100%", background: "#1a1510" }}
+                      minZoom={0}
+                      maxZoom={8}
+                      scrollWheelZoom={false}
                       zoomControl={false}
                       attributionControl={false}
-                      scrollWheelZoom={false}
-                    >
-                      <TileLayer
-                        url={MOLA_BASEMAP_URL}
-                        attribution={MOLA_ATTRIBUTION}
-                        tileSize={256}
-                        maxZoom={8}
-                      />
-                      <Polyline
-                        positions={route.geometry.coordinates.map(
-                          ([lon, lat]) => [lat, lon] as [number, number],
-                        )}
-                        pathOptions={{ color: "#E56A3A", weight: 3 }}
-                      />
-                      <FitRoute route={route} />
-                    </MapContainer>
+                      containerHeight="100%"
+                      tileLayers={[
+                        {
+                          id: "mola_basemap",
+                          url: MOLA_BASEMAP_URL,
+                          attribution: MOLA_ATTRIBUTION,
+                          maxZoom: 8,
+                          tileSize: 256,
+                          visible: true,
+                        },
+                      ]}
+                      polylines={[
+                        {
+                          id: "route",
+                          positions: route.geometry.coordinates.map(
+                            ([lon, lat]) => [lat, lon] as [number, number],
+                          ),
+                          color: "#E56A3A",
+                          weight: 3,
+                          opacity: 1,
+                          visible: true,
+                        },
+                      ]}
+                      fitBounds={route.geometry.coordinates.map(
+                        ([lon, lat]) => [lat, lon] as [number, number],
+                      )}
+                    />
                   </div>
                   <dl className="grid grid-cols-2 gap-x-4 gap-y-2">
                     <ReportRow label="Strategy" value={route.strategy.replace(/_/g, " ")} />
@@ -533,16 +543,7 @@ async function planDefaultMission(): Promise<MissionPlanResponse> {
   });
 }
 
-function FitRoute({ route }: { route: Route }) {
-  const map = useMap();
-  useEffect(() => {
-    const points = route.geometry.coordinates.map(([lon, lat]) => L.latLng(lat, lon));
-    if (points.length > 1) {
-      map.fitBounds(L.latLngBounds(points), { padding: [20, 20], maxZoom: 9 });
-    }
-  }, [map, route]);
-  return null;
-}
+
 
 function ReportRow({ label, value }: { label: string; value: string }) {
   return (
