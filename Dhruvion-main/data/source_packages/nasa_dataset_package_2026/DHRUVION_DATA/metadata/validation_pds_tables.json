@@ -1,0 +1,485 @@
+{
+  "generated_utc": "2026-11-14T19:43:07+00:00",
+  "n_labels": 6,
+  "products": [
+    {
+      "label": "/home/claude/DHRUVION_DATA/raw/rems/SOL00009/RME_398245439RMD00090000000_______PA.LBL",
+      "instrument": "rems",
+      "checked_utc": "2026-11-14T19:43:04+00:00",
+      "reasons_invalid": [],
+      "reasons_incomplete": [],
+      "limitations": [
+        "REMS_SCIENCE_TABLE: 22 numeric column(s) contain values such as -999 that the label does not declare as missing - treat them as missing only where the SIS documents it"
+      ],
+      "tables": [
+        {
+          "object": "REMS_SCIENCE_TABLE",
+          "data_file": "/home/claude/DHRUVION_DATA/raw/rems/SOL00009/RME_398245439RMD00090000000_______PA.TAB",
+          "declared_rows": 5520,
+          "rows_read": 5520,
+          "row_count_matches_label": true,
+          "n_columns": 40,
+          "candidate_time_columns_name_based": [
+            "TIMESTAMP",
+            "LMST",
+            "LTST"
+          ],
+          "candidate_quality_columns_name_based": [
+            "WS_CONFIDENCE_LEVEL",
+            "BRIGHTNESS_TEMP_LONG_TERM_UNCERTAINTY",
+            "BRIGHTNESS_TEMP_SHORT_TERM_UNCERTAINTY",
+            "GTS_CONFIDENCE_LEVEL",
+            "ATS_BOOM1_CONFIDENCE_LEVEL",
+            "ATS_BOOM2_CONFIDENCE_LEVEL",
+            "AMBIENT_TEMP_CONFIDENCE_LEVEL",
+            "UV_A_UNCERTAINTY",
+            "UV_B_UNCERTAINTY",
+            "UV_C_UNCERTAINTY",
+            "UV_ABC_UNCERTAINTY",
+            "UV_D_UNCERTAINTY",
+            "UV_E_UNCERTAINTY",
+            "UVS_CONFIDENCE_LEVEL",
+            "LOCAL_RELATIVE_HUMIDITY_UNCERTAINTY",
+            "VOLUME_MIXING_RATIO_UNCERTAINTY",
+            "HS_CONFIDENCE_LEVEL",
+            "PRESSURE_UNCERTAINTY",
+            "PS_CONFIDENCE_LEVEL"
+          ],
+          "numeric_columns_without_unit": [],
+          "numeric_columns_mostly_missing": [],
+          "temporal_coverage": {
+            "TIMESTAMP": {
+              "min": 398291714.0,
+              "max": 398330881.0,
+              "n_distinct": 5520
+            },
+            "LMST": {
+              "first": "00009M12:30:37.759",
+              "last": "00009M23:05:57.172",
+              "lexical_min": "00009M12:30:37.759",
+              "lexical_max": "00009M23:05:57.172"
+            },
+            "LTST": {
+              "first": "00009 13:05:09",
+              "last": "00009 23:40:32",
+              "lexical_min": "00009 13:05:09",
+              "lexical_max": "00009 23:40:32"
+            }
+          },
+          "usable_rows_any_numeric_valid": 5520,
+          "undeclared_sentinel_candidates": {
+            "HORIZONTAL_WIND_SPEED": {
+              "-999.0": 5513
+            },
+            "VERTICAL_WIND_SPEED": {
+              "-999.0": 5520
+            },
+            "WIND_DIRECTION": {
+              "-999.0": 5511
+            },
+            "BRIGHTNESS_TEMP": {
+              "-999.0": 900
+            },
+            "BRIGHTNESS_TEMP_LONG_TERM_UNCERTAINTY": {
+              "-999.0": 900
+            },
+            "BRIGHTNESS_TEMP_SHORT_TERM_UNCERTAINTY": {
+              "-999.0": 900
+            },
+            "BOOM1_LOCAL_AIR_TEMP": {
+              "-999.0": 240
+            },
+            "BOOM2_LOCAL_AIR_TEMP": {
+              "-999.0": 300
+            },
+            "AMBIENT_TEMP": {
+              "-999.0": 240
+            },
+            "UV_A": {
+              "-999.0": 1320
+            },
+            "UV_B": {
+              "-999.0": 1320
+            },
+            "UV_C": {
+              "-999.0": 1320
+            },
+            "UV_ABC": {
+              "-999.0": 1320
+            },
+            "UV_D": {
+              "-999.0": 1320
+            },
+            "UV_E": {
+              "-999.0": 1320
+            },
+            "LOCAL_RELATIVE_HUMIDITY": {
+              "-999.0": 409
+            },
+            "HS_TEMP": {
+              "-999.0": 409
+            },
+            "LOCAL_RELATIVE_HUMIDITY_UNCERTAINTY": {
+              "-999.0": 409
+            },
+            "VOLUME_MIXING_RATIO": {
+              "-999.0": 469
+            },
+            "VOLUME_MIXING_RATIO_UNCERTAINTY": {
+              "-999.0": 5520
+            },
+            "PRESSURE": {
+              "-999.0": 300
+            },
+            "PRESSURE_UNCERTAINTY": {
+              "-999.0": 300
+            }
+          },
+          "file_size_check": {
+            "expected_bytes": 2053440,
+            "actual_bytes": 2053440,
+            "ok": true
+          },
+          "column_dictionary": "metadata/column_dictionaries/rems/RME_398245439RMD00090000000_______PA__REMS_SCIENCE_TABLE.json"
+        }
+      ],
+      "documentation_files_found": [
+        "/home/claude/DHRUVION_DATA/raw/rems/documentation/MODRDR6.FMT",
+        "/home/claude/DHRUVION_DATA/raw/rems/documentation/REMS_RDR_SIS.TXT"
+      ],
+      "spatial_coverage": "Curiosity rover location only (single-point, rover-local measurements; not a map)",
+      "validation_status": "VALIDATED WITH LIMITATIONS",
+      "approved_for_processing": true
+    },
+    {
+      "label": "/home/claude/DHRUVION_DATA/raw/rems/SOL00010/RME_398334213RMD00100000000_______PA.LBL",
+      "instrument": "rems",
+      "checked_utc": "2026-11-14T19:43:04+00:00",
+      "reasons_invalid": [],
+      "reasons_incomplete": [
+        "Referenced file missing: Data file RME_398334213RMD00100000000_______PA.TAB not found near /home/claude/DHRUVION_DATA/raw/rems/SOL00010/RME_398334213RMD00100000000_______PA.LBL"
+      ],
+      "limitations": [],
+      "tables": [],
+      "validation_status": "INCOMPLETE",
+      "approved_for_processing": false
+    },
+    {
+      "label": "/home/claude/DHRUVION_DATA/raw/rems/SOL00011/RME_398422988RMD00110000000_______PA.LBL",
+      "instrument": "rems",
+      "checked_utc": "2026-11-14T19:43:04+00:00",
+      "reasons_invalid": [],
+      "reasons_incomplete": [],
+      "limitations": [
+        "REMS_SCIENCE_TABLE: 22 numeric column(s) contain values such as -999 that the label does not declare as missing - treat them as missing only where the SIS documents it"
+      ],
+      "tables": [
+        {
+          "object": "REMS_SCIENCE_TABLE",
+          "data_file": "/home/claude/DHRUVION_DATA/raw/rems/SOL00011/RME_398422988RMD00110000000_______PA.TAB",
+          "declared_rows": 12960,
+          "rows_read": 12960,
+          "row_count_matches_label": true,
+          "n_columns": 40,
+          "candidate_time_columns_name_based": [
+            "TIMESTAMP",
+            "LMST",
+            "LTST"
+          ],
+          "candidate_quality_columns_name_based": [
+            "WS_CONFIDENCE_LEVEL",
+            "BRIGHTNESS_TEMP_LONG_TERM_UNCERTAINTY",
+            "BRIGHTNESS_TEMP_SHORT_TERM_UNCERTAINTY",
+            "GTS_CONFIDENCE_LEVEL",
+            "ATS_BOOM1_CONFIDENCE_LEVEL",
+            "ATS_BOOM2_CONFIDENCE_LEVEL",
+            "AMBIENT_TEMP_CONFIDENCE_LEVEL",
+            "UV_A_UNCERTAINTY",
+            "UV_B_UNCERTAINTY",
+            "UV_C_UNCERTAINTY",
+            "UV_ABC_UNCERTAINTY",
+            "UV_D_UNCERTAINTY",
+            "UV_E_UNCERTAINTY",
+            "UVS_CONFIDENCE_LEVEL",
+            "LOCAL_RELATIVE_HUMIDITY_UNCERTAINTY",
+            "VOLUME_MIXING_RATIO_UNCERTAINTY",
+            "HS_CONFIDENCE_LEVEL",
+            "PRESSURE_UNCERTAINTY",
+            "PS_CONFIDENCE_LEVEL"
+          ],
+          "numeric_columns_without_unit": [],
+          "numeric_columns_mostly_missing": [],
+          "temporal_coverage": {
+            "TIMESTAMP": {
+              "min": 398423027.0,
+              "max": 398508428.0,
+              "n_distinct": 12960
+            },
+            "LMST": {
+              "first": "00011M00:00:38.572",
+              "last": "00011M23:05:55.380",
+              "lexical_min": "00011M00:00:38.572",
+              "lexical_max": "00011M23:05:55.380"
+            },
+            "LTST": {
+              "first": "00011 00:35:23",
+              "last": "00011 23:40:49",
+              "lexical_min": "00011 00:35:23",
+              "lexical_max": "00011 23:40:49"
+            }
+          },
+          "usable_rows_any_numeric_valid": 12960,
+          "undeclared_sentinel_candidates": {
+            "HORIZONTAL_WIND_SPEED": {
+              "-999.0": 12935
+            },
+            "VERTICAL_WIND_SPEED": {
+              "-999.0": 12960
+            },
+            "WIND_DIRECTION": {
+              "-999.0": 12927
+            },
+            "BRIGHTNESS_TEMP": {
+              "-999.0": 2340
+            },
+            "BRIGHTNESS_TEMP_LONG_TERM_UNCERTAINTY": {
+              "-999.0": 2340
+            },
+            "BRIGHTNESS_TEMP_SHORT_TERM_UNCERTAINTY": {
+              "-999.0": 2340
+            },
+            "BOOM1_LOCAL_AIR_TEMP": {
+              "-999.0": 600
+            },
+            "BOOM2_LOCAL_AIR_TEMP": {
+              "-999.0": 600
+            },
+            "AMBIENT_TEMP": {
+              "-999.0": 600
+            },
+            "UV_A": {
+              "-999.0": 4260
+            },
+            "UV_B": {
+              "-999.0": 4260
+            },
+            "UV_C": {
+              "-999.0": 4260
+            },
+            "UV_ABC": {
+              "-999.0": 4260
+            },
+            "UV_D": {
+              "-999.0": 4260
+            },
+            "UV_E": {
+              "-999.0": 4260
+            },
+            "LOCAL_RELATIVE_HUMIDITY": {
+              "-999.0": 725
+            },
+            "HS_TEMP": {
+              "-999.0": 725
+            },
+            "LOCAL_RELATIVE_HUMIDITY_UNCERTAINTY": {
+              "-999.0": 725
+            },
+            "VOLUME_MIXING_RATIO": {
+              "-999.0": 725
+            },
+            "VOLUME_MIXING_RATIO_UNCERTAINTY": {
+              "-999.0": 12960
+            },
+            "PRESSURE": {
+              "-999.0": 600
+            },
+            "PRESSURE_UNCERTAINTY": {
+              "-999.0": 600
+            }
+          },
+          "file_size_check": {
+            "expected_bytes": 4821120,
+            "actual_bytes": 4821120,
+            "ok": true
+          },
+          "column_dictionary": "metadata/column_dictionaries/rems/RME_398422988RMD00110000000_______PA__REMS_SCIENCE_TABLE.json"
+        }
+      ],
+      "documentation_files_found": [
+        "/home/claude/DHRUVION_DATA/raw/rems/documentation/MODRDR6.FMT",
+        "/home/claude/DHRUVION_DATA/raw/rems/documentation/REMS_RDR_SIS.TXT"
+      ],
+      "spatial_coverage": "Curiosity rover location only (single-point, rover-local measurements; not a map)",
+      "validation_status": "VALIDATED WITH LIMITATIONS",
+      "approved_for_processing": true
+    },
+    {
+      "label": "/home/claude/DHRUVION_DATA/raw/rad/SOL_00000_00089/RAD_RDR_2012_220_02_25_0001_V00.LBL",
+      "instrument": "rad",
+      "checked_utc": "2026-11-14T19:43:05+00:00",
+      "reasons_invalid": [],
+      "reasons_incomplete": [],
+      "limitations": [
+        "QC and ROVER_LAT/LON/ELEV are placeholders per RAD RDR SIS v3.2 sec. 4.2.1.2 - not used as quality flags or location",
+        "Only TOT_DOSE_B/E dose-rate elements are parsed; counters, histograms, LET arrays and PHA tables are present but not parsed"
+      ],
+      "tables": [
+        {
+          "object": "OBSnn_TOT_DOSE_B_ELEMENT / OBSnn_TOT_DOSE_E_ELEMENT",
+          "data_file": "/home/claude/DHRUVION_DATA/raw/rad/SOL_00000_00089/RAD_RDR_2012_220_02_25_0001_V00.TXT",
+          "n_observation_headers": 14,
+          "n_dose_elements": 28,
+          "observations_without_dose": [],
+          "units_from_label": [
+            "microGray / Hour"
+          ],
+          "n_missing_values": 0,
+          "n_negative_values": 0,
+          "crosscheck_label_vs_text": "28/28 agree",
+          "temporal_coverage": {
+            "sols_from_START_OBS_MARS": [
+              1
+            ],
+            "utc_first": "2012-220 02:25:43",
+            "utc_last": "2012-220 06:03:10"
+          },
+          "qc_values": {
+            "00000000": 14
+          },
+          "object_kinds_in_label": {
+            "L1_TABLE": 14,
+            "L2_TABLE": 14,
+            "TOT_DOSE_B_ELEMENT": 14,
+            "TOT_DOSE_E_ELEMENT": 14,
+            "D_LET_B_A1_EVC_ARRAY": 14,
+            "D_LET_B_A1_EVW_ARRAY": 14,
+            "D_LET_B_A1_CNT_ARRAY": 14,
+            "D_LET_B_A2_EVC_ARRAY": 14,
+            "D_LET_B_A2_EVW_ARRAY": 14,
+            "D_LET_B_A2_CNT_ARRAY": 14,
+            "PHA_TABLE": 13
+          },
+          "column_dictionary": "metadata/column_dictionaries/rad/RAD_RDR_2012_220_02_25_0001_V00__dose_elements.json"
+        }
+      ],
+      "documentation_files_found": [
+        "/home/claude/DHRUVION_DATA/raw/rad/documentation/RAD_RDR_SIS.pdf"
+      ],
+      "spatial_coverage": "Curiosity rover location only (single-point, rover-local measurements; not a map)",
+      "validation_status": "VALIDATED WITH LIMITATIONS",
+      "approved_for_processing": true
+    },
+    {
+      "label": "/home/claude/DHRUVION_DATA/raw/rad/SOL_00000_00089/RAD_RDR_2012_221_02_47_0002_V00.LBL",
+      "instrument": "rad",
+      "checked_utc": "2026-11-14T19:43:06+00:00",
+      "reasons_invalid": [],
+      "reasons_incomplete": [],
+      "limitations": [
+        "QC and ROVER_LAT/LON/ELEV are placeholders per RAD RDR SIS v3.2 sec. 4.2.1.2 - not used as quality flags or location",
+        "Only TOT_DOSE_B/E dose-rate elements are parsed; counters, histograms, LET arrays and PHA tables are present but not parsed"
+      ],
+      "tables": [
+        {
+          "object": "OBSnn_TOT_DOSE_B_ELEMENT / OBSnn_TOT_DOSE_E_ELEMENT",
+          "data_file": "/home/claude/DHRUVION_DATA/raw/rad/SOL_00000_00089/RAD_RDR_2012_221_02_47_0002_V00.TXT",
+          "n_observation_headers": 20,
+          "n_dose_elements": 40,
+          "observations_without_dose": [],
+          "units_from_label": [
+            "microGray / Hour"
+          ],
+          "n_missing_values": 0,
+          "n_negative_values": 0,
+          "crosscheck_label_vs_text": "40/40 agree",
+          "temporal_coverage": {
+            "sols_from_START_OBS_MARS": [
+              2
+            ],
+            "utc_first": "2012-221 02:47:54",
+            "utc_last": "2012-221 08:12:32"
+          },
+          "qc_values": {
+            "00000000": 20
+          },
+          "object_kinds_in_label": {
+            "L1_TABLE": 20,
+            "L2_TABLE": 20,
+            "TOT_DOSE_B_ELEMENT": 20,
+            "TOT_DOSE_E_ELEMENT": 20,
+            "D_LET_B_A1_EVC_ARRAY": 20,
+            "D_LET_B_A1_EVW_ARRAY": 20,
+            "D_LET_B_A1_CNT_ARRAY": 20,
+            "D_LET_B_A2_EVC_ARRAY": 20,
+            "D_LET_B_A2_EVW_ARRAY": 20,
+            "D_LET_B_A2_CNT_ARRAY": 20,
+            "PHA_TABLE": 20
+          },
+          "column_dictionary": "metadata/column_dictionaries/rad/RAD_RDR_2012_221_02_47_0002_V00__dose_elements.json"
+        }
+      ],
+      "documentation_files_found": [
+        "/home/claude/DHRUVION_DATA/raw/rad/documentation/RAD_RDR_SIS.pdf"
+      ],
+      "spatial_coverage": "Curiosity rover location only (single-point, rover-local measurements; not a map)",
+      "validation_status": "VALIDATED WITH LIMITATIONS",
+      "approved_for_processing": true
+    },
+    {
+      "label": "/home/claude/DHRUVION_DATA/raw/rad/SOL_00000_00089/RAD_RDR_2012_222_04_26_0003_V00.LBL",
+      "instrument": "rad",
+      "checked_utc": "2026-11-14T19:43:07+00:00",
+      "reasons_invalid": [],
+      "reasons_incomplete": [],
+      "limitations": [
+        "QC and ROVER_LAT/LON/ELEV are placeholders per RAD RDR SIS v3.2 sec. 4.2.1.2 - not used as quality flags or location",
+        "Only TOT_DOSE_B/E dose-rate elements are parsed; counters, histograms, LET arrays and PHA tables are present but not parsed"
+      ],
+      "tables": [
+        {
+          "object": "OBSnn_TOT_DOSE_B_ELEMENT / OBSnn_TOT_DOSE_E_ELEMENT",
+          "data_file": "/home/claude/DHRUVION_DATA/raw/rad/SOL_00000_00089/RAD_RDR_2012_222_04_26_0003_V00.TXT",
+          "n_observation_headers": 13,
+          "n_dose_elements": 26,
+          "observations_without_dose": [],
+          "units_from_label": [
+            "microGray / Hour"
+          ],
+          "n_missing_values": 0,
+          "n_negative_values": 0,
+          "crosscheck_label_vs_text": "26/26 agree",
+          "temporal_coverage": {
+            "sols_from_START_OBS_MARS": [
+              3
+            ],
+            "utc_first": "2012-222 04:26:10",
+            "utc_last": "2012-222 07:56:10"
+          },
+          "qc_values": {
+            "00000000": 13
+          },
+          "object_kinds_in_label": {
+            "L1_TABLE": 13,
+            "L2_TABLE": 13,
+            "TOT_DOSE_B_ELEMENT": 13,
+            "TOT_DOSE_E_ELEMENT": 13,
+            "D_LET_B_A1_EVC_ARRAY": 13,
+            "D_LET_B_A1_EVW_ARRAY": 13,
+            "D_LET_B_A1_CNT_ARRAY": 13,
+            "D_LET_B_A2_EVC_ARRAY": 13,
+            "D_LET_B_A2_EVW_ARRAY": 13,
+            "D_LET_B_A2_CNT_ARRAY": 13,
+            "PHA_TABLE": 13
+          },
+          "column_dictionary": "metadata/column_dictionaries/rad/RAD_RDR_2012_222_04_26_0003_V00__dose_elements.json"
+        }
+      ],
+      "documentation_files_found": [
+        "/home/claude/DHRUVION_DATA/raw/rad/documentation/RAD_RDR_SIS.pdf"
+      ],
+      "spatial_coverage": "Curiosity rover location only (single-point, rover-local measurements; not a map)",
+      "validation_status": "VALIDATED WITH LIMITATIONS",
+      "approved_for_processing": true
+    }
+  ]
+}

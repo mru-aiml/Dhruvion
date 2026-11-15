@@ -1,0 +1,50 @@
+/* H_NDE.FMT */                                                               
+/* This file defines the structure for Neutral DE Histograms Y + 8x8 part */  
+                                                                              
+ INTERCHANGE_FORMAT      = ASCII                                              
+ ROW_BYTES               = 138  /* Includes <CR><LF> */                       
+ COLUMNS                 = 3                                                  
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = H_NDE_Y_ENERGY_CENTER_COMPONENT_VALUE                    
+    COLUMN_NUMBER  = 1                                                        
+    START_BYTE     = 4                                                        
+    BYTES          = 13                                                       
+    DATA_TYPE      = ASCII_REAL                                               
+    UNIT           = "MeV"                                                    
+    DESCRIPTION    = "                                                        
+      Y values of the Neutral D & E (NDE) Histograms                          
+      Y1 through Y8 are the center energies in MeV                            
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = H_NDE_Y_ENERGY_WIDTH_COMPONENT_VALUE                     
+    COLUMN_NUMBER  = 2                                                        
+    START_BYTE     = 20                                                       
+    BYTES          = 13                                                       
+    DATA_TYPE      = ASCII_REAL                                               
+    UNIT           = "MeV"                                                    
+    DESCRIPTION    = "                                                        
+      Y values of the Neutral D & E (NDE) Histograms                          
+      Y1 through Y8 are the energy widths in MeV                              
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = H_NDE_VALUES                                             
+    COLUMN_NUMBER  = 3                                                        
+    START_BYTE     = 33                                                       
+    BYTES          = 104                                                      
+    ITEMS          = 8                                                        
+    ITEM_BYTES     = 13                                                       
+    DATA_TYPE      = ASCII_REAL                                               
+    UNIT           = "Counts"                                                 
+    DESCRIPTION    = "                                                        
+      The H_NDE_VALUES column contains the Neutral D & E (NDE) Histogram      
+      values associated with the X portion (energies in MeV) and the Y        
+      portion (energies in MeV).                                              
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+ /* End of H_NDE.FMT */                                                       

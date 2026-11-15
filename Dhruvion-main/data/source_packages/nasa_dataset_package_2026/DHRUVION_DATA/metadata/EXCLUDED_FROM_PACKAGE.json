@@ -1,0 +1,8 @@
+{
+  "generated_utc": "2026-11-14T19:49:48+00:00",
+  "excluded": [],
+  "not_in_data_root_by_design": [
+    "Application frontend/backend code (not part of the dataset package)",
+    "Uploaded planning documents (.docx) - project notes, not datasets"
+  ]
+}

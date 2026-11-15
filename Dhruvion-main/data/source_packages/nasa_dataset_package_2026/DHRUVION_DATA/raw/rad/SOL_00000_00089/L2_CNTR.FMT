@@ -1,0 +1,114 @@
+/* L2_CNTR.FMT */                                                             
+/* This file defines the structure for the L2 Counter Tables */               
+                                                                              
+ INTERCHANGE_FORMAT      = ASCII                                              
+ ROW_BYTES               = 196  /* Includes <CR><LF> */                       
+ COLUMNS                 = 9                                                  
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = ENTRY                                                    
+    COLUMN_NUMBER  = 1                                                        
+    START_BYTE     = 2                                                        
+    BYTES          = 5                                                        
+    DATA_TYPE      = ASCII_INTEGER                                            
+    DESCRIPTION    = "The entry number."                                      
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = COUNT                                                    
+    COLUMN_NUMBER  = 2                                                        
+    START_BYTE     = 8                                                        
+    BYTES          = 10                                                       
+    DATA_TYPE      = ASCII_INTEGER                                            
+    UNIT           = "Counts"                                                 
+    DESCRIPTION    = "                                                        
+      The number of matching events counted in the observation.               
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = READ                                                     
+    COLUMN_NUMBER  = 3                                                        
+    START_BYTE     = 19                                                       
+    BYTES          = 10                                                       
+    DATA_TYPE      = ASCII_INTEGER                                            
+    UNIT           = "Counts"                                                 
+    DESCRIPTION    = "The number of events read in the observation."          
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = INSPECT                                                  
+    COLUMN_NUMBER  = 4                                                        
+    START_BYTE     = 31                                                       
+    BYTES          = 36         /* Does NOT include double quotes */          
+    DATA_TYPE      = CHARACTER                                                
+    UNIT           = "N/A"                                                    
+    DESCRIPTION    = "                                                        
+      The channel bit mask of the channels that are to be inspected.          
+      It is represented by an ASCII string of 36 '0' and '1' characters.      
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = REQUIRE                                                  
+    COLUMN_NUMBER  = 5                                                        
+    START_BYTE     = 70                                                       
+    BYTES          = 36         /* Does NOT include double quotes */          
+    DATA_TYPE      = CHARACTER                                                
+    UNIT           = "N/A"                                                    
+    DESCRIPTION    = "                                                        
+      The channel bit mask indicating the value the respective slow           
+      slow trigger must be for that channel to evaluate to TRUE.              
+      It is represented by an ASCII string of 36 '0' and '1' characters.      
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = READOUT                                                  
+    COLUMN_NUMBER  = 6                                                        
+    START_BYTE     = 109                                                      
+    BYTES          = 36         /* Does NOT include double quotes */          
+    DATA_TYPE      = CHARACTER                                                
+    UNIT           = "N/A"                                                    
+    DESCRIPTION    = "                                                        
+      The channel bit mask identifying which channels are to be read.         
+      It is represented by an ASCII string of 36 '0' and '1' characters.      
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = PRIORITY                                                 
+    COLUMN_NUMBER  = 7                                                        
+    START_BYTE     = 147                                                      
+    BYTES          = 3                                                        
+    DATA_TYPE      = ASCII_INTEGER                                            
+    UNIT           = "N/A"                                                    
+    DESCRIPTION    = "The priority level (0 = Low, 1 = High)."                
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = TOO                                                      
+    COLUMN_NUMBER  = 8                                                        
+    START_BYTE     = 151                                                      
+    BYTES          = 3                                                        
+    DATA_TYPE      = ASCII_INTEGER                                            
+    UNIT           = "N/A"                                                    
+    DESCRIPTION    = "                                                        
+      The TOO column is for overriding the readout channels when TRUE.        
+               0 = FALSE    1 = TRUE                                          
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = LOGIC                                                    
+    COLUMN_NUMBER  = 9                                                        
+    START_BYTE     = 156                                                      
+    BYTES          = 38         /* Does NOT include double quotes */          
+    DATA_TYPE      = CHARACTER                                                
+    UNIT           = "N/A"                                                    
+    DESCRIPTION    = "                                                        
+      A logical expression combining the INSPECT and REQUIRE logic.           
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+ /* End of L2_CNTR.FMT */                                                     

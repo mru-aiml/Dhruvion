@@ -1,0 +1,21 @@
+/* HIST_SPXW.FMT */                                                           
+/* This file defines the structure of the X part of the SP Histograms */      
+                                                                              
+ INTERCHANGE_FORMAT      = ASCII                                              
+ AXES                    = 1                                                  
+ AXIS_ITEMS              = (16)                                               
+ START_BYTE              = 1                                                  
+                                                                              
+  OBJECT           = ELEMENT                                                  
+    NAME           = HIST_SP_X_ENERGY_WIDTH_RATIO_COMPONENT_VALUE             
+    START_BYTE     = 33                                                       
+    BYTES          = 13                                                       
+    DATA_TYPE      = ASCII_REAL                                               
+    UNIT           = "N/A"                                                    
+    DESCRIPTION    = "                                                        
+      X values of the Stopping Particle (SP) Histograms                       
+      X1 through X16 are the energy width ratios (dimensionless)              
+      "                                                                       
+  END_OBJECT       = ELEMENT                                                  
+                                                                              
+ /* End of HIST_SPXW.FMT */                                                   

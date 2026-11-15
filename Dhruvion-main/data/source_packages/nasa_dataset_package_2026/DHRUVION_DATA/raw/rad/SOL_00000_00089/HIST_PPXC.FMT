@@ -1,0 +1,21 @@
+/* HIST_PPXC.FMT */                                                           
+/* This file defines the structure of the X part of the PP Histograms */      
+                                                                              
+ INTERCHANGE_FORMAT      = ASCII                                              
+ AXES                    = 1                                                  
+ AXIS_ITEMS              = (24)                                               
+ START_BYTE              = 1                                                  
+                                                                              
+  OBJECT           = ELEMENT                                                  
+    NAME           = HIST_PP_X_ENERGY_CENTER_COMPONENT_VALUE                  
+    START_BYTE     = 33                                                       
+    BYTES          = 13                                                       
+    DATA_TYPE      = ASCII_REAL                                               
+    UNIT           = "MeV"                                                    
+    DESCRIPTION    = "                                                        
+      X values of the Penetrating Particle (PP) Histograms                    
+      X1 through X24 are the center energies (MeV)                            
+      "                                                                       
+  END_OBJECT       = ELEMENT                                                  
+                                                                              
+ /* End of HIST_PPXC.FMT */                                                   

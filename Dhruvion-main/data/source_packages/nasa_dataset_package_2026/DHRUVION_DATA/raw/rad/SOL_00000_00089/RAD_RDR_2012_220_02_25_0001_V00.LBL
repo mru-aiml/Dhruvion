@@ -1,0 +1,1604 @@
+PDS_VERSION_ID                = PDS3                                          
+RECORD_TYPE                   = STREAM                                        
+FILE_RECORDS                  = 9898                                          
+                                                                              
+DATA_SET_ID                   = "MSL-M-RAD-3-RDR-V1.0"                        
+STANDARD_DATA_PRODUCT_ID      = "RAD_RDR"                                     
+PRODUCT_ID                    = "RAD_RDR_2012_220_02_25_0001_V00"             
+                                                                              
+PRODUCT_TYPE                  = "DATA"                                        
+PRODUCT_CREATION_TIME         = 2013-08-21T01:19:19                           
+                                                                              
+INSTRUMENT_HOST_NAME          = "MARS SCIENCE LABORATORY"                     
+INSTRUMENT_HOST_ID            = "MSL"                                         
+MISSION_NAME                  = "MARS SCIENCE LABORATORY"                     
+TARGET_NAME                   = "MARS"                                        
+TARGET_TYPE                   = "PLANET"                                      
+INSTRUMENT_NAME               = "RADIATION ASSESSMENT DETECTOR"               
+INSTRUMENT_ID                 = "RAD"                                         
+PRODUCER_ID                   = "SRAFKIN"                                     
+PRODUCER_FULL_NAME            = "SCOT RAFKIN"                                 
+                                                                              
+START_TIME                    = 2012-220T02:25:43                             
+STOP_TIME                     = "UNK"                                         
+                                                                              
+SPACECRAFT_CLOCK_START_COUNT  = "UNK"                                         
+SPACECRAFT_CLOCK_STOP_COUNT   = "UNK"                                         
+                                                                              
+NOTE                          = "                                             
+    RAD_RDR_2012_220_02_25_0001_V00.TXT contains one sol's worth              
+    of all observations taken from the Mars Science Laboratory Radiation      
+    Assessment Detector (RAD) for the mission elapsed sol 1.  This            
+    file is in human readable ASCII form and the data have undergone          
+    calibration and decompression from the binary MSL RAD EDR data."          
+                                                                              
+DESCRIPTION                   = "                                             
+    This file contains data from RAD_RDR:  Radiation Assessment Detector      
+    on the Mars Science Laboratory (MSL).  There is one sol's worth of        
+    observations where each observation can have four types of data:          
+    (1) Counters, (2) Histograms, (3) Dosimetry, and (4) PHA data.            
+    These data are organized in a hierarchical fashion in which some          
+    observations may not have all four types.  These are described in         
+    the data object sections.  For additional information and details         
+    concerning data organization, science meaning, etc., please refer         
+    to the Data Set Catalog, MSLRAD_RDR_DS.CAT.                               
+    "                                                                         
+                                                                              
+/* For Observation 000 */                                                     
+                                                                              
+  /* Counter Section */                                                       
+                                                                              
+     /* L1 Counter */                                                         
+                                                                              
+^OBS000_L1_TABLE         = ("RAD_RDR_2012_220_02_25_0001_V00.TXT",689 <BYTES>)
+OBJECT                   = OBS000_L1_TABLE                                    
+ NAME                    = OBS_000_L1_COUNTER                                 
+ ROWS                    = 36                                                 
+ ^STRUCTURE              = "L1_CNTR.FMT" /* Structure for L1 Counter tables */
+END_OBJECT               = OBS000_L1_TABLE                                    
+                                                                              
+     /* L2 Counter */                                                         
+                                                                              
+^OBS000_L2_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6035 <BYTES>)             
+OBJECT                   = OBS000_L2_TABLE                                    
+ NAME                    = OBS_000_L2_COUNTER                                 
+ ROWS                    = 10                                                 
+ ^STRUCTURE              = "L2_CNTR.FMT" /* Structure for L2 Counter tables */
+END_OBJECT               = OBS000_L2_TABLE                                    
+                                                                              
+  /* Dosimetry Section */                                                     
+                                                                              
+    /* Total Dose B */                                                        
+                                                                              
+^OBS000_TOT_DOSE_B_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",8126 <BYTES>)            
+OBJECT           = OBS000_TOT_DOSE_B_ELEMENT                                  
+  NAME           = OBS_000_TOT_DOSE_B                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose B value                                              
+    "                                                                         
+END_OBJECT       = OBS000_TOT_DOSE_B_ELEMENT                                  
+                                                                              
+    /* Total Dose E */                                                        
+                                                                              
+^OBS000_TOT_DOSE_E_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",8169 <BYTES>)            
+OBJECT           = OBS000_TOT_DOSE_E_ELEMENT                                  
+  NAME           = OBS_000_TOT_DOSE_E                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose E value                                              
+    "                                                                         
+END_OBJECT       = OBS000_TOT_DOSE_E_ELEMENT                                  
+                                                                              
+    /* Dose LET B_A1 */                                                       
+                                                                              
+^OBS000_D_LET_B_A1_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",8208 <BYTES>)           
+OBJECT                   = OBS000_D_LET_B_A1_EVC_ARRAY                        
+ NAME                    = OBS_000_D_LET_B_A1_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS000_D_LET_B_A1_EVC_ARRAY                        
+                                                                              
+^OBS000_D_LET_B_A1_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",8782 <BYTES>)           
+OBJECT                   = OBS000_D_LET_B_A1_EVW_ARRAY                        
+ NAME                    = OBS_000_D_LET_B_A1_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS000_D_LET_B_A1_EVW_ARRAY                        
+                                                                              
+^OBS000_D_LET_B_A1_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",9930 <BYTES>)           
+OBJECT                   = OBS000_D_LET_B_A1_CNT_ARRAY                        
+ NAME                    = OBS_000_D_LET_B_A1_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS000_D_LET_B_A1_CNT_ARRAY                        
+                                                                              
+    /* Dose LET B_A2 */                                                       
+                                                                              
+^OBS000_D_LET_B_A2_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",10534 <BYTES>)          
+OBJECT                   = OBS000_D_LET_B_A2_EVC_ARRAY                        
+ NAME                    = OBS_000_D_LET_B_A2_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS000_D_LET_B_A2_EVC_ARRAY                        
+                                                                              
+^OBS000_D_LET_B_A2_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",11108 <BYTES>)          
+OBJECT                   = OBS000_D_LET_B_A2_EVW_ARRAY                        
+ NAME                    = OBS_000_D_LET_B_A2_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS000_D_LET_B_A2_EVW_ARRAY                        
+                                                                              
+^OBS000_D_LET_B_A2_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",12256 <BYTES>)          
+OBJECT                   = OBS000_D_LET_B_A2_CNT_ARRAY                        
+ NAME                    = OBS_000_D_LET_B_A2_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS000_D_LET_B_A2_CNT_ARRAY                        
+                                                                              
+  /* PHA Section */                                                           
+                                                                              
+^OBS000_PHA_TABLE        =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",14349 <BYTES>)            
+OBJECT                   = OBS000_PHA_TABLE                                   
+ NAME                    = OBS_000_PHA                                        
+ ROWS                    = 657                                                
+ ^STRUCTURE              = "PHA_TAB.FMT"  /* Structure of PHA Tables */       
+END_OBJECT               = OBS000_PHA_TABLE                                   
+                                                                              
+/* For Observation 001 */                                                     
+                                                                              
+  /* Counter Section */                                                       
+                                                                              
+     /* L1 Counter */                                                         
+                                                                              
+^OBS001_L1_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",508973 <BYTES>)           
+OBJECT                   = OBS001_L1_TABLE                                    
+ NAME                    = OBS_001_L1_COUNTER                                 
+ ROWS                    = 36                                                 
+ ^STRUCTURE              = "L1_CNTR.FMT" /* Structure for L1 Counter tables */
+END_OBJECT               = OBS001_L1_TABLE                                    
+                                                                              
+     /* L2 Counter */                                                         
+                                                                              
+^OBS001_L2_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",514319 <BYTES>)           
+OBJECT                   = OBS001_L2_TABLE                                    
+ NAME                    = OBS_001_L2_COUNTER                                 
+ ROWS                    = 10                                                 
+ ^STRUCTURE              = "L2_CNTR.FMT" /* Structure for L2 Counter tables */
+END_OBJECT               = OBS001_L2_TABLE                                    
+                                                                              
+  /* Dosimetry Section */                                                     
+                                                                              
+    /* Total Dose B */                                                        
+                                                                              
+^OBS001_TOT_DOSE_B_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",516410 <BYTES>)          
+OBJECT           = OBS001_TOT_DOSE_B_ELEMENT                                  
+  NAME           = OBS_001_TOT_DOSE_B                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose B value                                              
+    "                                                                         
+END_OBJECT       = OBS001_TOT_DOSE_B_ELEMENT                                  
+                                                                              
+    /* Total Dose E */                                                        
+                                                                              
+^OBS001_TOT_DOSE_E_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",516453 <BYTES>)          
+OBJECT           = OBS001_TOT_DOSE_E_ELEMENT                                  
+  NAME           = OBS_001_TOT_DOSE_E                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose E value                                              
+    "                                                                         
+END_OBJECT       = OBS001_TOT_DOSE_E_ELEMENT                                  
+                                                                              
+    /* Dose LET B_A1 */                                                       
+                                                                              
+^OBS001_D_LET_B_A1_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",516492 <BYTES>)         
+OBJECT                   = OBS001_D_LET_B_A1_EVC_ARRAY                        
+ NAME                    = OBS_001_D_LET_B_A1_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS001_D_LET_B_A1_EVC_ARRAY                        
+                                                                              
+^OBS001_D_LET_B_A1_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",517066 <BYTES>)         
+OBJECT                   = OBS001_D_LET_B_A1_EVW_ARRAY                        
+ NAME                    = OBS_001_D_LET_B_A1_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS001_D_LET_B_A1_EVW_ARRAY                        
+                                                                              
+^OBS001_D_LET_B_A1_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",518214 <BYTES>)         
+OBJECT                   = OBS001_D_LET_B_A1_CNT_ARRAY                        
+ NAME                    = OBS_001_D_LET_B_A1_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS001_D_LET_B_A1_CNT_ARRAY                        
+                                                                              
+    /* Dose LET B_A2 */                                                       
+                                                                              
+^OBS001_D_LET_B_A2_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",518818 <BYTES>)         
+OBJECT                   = OBS001_D_LET_B_A2_EVC_ARRAY                        
+ NAME                    = OBS_001_D_LET_B_A2_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS001_D_LET_B_A2_EVC_ARRAY                        
+                                                                              
+^OBS001_D_LET_B_A2_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",519392 <BYTES>)         
+OBJECT                   = OBS001_D_LET_B_A2_EVW_ARRAY                        
+ NAME                    = OBS_001_D_LET_B_A2_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS001_D_LET_B_A2_EVW_ARRAY                        
+                                                                              
+^OBS001_D_LET_B_A2_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",520540 <BYTES>)         
+OBJECT                   = OBS001_D_LET_B_A2_CNT_ARRAY                        
+ NAME                    = OBS_001_D_LET_B_A2_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS001_D_LET_B_A2_CNT_ARRAY                        
+                                                                              
+  /* PHA Section */                                                           
+                                                                              
+^OBS001_PHA_TABLE        =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",522633 <BYTES>)           
+OBJECT                   = OBS001_PHA_TABLE                                   
+ NAME                    = OBS_001_PHA                                        
+ ROWS                    = 669                                                
+ ^STRUCTURE              = "PHA_TAB.FMT"  /* Structure of PHA Tables */       
+END_OBJECT               = OBS001_PHA_TABLE                                   
+                                                                              
+/* For Observation 002 */                                                     
+                                                                              
+  /* Counter Section */                                                       
+                                                                              
+     /* L1 Counter */                                                         
+                                                                              
+^OBS002_L1_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1026281 <BYTES>)          
+OBJECT                   = OBS002_L1_TABLE                                    
+ NAME                    = OBS_002_L1_COUNTER                                 
+ ROWS                    = 36                                                 
+ ^STRUCTURE              = "L1_CNTR.FMT" /* Structure for L1 Counter tables */
+END_OBJECT               = OBS002_L1_TABLE                                    
+                                                                              
+     /* L2 Counter */                                                         
+                                                                              
+^OBS002_L2_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1031627 <BYTES>)          
+OBJECT                   = OBS002_L2_TABLE                                    
+ NAME                    = OBS_002_L2_COUNTER                                 
+ ROWS                    = 10                                                 
+ ^STRUCTURE              = "L2_CNTR.FMT" /* Structure for L2 Counter tables */
+END_OBJECT               = OBS002_L2_TABLE                                    
+                                                                              
+  /* Dosimetry Section */                                                     
+                                                                              
+    /* Total Dose B */                                                        
+                                                                              
+^OBS002_TOT_DOSE_B_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1033718 <BYTES>)         
+OBJECT           = OBS002_TOT_DOSE_B_ELEMENT                                  
+  NAME           = OBS_002_TOT_DOSE_B                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose B value                                              
+    "                                                                         
+END_OBJECT       = OBS002_TOT_DOSE_B_ELEMENT                                  
+                                                                              
+    /* Total Dose E */                                                        
+                                                                              
+^OBS002_TOT_DOSE_E_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1033761 <BYTES>)         
+OBJECT           = OBS002_TOT_DOSE_E_ELEMENT                                  
+  NAME           = OBS_002_TOT_DOSE_E                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose E value                                              
+    "                                                                         
+END_OBJECT       = OBS002_TOT_DOSE_E_ELEMENT                                  
+                                                                              
+    /* Dose LET B_A1 */                                                       
+                                                                              
+^OBS002_D_LET_B_A1_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1033800 <BYTES>)        
+OBJECT                   = OBS002_D_LET_B_A1_EVC_ARRAY                        
+ NAME                    = OBS_002_D_LET_B_A1_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS002_D_LET_B_A1_EVC_ARRAY                        
+                                                                              
+^OBS002_D_LET_B_A1_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1034374 <BYTES>)        
+OBJECT                   = OBS002_D_LET_B_A1_EVW_ARRAY                        
+ NAME                    = OBS_002_D_LET_B_A1_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS002_D_LET_B_A1_EVW_ARRAY                        
+                                                                              
+^OBS002_D_LET_B_A1_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1035522 <BYTES>)        
+OBJECT                   = OBS002_D_LET_B_A1_CNT_ARRAY                        
+ NAME                    = OBS_002_D_LET_B_A1_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS002_D_LET_B_A1_CNT_ARRAY                        
+                                                                              
+    /* Dose LET B_A2 */                                                       
+                                                                              
+^OBS002_D_LET_B_A2_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1036126 <BYTES>)        
+OBJECT                   = OBS002_D_LET_B_A2_EVC_ARRAY                        
+ NAME                    = OBS_002_D_LET_B_A2_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS002_D_LET_B_A2_EVC_ARRAY                        
+                                                                              
+^OBS002_D_LET_B_A2_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1036700 <BYTES>)        
+OBJECT                   = OBS002_D_LET_B_A2_EVW_ARRAY                        
+ NAME                    = OBS_002_D_LET_B_A2_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS002_D_LET_B_A2_EVW_ARRAY                        
+                                                                              
+^OBS002_D_LET_B_A2_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1037848 <BYTES>)        
+OBJECT                   = OBS002_D_LET_B_A2_CNT_ARRAY                        
+ NAME                    = OBS_002_D_LET_B_A2_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS002_D_LET_B_A2_CNT_ARRAY                        
+                                                                              
+  /* PHA Section */                                                           
+                                                                              
+^OBS002_PHA_TABLE        =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1039941 <BYTES>)          
+OBJECT                   = OBS002_PHA_TABLE                                   
+ NAME                    = OBS_002_PHA                                        
+ ROWS                    = 643                                                
+ ^STRUCTURE              = "PHA_TAB.FMT"  /* Structure of PHA Tables */       
+END_OBJECT               = OBS002_PHA_TABLE                                   
+                                                                              
+/* For Observation 003 */                                                     
+                                                                              
+  /* Counter Section */                                                       
+                                                                              
+     /* L1 Counter */                                                         
+                                                                              
+^OBS003_L1_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1524037 <BYTES>)          
+OBJECT                   = OBS003_L1_TABLE                                    
+ NAME                    = OBS_003_L1_COUNTER                                 
+ ROWS                    = 36                                                 
+ ^STRUCTURE              = "L1_CNTR.FMT" /* Structure for L1 Counter tables */
+END_OBJECT               = OBS003_L1_TABLE                                    
+                                                                              
+     /* L2 Counter */                                                         
+                                                                              
+^OBS003_L2_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1529383 <BYTES>)          
+OBJECT                   = OBS003_L2_TABLE                                    
+ NAME                    = OBS_003_L2_COUNTER                                 
+ ROWS                    = 10                                                 
+ ^STRUCTURE              = "L2_CNTR.FMT" /* Structure for L2 Counter tables */
+END_OBJECT               = OBS003_L2_TABLE                                    
+                                                                              
+  /* Dosimetry Section */                                                     
+                                                                              
+    /* Total Dose B */                                                        
+                                                                              
+^OBS003_TOT_DOSE_B_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1531474 <BYTES>)         
+OBJECT           = OBS003_TOT_DOSE_B_ELEMENT                                  
+  NAME           = OBS_003_TOT_DOSE_B                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose B value                                              
+    "                                                                         
+END_OBJECT       = OBS003_TOT_DOSE_B_ELEMENT                                  
+                                                                              
+    /* Total Dose E */                                                        
+                                                                              
+^OBS003_TOT_DOSE_E_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1531517 <BYTES>)         
+OBJECT           = OBS003_TOT_DOSE_E_ELEMENT                                  
+  NAME           = OBS_003_TOT_DOSE_E                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose E value                                              
+    "                                                                         
+END_OBJECT       = OBS003_TOT_DOSE_E_ELEMENT                                  
+                                                                              
+    /* Dose LET B_A1 */                                                       
+                                                                              
+^OBS003_D_LET_B_A1_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1531556 <BYTES>)        
+OBJECT                   = OBS003_D_LET_B_A1_EVC_ARRAY                        
+ NAME                    = OBS_003_D_LET_B_A1_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS003_D_LET_B_A1_EVC_ARRAY                        
+                                                                              
+^OBS003_D_LET_B_A1_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1532130 <BYTES>)        
+OBJECT                   = OBS003_D_LET_B_A1_EVW_ARRAY                        
+ NAME                    = OBS_003_D_LET_B_A1_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS003_D_LET_B_A1_EVW_ARRAY                        
+                                                                              
+^OBS003_D_LET_B_A1_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1533278 <BYTES>)        
+OBJECT                   = OBS003_D_LET_B_A1_CNT_ARRAY                        
+ NAME                    = OBS_003_D_LET_B_A1_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS003_D_LET_B_A1_CNT_ARRAY                        
+                                                                              
+    /* Dose LET B_A2 */                                                       
+                                                                              
+^OBS003_D_LET_B_A2_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1533882 <BYTES>)        
+OBJECT                   = OBS003_D_LET_B_A2_EVC_ARRAY                        
+ NAME                    = OBS_003_D_LET_B_A2_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS003_D_LET_B_A2_EVC_ARRAY                        
+                                                                              
+^OBS003_D_LET_B_A2_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1534456 <BYTES>)        
+OBJECT                   = OBS003_D_LET_B_A2_EVW_ARRAY                        
+ NAME                    = OBS_003_D_LET_B_A2_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS003_D_LET_B_A2_EVW_ARRAY                        
+                                                                              
+^OBS003_D_LET_B_A2_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1535604 <BYTES>)        
+OBJECT                   = OBS003_D_LET_B_A2_CNT_ARRAY                        
+ NAME                    = OBS_003_D_LET_B_A2_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS003_D_LET_B_A2_CNT_ARRAY                        
+                                                                              
+  /* PHA Section */                                                           
+                                                                              
+^OBS003_PHA_TABLE        =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",1537697 <BYTES>)          
+OBJECT                   = OBS003_PHA_TABLE                                   
+ NAME                    = OBS_003_PHA                                        
+ ROWS                    = 651                                                
+ ^STRUCTURE              = "PHA_TAB.FMT"  /* Structure of PHA Tables */       
+END_OBJECT               = OBS003_PHA_TABLE                                   
+                                                                              
+/* For Observation 004 */                                                     
+                                                                              
+  /* Counter Section */                                                       
+                                                                              
+     /* L1 Counter */                                                         
+                                                                              
+^OBS004_L1_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2027809 <BYTES>)          
+OBJECT                   = OBS004_L1_TABLE                                    
+ NAME                    = OBS_004_L1_COUNTER                                 
+ ROWS                    = 36                                                 
+ ^STRUCTURE              = "L1_CNTR.FMT" /* Structure for L1 Counter tables */
+END_OBJECT               = OBS004_L1_TABLE                                    
+                                                                              
+     /* L2 Counter */                                                         
+                                                                              
+^OBS004_L2_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2033155 <BYTES>)          
+OBJECT                   = OBS004_L2_TABLE                                    
+ NAME                    = OBS_004_L2_COUNTER                                 
+ ROWS                    = 10                                                 
+ ^STRUCTURE              = "L2_CNTR.FMT" /* Structure for L2 Counter tables */
+END_OBJECT               = OBS004_L2_TABLE                                    
+                                                                              
+  /* Dosimetry Section */                                                     
+                                                                              
+    /* Total Dose B */                                                        
+                                                                              
+^OBS004_TOT_DOSE_B_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2035246 <BYTES>)         
+OBJECT           = OBS004_TOT_DOSE_B_ELEMENT                                  
+  NAME           = OBS_004_TOT_DOSE_B                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose B value                                              
+    "                                                                         
+END_OBJECT       = OBS004_TOT_DOSE_B_ELEMENT                                  
+                                                                              
+    /* Total Dose E */                                                        
+                                                                              
+^OBS004_TOT_DOSE_E_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2035289 <BYTES>)         
+OBJECT           = OBS004_TOT_DOSE_E_ELEMENT                                  
+  NAME           = OBS_004_TOT_DOSE_E                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose E value                                              
+    "                                                                         
+END_OBJECT       = OBS004_TOT_DOSE_E_ELEMENT                                  
+                                                                              
+    /* Dose LET B_A1 */                                                       
+                                                                              
+^OBS004_D_LET_B_A1_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2035328 <BYTES>)        
+OBJECT                   = OBS004_D_LET_B_A1_EVC_ARRAY                        
+ NAME                    = OBS_004_D_LET_B_A1_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS004_D_LET_B_A1_EVC_ARRAY                        
+                                                                              
+^OBS004_D_LET_B_A1_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2035902 <BYTES>)        
+OBJECT                   = OBS004_D_LET_B_A1_EVW_ARRAY                        
+ NAME                    = OBS_004_D_LET_B_A1_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS004_D_LET_B_A1_EVW_ARRAY                        
+                                                                              
+^OBS004_D_LET_B_A1_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2037050 <BYTES>)        
+OBJECT                   = OBS004_D_LET_B_A1_CNT_ARRAY                        
+ NAME                    = OBS_004_D_LET_B_A1_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS004_D_LET_B_A1_CNT_ARRAY                        
+                                                                              
+    /* Dose LET B_A2 */                                                       
+                                                                              
+^OBS004_D_LET_B_A2_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2037654 <BYTES>)        
+OBJECT                   = OBS004_D_LET_B_A2_EVC_ARRAY                        
+ NAME                    = OBS_004_D_LET_B_A2_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS004_D_LET_B_A2_EVC_ARRAY                        
+                                                                              
+^OBS004_D_LET_B_A2_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2038228 <BYTES>)        
+OBJECT                   = OBS004_D_LET_B_A2_EVW_ARRAY                        
+ NAME                    = OBS_004_D_LET_B_A2_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS004_D_LET_B_A2_EVW_ARRAY                        
+                                                                              
+^OBS004_D_LET_B_A2_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2039376 <BYTES>)        
+OBJECT                   = OBS004_D_LET_B_A2_CNT_ARRAY                        
+ NAME                    = OBS_004_D_LET_B_A2_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS004_D_LET_B_A2_CNT_ARRAY                        
+                                                                              
+  /* PHA Section */                                                           
+                                                                              
+^OBS004_PHA_TABLE        =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2041469 <BYTES>)          
+OBJECT                   = OBS004_PHA_TABLE                                   
+ NAME                    = OBS_004_PHA                                        
+ ROWS                    = 664                                                
+ ^STRUCTURE              = "PHA_TAB.FMT"  /* Structure of PHA Tables */       
+END_OBJECT               = OBS004_PHA_TABLE                                   
+                                                                              
+/* For Observation 005 */                                                     
+                                                                              
+  /* Counter Section */                                                       
+                                                                              
+     /* L1 Counter */                                                         
+                                                                              
+^OBS005_L1_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2541357 <BYTES>)          
+OBJECT                   = OBS005_L1_TABLE                                    
+ NAME                    = OBS_005_L1_COUNTER                                 
+ ROWS                    = 36                                                 
+ ^STRUCTURE              = "L1_CNTR.FMT" /* Structure for L1 Counter tables */
+END_OBJECT               = OBS005_L1_TABLE                                    
+                                                                              
+     /* L2 Counter */                                                         
+                                                                              
+^OBS005_L2_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2546703 <BYTES>)          
+OBJECT                   = OBS005_L2_TABLE                                    
+ NAME                    = OBS_005_L2_COUNTER                                 
+ ROWS                    = 10                                                 
+ ^STRUCTURE              = "L2_CNTR.FMT" /* Structure for L2 Counter tables */
+END_OBJECT               = OBS005_L2_TABLE                                    
+                                                                              
+  /* Dosimetry Section */                                                     
+                                                                              
+    /* Total Dose B */                                                        
+                                                                              
+^OBS005_TOT_DOSE_B_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2548794 <BYTES>)         
+OBJECT           = OBS005_TOT_DOSE_B_ELEMENT                                  
+  NAME           = OBS_005_TOT_DOSE_B                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose B value                                              
+    "                                                                         
+END_OBJECT       = OBS005_TOT_DOSE_B_ELEMENT                                  
+                                                                              
+    /* Total Dose E */                                                        
+                                                                              
+^OBS005_TOT_DOSE_E_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2548837 <BYTES>)         
+OBJECT           = OBS005_TOT_DOSE_E_ELEMENT                                  
+  NAME           = OBS_005_TOT_DOSE_E                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose E value                                              
+    "                                                                         
+END_OBJECT       = OBS005_TOT_DOSE_E_ELEMENT                                  
+                                                                              
+    /* Dose LET B_A1 */                                                       
+                                                                              
+^OBS005_D_LET_B_A1_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2548876 <BYTES>)        
+OBJECT                   = OBS005_D_LET_B_A1_EVC_ARRAY                        
+ NAME                    = OBS_005_D_LET_B_A1_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS005_D_LET_B_A1_EVC_ARRAY                        
+                                                                              
+^OBS005_D_LET_B_A1_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2549450 <BYTES>)        
+OBJECT                   = OBS005_D_LET_B_A1_EVW_ARRAY                        
+ NAME                    = OBS_005_D_LET_B_A1_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS005_D_LET_B_A1_EVW_ARRAY                        
+                                                                              
+^OBS005_D_LET_B_A1_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2550598 <BYTES>)        
+OBJECT                   = OBS005_D_LET_B_A1_CNT_ARRAY                        
+ NAME                    = OBS_005_D_LET_B_A1_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS005_D_LET_B_A1_CNT_ARRAY                        
+                                                                              
+    /* Dose LET B_A2 */                                                       
+                                                                              
+^OBS005_D_LET_B_A2_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2551202 <BYTES>)        
+OBJECT                   = OBS005_D_LET_B_A2_EVC_ARRAY                        
+ NAME                    = OBS_005_D_LET_B_A2_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS005_D_LET_B_A2_EVC_ARRAY                        
+                                                                              
+^OBS005_D_LET_B_A2_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2551776 <BYTES>)        
+OBJECT                   = OBS005_D_LET_B_A2_EVW_ARRAY                        
+ NAME                    = OBS_005_D_LET_B_A2_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS005_D_LET_B_A2_EVW_ARRAY                        
+                                                                              
+^OBS005_D_LET_B_A2_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2552924 <BYTES>)        
+OBJECT                   = OBS005_D_LET_B_A2_CNT_ARRAY                        
+ NAME                    = OBS_005_D_LET_B_A2_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS005_D_LET_B_A2_CNT_ARRAY                        
+                                                                              
+  /* PHA Section */                                                           
+                                                                              
+^OBS005_PHA_TABLE        =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",2555017 <BYTES>)          
+OBJECT                   = OBS005_PHA_TABLE                                   
+ NAME                    = OBS_005_PHA                                        
+ ROWS                    = 667                                                
+ ^STRUCTURE              = "PHA_TAB.FMT"  /* Structure of PHA Tables */       
+END_OBJECT               = OBS005_PHA_TABLE                                   
+                                                                              
+/* For Observation 006 */                                                     
+                                                                              
+  /* Counter Section */                                                       
+                                                                              
+     /* L1 Counter */                                                         
+                                                                              
+^OBS006_L1_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3057161 <BYTES>)          
+OBJECT                   = OBS006_L1_TABLE                                    
+ NAME                    = OBS_006_L1_COUNTER                                 
+ ROWS                    = 36                                                 
+ ^STRUCTURE              = "L1_CNTR.FMT" /* Structure for L1 Counter tables */
+END_OBJECT               = OBS006_L1_TABLE                                    
+                                                                              
+     /* L2 Counter */                                                         
+                                                                              
+^OBS006_L2_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3062507 <BYTES>)          
+OBJECT                   = OBS006_L2_TABLE                                    
+ NAME                    = OBS_006_L2_COUNTER                                 
+ ROWS                    = 10                                                 
+ ^STRUCTURE              = "L2_CNTR.FMT" /* Structure for L2 Counter tables */
+END_OBJECT               = OBS006_L2_TABLE                                    
+                                                                              
+  /* Dosimetry Section */                                                     
+                                                                              
+    /* Total Dose B */                                                        
+                                                                              
+^OBS006_TOT_DOSE_B_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3064598 <BYTES>)         
+OBJECT           = OBS006_TOT_DOSE_B_ELEMENT                                  
+  NAME           = OBS_006_TOT_DOSE_B                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose B value                                              
+    "                                                                         
+END_OBJECT       = OBS006_TOT_DOSE_B_ELEMENT                                  
+                                                                              
+    /* Total Dose E */                                                        
+                                                                              
+^OBS006_TOT_DOSE_E_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3064641 <BYTES>)         
+OBJECT           = OBS006_TOT_DOSE_E_ELEMENT                                  
+  NAME           = OBS_006_TOT_DOSE_E                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose E value                                              
+    "                                                                         
+END_OBJECT       = OBS006_TOT_DOSE_E_ELEMENT                                  
+                                                                              
+    /* Dose LET B_A1 */                                                       
+                                                                              
+^OBS006_D_LET_B_A1_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3064680 <BYTES>)        
+OBJECT                   = OBS006_D_LET_B_A1_EVC_ARRAY                        
+ NAME                    = OBS_006_D_LET_B_A1_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS006_D_LET_B_A1_EVC_ARRAY                        
+                                                                              
+^OBS006_D_LET_B_A1_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3065254 <BYTES>)        
+OBJECT                   = OBS006_D_LET_B_A1_EVW_ARRAY                        
+ NAME                    = OBS_006_D_LET_B_A1_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS006_D_LET_B_A1_EVW_ARRAY                        
+                                                                              
+^OBS006_D_LET_B_A1_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3066402 <BYTES>)        
+OBJECT                   = OBS006_D_LET_B_A1_CNT_ARRAY                        
+ NAME                    = OBS_006_D_LET_B_A1_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS006_D_LET_B_A1_CNT_ARRAY                        
+                                                                              
+    /* Dose LET B_A2 */                                                       
+                                                                              
+^OBS006_D_LET_B_A2_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3067006 <BYTES>)        
+OBJECT                   = OBS006_D_LET_B_A2_EVC_ARRAY                        
+ NAME                    = OBS_006_D_LET_B_A2_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS006_D_LET_B_A2_EVC_ARRAY                        
+                                                                              
+^OBS006_D_LET_B_A2_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3067580 <BYTES>)        
+OBJECT                   = OBS006_D_LET_B_A2_EVW_ARRAY                        
+ NAME                    = OBS_006_D_LET_B_A2_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS006_D_LET_B_A2_EVW_ARRAY                        
+                                                                              
+^OBS006_D_LET_B_A2_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3068728 <BYTES>)        
+OBJECT                   = OBS006_D_LET_B_A2_CNT_ARRAY                        
+ NAME                    = OBS_006_D_LET_B_A2_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS006_D_LET_B_A2_CNT_ARRAY                        
+                                                                              
+  /* PHA Section */                                                           
+                                                                              
+^OBS006_PHA_TABLE        =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3070821 <BYTES>)          
+OBJECT                   = OBS006_PHA_TABLE                                   
+ NAME                    = OBS_006_PHA                                        
+ ROWS                    = 653                                                
+ ^STRUCTURE              = "PHA_TAB.FMT"  /* Structure of PHA Tables */       
+END_OBJECT               = OBS006_PHA_TABLE                                   
+                                                                              
+/* For Observation 007 */                                                     
+                                                                              
+  /* Counter Section */                                                       
+                                                                              
+     /* L1 Counter */                                                         
+                                                                              
+^OBS007_L1_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3562439 <BYTES>)          
+OBJECT                   = OBS007_L1_TABLE                                    
+ NAME                    = OBS_007_L1_COUNTER                                 
+ ROWS                    = 36                                                 
+ ^STRUCTURE              = "L1_CNTR.FMT" /* Structure for L1 Counter tables */
+END_OBJECT               = OBS007_L1_TABLE                                    
+                                                                              
+     /* L2 Counter */                                                         
+                                                                              
+^OBS007_L2_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3567785 <BYTES>)          
+OBJECT                   = OBS007_L2_TABLE                                    
+ NAME                    = OBS_007_L2_COUNTER                                 
+ ROWS                    = 10                                                 
+ ^STRUCTURE              = "L2_CNTR.FMT" /* Structure for L2 Counter tables */
+END_OBJECT               = OBS007_L2_TABLE                                    
+                                                                              
+  /* Dosimetry Section */                                                     
+                                                                              
+    /* Total Dose B */                                                        
+                                                                              
+^OBS007_TOT_DOSE_B_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3569876 <BYTES>)         
+OBJECT           = OBS007_TOT_DOSE_B_ELEMENT                                  
+  NAME           = OBS_007_TOT_DOSE_B                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose B value                                              
+    "                                                                         
+END_OBJECT       = OBS007_TOT_DOSE_B_ELEMENT                                  
+                                                                              
+    /* Total Dose E */                                                        
+                                                                              
+^OBS007_TOT_DOSE_E_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3569919 <BYTES>)         
+OBJECT           = OBS007_TOT_DOSE_E_ELEMENT                                  
+  NAME           = OBS_007_TOT_DOSE_E                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose E value                                              
+    "                                                                         
+END_OBJECT       = OBS007_TOT_DOSE_E_ELEMENT                                  
+                                                                              
+    /* Dose LET B_A1 */                                                       
+                                                                              
+^OBS007_D_LET_B_A1_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3569958 <BYTES>)        
+OBJECT                   = OBS007_D_LET_B_A1_EVC_ARRAY                        
+ NAME                    = OBS_007_D_LET_B_A1_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS007_D_LET_B_A1_EVC_ARRAY                        
+                                                                              
+^OBS007_D_LET_B_A1_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3570532 <BYTES>)        
+OBJECT                   = OBS007_D_LET_B_A1_EVW_ARRAY                        
+ NAME                    = OBS_007_D_LET_B_A1_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS007_D_LET_B_A1_EVW_ARRAY                        
+                                                                              
+^OBS007_D_LET_B_A1_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3571680 <BYTES>)        
+OBJECT                   = OBS007_D_LET_B_A1_CNT_ARRAY                        
+ NAME                    = OBS_007_D_LET_B_A1_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS007_D_LET_B_A1_CNT_ARRAY                        
+                                                                              
+    /* Dose LET B_A2 */                                                       
+                                                                              
+^OBS007_D_LET_B_A2_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3572284 <BYTES>)        
+OBJECT                   = OBS007_D_LET_B_A2_EVC_ARRAY                        
+ NAME                    = OBS_007_D_LET_B_A2_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS007_D_LET_B_A2_EVC_ARRAY                        
+                                                                              
+^OBS007_D_LET_B_A2_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3572858 <BYTES>)        
+OBJECT                   = OBS007_D_LET_B_A2_EVW_ARRAY                        
+ NAME                    = OBS_007_D_LET_B_A2_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS007_D_LET_B_A2_EVW_ARRAY                        
+                                                                              
+^OBS007_D_LET_B_A2_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3574006 <BYTES>)        
+OBJECT                   = OBS007_D_LET_B_A2_CNT_ARRAY                        
+ NAME                    = OBS_007_D_LET_B_A2_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS007_D_LET_B_A2_CNT_ARRAY                        
+                                                                              
+  /* PHA Section */                                                           
+                                                                              
+^OBS007_PHA_TABLE        =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",3576099 <BYTES>)          
+OBJECT                   = OBS007_PHA_TABLE                                   
+ NAME                    = OBS_007_PHA                                        
+ ROWS                    = 651                                                
+ ^STRUCTURE              = "PHA_TAB.FMT"  /* Structure of PHA Tables */       
+END_OBJECT               = OBS007_PHA_TABLE                                   
+                                                                              
+/* For Observation 008 */                                                     
+                                                                              
+  /* Counter Section */                                                       
+                                                                              
+     /* L1 Counter */                                                         
+                                                                              
+^OBS008_L1_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4066211 <BYTES>)          
+OBJECT                   = OBS008_L1_TABLE                                    
+ NAME                    = OBS_008_L1_COUNTER                                 
+ ROWS                    = 36                                                 
+ ^STRUCTURE              = "L1_CNTR.FMT" /* Structure for L1 Counter tables */
+END_OBJECT               = OBS008_L1_TABLE                                    
+                                                                              
+     /* L2 Counter */                                                         
+                                                                              
+^OBS008_L2_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4071557 <BYTES>)          
+OBJECT                   = OBS008_L2_TABLE                                    
+ NAME                    = OBS_008_L2_COUNTER                                 
+ ROWS                    = 10                                                 
+ ^STRUCTURE              = "L2_CNTR.FMT" /* Structure for L2 Counter tables */
+END_OBJECT               = OBS008_L2_TABLE                                    
+                                                                              
+  /* Dosimetry Section */                                                     
+                                                                              
+    /* Total Dose B */                                                        
+                                                                              
+^OBS008_TOT_DOSE_B_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4073648 <BYTES>)         
+OBJECT           = OBS008_TOT_DOSE_B_ELEMENT                                  
+  NAME           = OBS_008_TOT_DOSE_B                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose B value                                              
+    "                                                                         
+END_OBJECT       = OBS008_TOT_DOSE_B_ELEMENT                                  
+                                                                              
+    /* Total Dose E */                                                        
+                                                                              
+^OBS008_TOT_DOSE_E_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4073691 <BYTES>)         
+OBJECT           = OBS008_TOT_DOSE_E_ELEMENT                                  
+  NAME           = OBS_008_TOT_DOSE_E                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose E value                                              
+    "                                                                         
+END_OBJECT       = OBS008_TOT_DOSE_E_ELEMENT                                  
+                                                                              
+    /* Dose LET B_A1 */                                                       
+                                                                              
+^OBS008_D_LET_B_A1_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4073730 <BYTES>)        
+OBJECT                   = OBS008_D_LET_B_A1_EVC_ARRAY                        
+ NAME                    = OBS_008_D_LET_B_A1_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS008_D_LET_B_A1_EVC_ARRAY                        
+                                                                              
+^OBS008_D_LET_B_A1_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4074304 <BYTES>)        
+OBJECT                   = OBS008_D_LET_B_A1_EVW_ARRAY                        
+ NAME                    = OBS_008_D_LET_B_A1_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS008_D_LET_B_A1_EVW_ARRAY                        
+                                                                              
+^OBS008_D_LET_B_A1_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4075452 <BYTES>)        
+OBJECT                   = OBS008_D_LET_B_A1_CNT_ARRAY                        
+ NAME                    = OBS_008_D_LET_B_A1_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS008_D_LET_B_A1_CNT_ARRAY                        
+                                                                              
+    /* Dose LET B_A2 */                                                       
+                                                                              
+^OBS008_D_LET_B_A2_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4076056 <BYTES>)        
+OBJECT                   = OBS008_D_LET_B_A2_EVC_ARRAY                        
+ NAME                    = OBS_008_D_LET_B_A2_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS008_D_LET_B_A2_EVC_ARRAY                        
+                                                                              
+^OBS008_D_LET_B_A2_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4076630 <BYTES>)        
+OBJECT                   = OBS008_D_LET_B_A2_EVW_ARRAY                        
+ NAME                    = OBS_008_D_LET_B_A2_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS008_D_LET_B_A2_EVW_ARRAY                        
+                                                                              
+^OBS008_D_LET_B_A2_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4077778 <BYTES>)        
+OBJECT                   = OBS008_D_LET_B_A2_CNT_ARRAY                        
+ NAME                    = OBS_008_D_LET_B_A2_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS008_D_LET_B_A2_CNT_ARRAY                        
+                                                                              
+  /* PHA Section */                                                           
+                                                                              
+^OBS008_PHA_TABLE        =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4079871 <BYTES>)          
+OBJECT                   = OBS008_PHA_TABLE                                   
+ NAME                    = OBS_008_PHA                                        
+ ROWS                    = 651                                                
+ ^STRUCTURE              = "PHA_TAB.FMT"  /* Structure of PHA Tables */       
+END_OBJECT               = OBS008_PHA_TABLE                                   
+                                                                              
+/* For Observation 009 */                                                     
+                                                                              
+  /* Counter Section */                                                       
+                                                                              
+     /* L1 Counter */                                                         
+                                                                              
+^OBS009_L1_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4569983 <BYTES>)          
+OBJECT                   = OBS009_L1_TABLE                                    
+ NAME                    = OBS_009_L1_COUNTER                                 
+ ROWS                    = 36                                                 
+ ^STRUCTURE              = "L1_CNTR.FMT" /* Structure for L1 Counter tables */
+END_OBJECT               = OBS009_L1_TABLE                                    
+                                                                              
+     /* L2 Counter */                                                         
+                                                                              
+^OBS009_L2_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4575329 <BYTES>)          
+OBJECT                   = OBS009_L2_TABLE                                    
+ NAME                    = OBS_009_L2_COUNTER                                 
+ ROWS                    = 10                                                 
+ ^STRUCTURE              = "L2_CNTR.FMT" /* Structure for L2 Counter tables */
+END_OBJECT               = OBS009_L2_TABLE                                    
+                                                                              
+  /* Dosimetry Section */                                                     
+                                                                              
+    /* Total Dose B */                                                        
+                                                                              
+^OBS009_TOT_DOSE_B_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4577420 <BYTES>)         
+OBJECT           = OBS009_TOT_DOSE_B_ELEMENT                                  
+  NAME           = OBS_009_TOT_DOSE_B                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose B value                                              
+    "                                                                         
+END_OBJECT       = OBS009_TOT_DOSE_B_ELEMENT                                  
+                                                                              
+    /* Total Dose E */                                                        
+                                                                              
+^OBS009_TOT_DOSE_E_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4577463 <BYTES>)         
+OBJECT           = OBS009_TOT_DOSE_E_ELEMENT                                  
+  NAME           = OBS_009_TOT_DOSE_E                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose E value                                              
+    "                                                                         
+END_OBJECT       = OBS009_TOT_DOSE_E_ELEMENT                                  
+                                                                              
+    /* Dose LET B_A1 */                                                       
+                                                                              
+^OBS009_D_LET_B_A1_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4577502 <BYTES>)        
+OBJECT                   = OBS009_D_LET_B_A1_EVC_ARRAY                        
+ NAME                    = OBS_009_D_LET_B_A1_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS009_D_LET_B_A1_EVC_ARRAY                        
+                                                                              
+^OBS009_D_LET_B_A1_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4578076 <BYTES>)        
+OBJECT                   = OBS009_D_LET_B_A1_EVW_ARRAY                        
+ NAME                    = OBS_009_D_LET_B_A1_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS009_D_LET_B_A1_EVW_ARRAY                        
+                                                                              
+^OBS009_D_LET_B_A1_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4579224 <BYTES>)        
+OBJECT                   = OBS009_D_LET_B_A1_CNT_ARRAY                        
+ NAME                    = OBS_009_D_LET_B_A1_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS009_D_LET_B_A1_CNT_ARRAY                        
+                                                                              
+    /* Dose LET B_A2 */                                                       
+                                                                              
+^OBS009_D_LET_B_A2_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4579828 <BYTES>)        
+OBJECT                   = OBS009_D_LET_B_A2_EVC_ARRAY                        
+ NAME                    = OBS_009_D_LET_B_A2_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS009_D_LET_B_A2_EVC_ARRAY                        
+                                                                              
+^OBS009_D_LET_B_A2_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4580402 <BYTES>)        
+OBJECT                   = OBS009_D_LET_B_A2_EVW_ARRAY                        
+ NAME                    = OBS_009_D_LET_B_A2_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS009_D_LET_B_A2_EVW_ARRAY                        
+                                                                              
+^OBS009_D_LET_B_A2_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4581550 <BYTES>)        
+OBJECT                   = OBS009_D_LET_B_A2_CNT_ARRAY                        
+ NAME                    = OBS_009_D_LET_B_A2_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS009_D_LET_B_A2_CNT_ARRAY                        
+                                                                              
+  /* PHA Section */                                                           
+                                                                              
+^OBS009_PHA_TABLE        =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",4583643 <BYTES>)          
+OBJECT                   = OBS009_PHA_TABLE                                   
+ NAME                    = OBS_009_PHA                                        
+ ROWS                    = 637                                                
+ ^STRUCTURE              = "PHA_TAB.FMT"  /* Structure of PHA Tables */       
+END_OBJECT               = OBS009_PHA_TABLE                                   
+                                                                              
+/* For Observation 010 */                                                     
+                                                                              
+  /* Counter Section */                                                       
+                                                                              
+     /* L1 Counter */                                                         
+                                                                              
+^OBS010_L1_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5063227 <BYTES>)          
+OBJECT                   = OBS010_L1_TABLE                                    
+ NAME                    = OBS_010_L1_COUNTER                                 
+ ROWS                    = 36                                                 
+ ^STRUCTURE              = "L1_CNTR.FMT" /* Structure for L1 Counter tables */
+END_OBJECT               = OBS010_L1_TABLE                                    
+                                                                              
+     /* L2 Counter */                                                         
+                                                                              
+^OBS010_L2_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5068573 <BYTES>)          
+OBJECT                   = OBS010_L2_TABLE                                    
+ NAME                    = OBS_010_L2_COUNTER                                 
+ ROWS                    = 10                                                 
+ ^STRUCTURE              = "L2_CNTR.FMT" /* Structure for L2 Counter tables */
+END_OBJECT               = OBS010_L2_TABLE                                    
+                                                                              
+  /* Dosimetry Section */                                                     
+                                                                              
+    /* Total Dose B */                                                        
+                                                                              
+^OBS010_TOT_DOSE_B_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5070664 <BYTES>)         
+OBJECT           = OBS010_TOT_DOSE_B_ELEMENT                                  
+  NAME           = OBS_010_TOT_DOSE_B                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose B value                                              
+    "                                                                         
+END_OBJECT       = OBS010_TOT_DOSE_B_ELEMENT                                  
+                                                                              
+    /* Total Dose E */                                                        
+                                                                              
+^OBS010_TOT_DOSE_E_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5070707 <BYTES>)         
+OBJECT           = OBS010_TOT_DOSE_E_ELEMENT                                  
+  NAME           = OBS_010_TOT_DOSE_E                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose E value                                              
+    "                                                                         
+END_OBJECT       = OBS010_TOT_DOSE_E_ELEMENT                                  
+                                                                              
+    /* Dose LET B_A1 */                                                       
+                                                                              
+^OBS010_D_LET_B_A1_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5070746 <BYTES>)        
+OBJECT                   = OBS010_D_LET_B_A1_EVC_ARRAY                        
+ NAME                    = OBS_010_D_LET_B_A1_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS010_D_LET_B_A1_EVC_ARRAY                        
+                                                                              
+^OBS010_D_LET_B_A1_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5071320 <BYTES>)        
+OBJECT                   = OBS010_D_LET_B_A1_EVW_ARRAY                        
+ NAME                    = OBS_010_D_LET_B_A1_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS010_D_LET_B_A1_EVW_ARRAY                        
+                                                                              
+^OBS010_D_LET_B_A1_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5072468 <BYTES>)        
+OBJECT                   = OBS010_D_LET_B_A1_CNT_ARRAY                        
+ NAME                    = OBS_010_D_LET_B_A1_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS010_D_LET_B_A1_CNT_ARRAY                        
+                                                                              
+    /* Dose LET B_A2 */                                                       
+                                                                              
+^OBS010_D_LET_B_A2_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5073072 <BYTES>)        
+OBJECT                   = OBS010_D_LET_B_A2_EVC_ARRAY                        
+ NAME                    = OBS_010_D_LET_B_A2_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS010_D_LET_B_A2_EVC_ARRAY                        
+                                                                              
+^OBS010_D_LET_B_A2_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5073646 <BYTES>)        
+OBJECT                   = OBS010_D_LET_B_A2_EVW_ARRAY                        
+ NAME                    = OBS_010_D_LET_B_A2_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS010_D_LET_B_A2_EVW_ARRAY                        
+                                                                              
+^OBS010_D_LET_B_A2_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5074794 <BYTES>)        
+OBJECT                   = OBS010_D_LET_B_A2_CNT_ARRAY                        
+ NAME                    = OBS_010_D_LET_B_A2_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS010_D_LET_B_A2_CNT_ARRAY                        
+                                                                              
+  /* PHA Section */                                                           
+                                                                              
+^OBS010_PHA_TABLE        =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5076887 <BYTES>)          
+OBJECT                   = OBS010_PHA_TABLE                                   
+ NAME                    = OBS_010_PHA                                        
+ ROWS                    = 647                                                
+ ^STRUCTURE              = "PHA_TAB.FMT"  /* Structure of PHA Tables */       
+END_OBJECT               = OBS010_PHA_TABLE                                   
+                                                                              
+/* For Observation 011 */                                                     
+                                                                              
+  /* Counter Section */                                                       
+                                                                              
+     /* L1 Counter */                                                         
+                                                                              
+^OBS011_L1_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5563993 <BYTES>)          
+OBJECT                   = OBS011_L1_TABLE                                    
+ NAME                    = OBS_011_L1_COUNTER                                 
+ ROWS                    = 36                                                 
+ ^STRUCTURE              = "L1_CNTR.FMT" /* Structure for L1 Counter tables */
+END_OBJECT               = OBS011_L1_TABLE                                    
+                                                                              
+     /* L2 Counter */                                                         
+                                                                              
+^OBS011_L2_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5569339 <BYTES>)          
+OBJECT                   = OBS011_L2_TABLE                                    
+ NAME                    = OBS_011_L2_COUNTER                                 
+ ROWS                    = 10                                                 
+ ^STRUCTURE              = "L2_CNTR.FMT" /* Structure for L2 Counter tables */
+END_OBJECT               = OBS011_L2_TABLE                                    
+                                                                              
+  /* Dosimetry Section */                                                     
+                                                                              
+    /* Total Dose B */                                                        
+                                                                              
+^OBS011_TOT_DOSE_B_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5571430 <BYTES>)         
+OBJECT           = OBS011_TOT_DOSE_B_ELEMENT                                  
+  NAME           = OBS_011_TOT_DOSE_B                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose B value                                              
+    "                                                                         
+END_OBJECT       = OBS011_TOT_DOSE_B_ELEMENT                                  
+                                                                              
+    /* Total Dose E */                                                        
+                                                                              
+^OBS011_TOT_DOSE_E_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5571473 <BYTES>)         
+OBJECT           = OBS011_TOT_DOSE_E_ELEMENT                                  
+  NAME           = OBS_011_TOT_DOSE_E                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose E value                                              
+    "                                                                         
+END_OBJECT       = OBS011_TOT_DOSE_E_ELEMENT                                  
+                                                                              
+    /* Dose LET B_A1 */                                                       
+                                                                              
+^OBS011_D_LET_B_A1_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5571512 <BYTES>)        
+OBJECT                   = OBS011_D_LET_B_A1_EVC_ARRAY                        
+ NAME                    = OBS_011_D_LET_B_A1_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS011_D_LET_B_A1_EVC_ARRAY                        
+                                                                              
+^OBS011_D_LET_B_A1_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5572086 <BYTES>)        
+OBJECT                   = OBS011_D_LET_B_A1_EVW_ARRAY                        
+ NAME                    = OBS_011_D_LET_B_A1_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS011_D_LET_B_A1_EVW_ARRAY                        
+                                                                              
+^OBS011_D_LET_B_A1_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5573234 <BYTES>)        
+OBJECT                   = OBS011_D_LET_B_A1_CNT_ARRAY                        
+ NAME                    = OBS_011_D_LET_B_A1_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS011_D_LET_B_A1_CNT_ARRAY                        
+                                                                              
+    /* Dose LET B_A2 */                                                       
+                                                                              
+^OBS011_D_LET_B_A2_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5573838 <BYTES>)        
+OBJECT                   = OBS011_D_LET_B_A2_EVC_ARRAY                        
+ NAME                    = OBS_011_D_LET_B_A2_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS011_D_LET_B_A2_EVC_ARRAY                        
+                                                                              
+^OBS011_D_LET_B_A2_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5574412 <BYTES>)        
+OBJECT                   = OBS011_D_LET_B_A2_EVW_ARRAY                        
+ NAME                    = OBS_011_D_LET_B_A2_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS011_D_LET_B_A2_EVW_ARRAY                        
+                                                                              
+^OBS011_D_LET_B_A2_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5575560 <BYTES>)        
+OBJECT                   = OBS011_D_LET_B_A2_CNT_ARRAY                        
+ NAME                    = OBS_011_D_LET_B_A2_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS011_D_LET_B_A2_CNT_ARRAY                        
+                                                                              
+  /* PHA Section */                                                           
+                                                                              
+^OBS011_PHA_TABLE        =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",5577653 <BYTES>)          
+OBJECT                   = OBS011_PHA_TABLE                                   
+ NAME                    = OBS_011_PHA                                        
+ ROWS                    = 647                                                
+ ^STRUCTURE              = "PHA_TAB.FMT"  /* Structure of PHA Tables */       
+END_OBJECT               = OBS011_PHA_TABLE                                   
+                                                                              
+/* For Observation 012 */                                                     
+                                                                              
+  /* Counter Section */                                                       
+                                                                              
+     /* L1 Counter */                                                         
+                                                                              
+^OBS012_L1_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6064759 <BYTES>)          
+OBJECT                   = OBS012_L1_TABLE                                    
+ NAME                    = OBS_012_L1_COUNTER                                 
+ ROWS                    = 36                                                 
+ ^STRUCTURE              = "L1_CNTR.FMT" /* Structure for L1 Counter tables */
+END_OBJECT               = OBS012_L1_TABLE                                    
+                                                                              
+     /* L2 Counter */                                                         
+                                                                              
+^OBS012_L2_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6070105 <BYTES>)          
+OBJECT                   = OBS012_L2_TABLE                                    
+ NAME                    = OBS_012_L2_COUNTER                                 
+ ROWS                    = 10                                                 
+ ^STRUCTURE              = "L2_CNTR.FMT" /* Structure for L2 Counter tables */
+END_OBJECT               = OBS012_L2_TABLE                                    
+                                                                              
+  /* Dosimetry Section */                                                     
+                                                                              
+    /* Total Dose B */                                                        
+                                                                              
+^OBS012_TOT_DOSE_B_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6072196 <BYTES>)         
+OBJECT           = OBS012_TOT_DOSE_B_ELEMENT                                  
+  NAME           = OBS_012_TOT_DOSE_B                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose B value                                              
+    "                                                                         
+END_OBJECT       = OBS012_TOT_DOSE_B_ELEMENT                                  
+                                                                              
+    /* Total Dose E */                                                        
+                                                                              
+^OBS012_TOT_DOSE_E_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6072239 <BYTES>)         
+OBJECT           = OBS012_TOT_DOSE_E_ELEMENT                                  
+  NAME           = OBS_012_TOT_DOSE_E                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose E value                                              
+    "                                                                         
+END_OBJECT       = OBS012_TOT_DOSE_E_ELEMENT                                  
+                                                                              
+    /* Dose LET B_A1 */                                                       
+                                                                              
+^OBS012_D_LET_B_A1_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6072278 <BYTES>)        
+OBJECT                   = OBS012_D_LET_B_A1_EVC_ARRAY                        
+ NAME                    = OBS_012_D_LET_B_A1_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS012_D_LET_B_A1_EVC_ARRAY                        
+                                                                              
+^OBS012_D_LET_B_A1_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6072852 <BYTES>)        
+OBJECT                   = OBS012_D_LET_B_A1_EVW_ARRAY                        
+ NAME                    = OBS_012_D_LET_B_A1_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS012_D_LET_B_A1_EVW_ARRAY                        
+                                                                              
+^OBS012_D_LET_B_A1_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6074000 <BYTES>)        
+OBJECT                   = OBS012_D_LET_B_A1_CNT_ARRAY                        
+ NAME                    = OBS_012_D_LET_B_A1_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS012_D_LET_B_A1_CNT_ARRAY                        
+                                                                              
+    /* Dose LET B_A2 */                                                       
+                                                                              
+^OBS012_D_LET_B_A2_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6074604 <BYTES>)        
+OBJECT                   = OBS012_D_LET_B_A2_EVC_ARRAY                        
+ NAME                    = OBS_012_D_LET_B_A2_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS012_D_LET_B_A2_EVC_ARRAY                        
+                                                                              
+^OBS012_D_LET_B_A2_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6075178 <BYTES>)        
+OBJECT                   = OBS012_D_LET_B_A2_EVW_ARRAY                        
+ NAME                    = OBS_012_D_LET_B_A2_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS012_D_LET_B_A2_EVW_ARRAY                        
+                                                                              
+^OBS012_D_LET_B_A2_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6076326 <BYTES>)        
+OBJECT                   = OBS012_D_LET_B_A2_CNT_ARRAY                        
+ NAME                    = OBS_012_D_LET_B_A2_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS012_D_LET_B_A2_CNT_ARRAY                        
+                                                                              
+  /* PHA Section */                                                           
+                                                                              
+^OBS012_PHA_TABLE        =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6078419 <BYTES>)          
+OBJECT                   = OBS012_PHA_TABLE                                   
+ NAME                    = OBS_012_PHA                                        
+ ROWS                    = 644                                                
+ ^STRUCTURE              = "PHA_TAB.FMT"  /* Structure of PHA Tables */       
+END_OBJECT               = OBS012_PHA_TABLE                                   
+                                                                              
+/* For Observation 013 */                                                     
+                                                                              
+  /* Counter Section */                                                       
+                                                                              
+     /* L1 Counter */                                                         
+                                                                              
+^OBS013_L1_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6563267 <BYTES>)          
+OBJECT                   = OBS013_L1_TABLE                                    
+ NAME                    = OBS_013_L1_COUNTER                                 
+ ROWS                    = 36                                                 
+ ^STRUCTURE              = "L1_CNTR.FMT" /* Structure for L1 Counter tables */
+END_OBJECT               = OBS013_L1_TABLE                                    
+                                                                              
+     /* L2 Counter */                                                         
+                                                                              
+^OBS013_L2_TABLE         =                                                    
+             ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6568613 <BYTES>)          
+OBJECT                   = OBS013_L2_TABLE                                    
+ NAME                    = OBS_013_L2_COUNTER                                 
+ ROWS                    = 10                                                 
+ ^STRUCTURE              = "L2_CNTR.FMT" /* Structure for L2 Counter tables */
+END_OBJECT               = OBS013_L2_TABLE                                    
+                                                                              
+  /* Dosimetry Section */                                                     
+                                                                              
+    /* Total Dose B */                                                        
+                                                                              
+^OBS013_TOT_DOSE_B_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6570704 <BYTES>)         
+OBJECT           = OBS013_TOT_DOSE_B_ELEMENT                                  
+  NAME           = OBS_013_TOT_DOSE_B                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose B value                                              
+    "                                                                         
+END_OBJECT       = OBS013_TOT_DOSE_B_ELEMENT                                  
+                                                                              
+    /* Total Dose E */                                                        
+                                                                              
+^OBS013_TOT_DOSE_E_ELEMENT =                                                  
+              ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6570747 <BYTES>)         
+OBJECT           = OBS013_TOT_DOSE_E_ELEMENT                                  
+  NAME           = OBS_013_TOT_DOSE_E                                         
+  START_BYTE     = 1                                                          
+  BYTES          = 7                                                          
+  DATA_TYPE      = ASCII_REAL                                                 
+  UNIT           = "microGray / Hour"                                         
+  DESCRIPTION    = "                                                          
+    Dosimetry Total Dose E value                                              
+    "                                                                         
+END_OBJECT       = OBS013_TOT_DOSE_E_ELEMENT                                  
+                                                                              
+    /* Dose LET B_A1 */                                                       
+                                                                              
+^OBS013_D_LET_B_A1_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6570786 <BYTES>)        
+OBJECT                   = OBS013_D_LET_B_A1_EVC_ARRAY                        
+ NAME                    = OBS_013_D_LET_B_A1_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS013_D_LET_B_A1_EVC_ARRAY                        
+                                                                              
+^OBS013_D_LET_B_A1_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6571360 <BYTES>)        
+OBJECT                   = OBS013_D_LET_B_A1_EVW_ARRAY                        
+ NAME                    = OBS_013_D_LET_B_A1_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS013_D_LET_B_A1_EVW_ARRAY                        
+                                                                              
+^OBS013_D_LET_B_A1_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6572508 <BYTES>)        
+OBJECT                   = OBS013_D_LET_B_A1_CNT_ARRAY                        
+ NAME                    = OBS_013_D_LET_B_A1_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS013_D_LET_B_A1_CNT_ARRAY                        
+                                                                              
+    /* Dose LET B_A2 */                                                       
+                                                                              
+^OBS013_D_LET_B_A2_EVC_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6573112 <BYTES>)        
+OBJECT                   = OBS013_D_LET_B_A2_EVC_ARRAY                        
+ NAME                    = OBS_013_D_LET_B_A2_EVC                             
+ ^STRUCTURE              = "D_LET_EVC.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS013_D_LET_B_A2_EVC_ARRAY                        
+                                                                              
+^OBS013_D_LET_B_A2_EVW_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6573686 <BYTES>)        
+OBJECT                   = OBS013_D_LET_B_A2_EVW_ARRAY                        
+ NAME                    = OBS_013_D_LET_B_A2_EVW                             
+ ^STRUCTURE              = "D_LET_EVW.FMT" /* eV array for Dosimetry LET */   
+END_OBJECT               = OBS013_D_LET_B_A2_EVW_ARRAY                        
+                                                                              
+^OBS013_D_LET_B_A2_CNT_ARRAY =                                                
+               ("RAD_RDR_2012_220_02_25_0001_V00.TXT",6574834 <BYTES>)        
+OBJECT                   = OBS013_D_LET_B_A2_CNT_ARRAY                        
+ NAME                    = OBS_013_D_LET_B_A2_CNT                             
+ ^STRUCTURE              = "D_LETCNT.FMT" /* Cnt array for Dosimetry LET */   
+END_OBJECT               = OBS013_D_LET_B_A2_CNT_ARRAY                        
+                                                                              
+END                                                                           

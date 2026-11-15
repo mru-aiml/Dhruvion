@@ -1,0 +1,157 @@
+{
+  "trends": [
+    {
+      "measurement": "air_temperature",
+      "filter": "AMBIENT_TEMP_CONFIDENCE_LEVEL: no_zeros",
+      "unit": "KELVIN",
+      "n_sols": 2,
+      "sol_min": 9.0,
+      "sol_max": 11.0,
+      "note": "Fewer than 5 sols - trend not computed"
+    },
+    {
+      "measurement": "air_temperature",
+      "filter": "all_valid_values",
+      "unit": "KELVIN",
+      "n_sols": 2,
+      "sol_min": 9.0,
+      "sol_max": 11.0,
+      "note": "Fewer than 5 sols - trend not computed"
+    },
+    {
+      "measurement": "ground_temperature",
+      "filter": "GTS_CONFIDENCE_LEVEL: all_ones",
+      "unit": "KELVIN",
+      "n_sols": 2,
+      "sol_min": 9.0,
+      "sol_max": 11.0,
+      "note": "Fewer than 5 sols - trend not computed"
+    },
+    {
+      "measurement": "ground_temperature",
+      "filter": "GTS_CONFIDENCE_LEVEL: no_zeros",
+      "unit": "KELVIN",
+      "n_sols": 2,
+      "sol_min": 9.0,
+      "sol_max": 11.0,
+      "note": "Fewer than 5 sols - trend not computed"
+    },
+    {
+      "measurement": "ground_temperature",
+      "filter": "all_valid_values",
+      "unit": "KELVIN",
+      "n_sols": 2,
+      "sol_min": 9.0,
+      "sol_max": 11.0,
+      "note": "Fewer than 5 sols - trend not computed"
+    },
+    {
+      "measurement": "horizontal_wind_speed",
+      "filter": "all_valid_values",
+      "unit": "METERS/SECOND",
+      "n_sols": 2,
+      "sol_min": 9.0,
+      "sol_max": 11.0,
+      "note": "Fewer than 5 sols - trend not computed"
+    },
+    {
+      "measurement": "pressure",
+      "filter": "PS_CONFIDENCE_LEVEL: all_ones",
+      "unit": "PASCAL",
+      "n_sols": 2,
+      "sol_min": 9.0,
+      "sol_max": 11.0,
+      "note": "Fewer than 5 sols - trend not computed"
+    },
+    {
+      "measurement": "pressure",
+      "filter": "PS_CONFIDENCE_LEVEL: no_zeros",
+      "unit": "PASCAL",
+      "n_sols": 2,
+      "sol_min": 9.0,
+      "sol_max": 11.0,
+      "note": "Fewer than 5 sols - trend not computed"
+    },
+    {
+      "measurement": "pressure",
+      "filter": "all_valid_values",
+      "unit": "PASCAL",
+      "n_sols": 2,
+      "sol_min": 9.0,
+      "sol_max": 11.0,
+      "note": "Fewer than 5 sols - trend not computed"
+    },
+    {
+      "measurement": "relative_humidity",
+      "filter": "all_valid_values",
+      "unit": "%",
+      "n_sols": 2,
+      "sol_min": 9.0,
+      "sol_max": 11.0,
+      "note": "Fewer than 5 sols - trend not computed"
+    },
+    {
+      "measurement": "uv_a",
+      "filter": "all_valid_values",
+      "unit": "W/m**2",
+      "n_sols": 2,
+      "sol_min": 9.0,
+      "sol_max": 11.0,
+      "note": "Fewer than 5 sols - trend not computed"
+    },
+    {
+      "measurement": "uv_abc",
+      "filter": "all_valid_values",
+      "unit": "W/m**2",
+      "n_sols": 2,
+      "sol_min": 9.0,
+      "sol_max": 11.0,
+      "note": "Fewer than 5 sols - trend not computed"
+    },
+    {
+      "measurement": "uv_b",
+      "filter": "all_valid_values",
+      "unit": "W/m**2",
+      "n_sols": 2,
+      "sol_min": 9.0,
+      "sol_max": 11.0,
+      "note": "Fewer than 5 sols - trend not computed"
+    },
+    {
+      "measurement": "uv_c",
+      "filter": "all_valid_values",
+      "unit": "W/m**2",
+      "n_sols": 2,
+      "sol_min": 9.0,
+      "sol_max": 11.0,
+      "note": "Fewer than 5 sols - trend not computed"
+    },
+    {
+      "measurement": "uv_d",
+      "filter": "all_valid_values",
+      "unit": "W/m**2",
+      "n_sols": 2,
+      "sol_min": 9.0,
+      "sol_max": 11.0,
+      "note": "Fewer than 5 sols - trend not computed"
+    },
+    {
+      "measurement": "uv_e",
+      "filter": "all_valid_values",
+      "unit": "W/m**2",
+      "n_sols": 2,
+      "sol_min": 9.0,
+      "sol_max": 11.0,
+      "note": "Fewer than 5 sols - trend not computed"
+    },
+    {
+      "measurement": "wind_direction",
+      "filter": "all_valid_values",
+      "unit": "DEGREE",
+      "n_sols": 0,
+      "sol_min": null,
+      "sol_max": null,
+      "note": "Fewer than 5 sols - trend not computed"
+    }
+  ]
+}

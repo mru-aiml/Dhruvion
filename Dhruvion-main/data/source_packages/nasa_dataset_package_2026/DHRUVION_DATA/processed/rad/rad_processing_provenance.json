@@ -1,0 +1,38 @@
+{
+  "created_utc": "2026-11-14T19:45:04+00:00",
+  "instrument": "rad",
+  "provenance_class": "DERIVED (statistics) from OBSERVED rover measurements",
+  "spatial_coverage": "Curiosity rover location only - not a map, not live, not a forecast",
+  "column_map_confirmed_by": "Claude (AI assistant) from the RAD RDR labels (OBSnn_TOT_DOSE_B/E_ELEMENT objects) and RAD_RDR_SIS.pdf v3.2; independent review recommended",
+  "column_map_confirmed_against": "RAD RDR labels (DATA/SOL_00000_00089) and RAD_RDR_SIS.pdf v3.2 (28 Aug 2013) section 4.2.1.6 'Dosimetry': total dose for the B and E detectors in microGray/hour",
+  "methods": {
+    "extraction": "label byte offsets, cross-checked against text sections",
+    "per_sol": "unweighted mean/min/max/median/std of observation dose rates; each detector separately"
+  },
+  "outputs": [
+    "rad_observations_clean.csv",
+    "rad_observations_clean.json",
+    "rad_sol_summary.csv",
+    "rad_sol_summary.json",
+    "rad_trends.json"
+  ],
+  "processed": [
+    {
+      "label": "/home/claude/DHRUVION_DATA/raw/rad/SOL_00000_00089/RAD_RDR_2012_220_02_25_0001_V00.LBL",
+      "n_observations": 14,
+      "n_dose_elements": 28
+    },
+    {
+      "label": "/home/claude/DHRUVION_DATA/raw/rad/SOL_00000_00089/RAD_RDR_2012_221_02_47_0002_V00.LBL",
+      "n_observations": 20,
+      "n_dose_elements": 40
+    },
+    {
+      "label": "/home/claude/DHRUVION_DATA/raw/rad/SOL_00000_00089/RAD_RDR_2012_222_04_26_0003_V00.LBL",
+      "n_observations": 13,
+      "n_dose_elements": 26
+    }
+  ],
+  "skipped": [],
+  "n_clean_rows": 94
+}

@@ -1,0 +1,69 @@
+{
+  "created_utc": "2026-11-14T19:45:02+00:00",
+  "instrument": "rems",
+  "provenance_class": "DERIVED (statistics) from OBSERVED rover measurements",
+  "spatial_coverage": "Curiosity rover location only - not a map, not live, not a forecast",
+  "column_map": "/home/claude/DHRUVION_DATA/scripts/config/rems_column_map.json",
+  "column_map_confirmed_by": "Claude (AI assistant) by reading every column DESCRIPTION/UNIT in MODRDR6.FMT and REMS_RDR_SIS.TXT sections 3.1.6 and 3.2; independent review by a team member is recommended",
+  "column_map_confirmed_against": "MODRDR6.FMT (mslrem_1001/LABEL) and REMS_RDR_SIS.TXT Issue 9 (mslrem_1001/DOCUMENT)",
+  "units_from_labels": {
+    "air_temperature": "KELVIN",
+    "ground_temperature": "KELVIN",
+    "pressure": "PASCAL",
+    "horizontal_wind_speed": "METERS/SECOND",
+    "wind_direction": "DEGREE",
+    "relative_humidity": "%",
+    "uv_a": "W/m**2",
+    "uv_b": "W/m**2",
+    "uv_c": "W/m**2",
+    "uv_abc": "W/m**2",
+    "uv_d": "W/m**2",
+    "uv_e": "W/m**2"
+  },
+  "processed": [
+    {
+      "label": "/home/claude/DHRUVION_DATA/raw/rems/SOL00009/RME_398245439RMD00090000000_______PA.LBL",
+      "table": "REMS_SCIENCE_TABLE",
+      "rows": 5520,
+      "measurements": {
+        "air_temperature": "AMBIENT_TEMP",
+        "ground_temperature": "BRIGHTNESS_TEMP",
+        "pressure": "PRESSURE",
+        "horizontal_wind_speed": "HORIZONTAL_WIND_SPEED",
+        "wind_direction": "WIND_DIRECTION",
+        "relative_humidity": "LOCAL_RELATIVE_HUMIDITY",
+        "uv_a": "UV_A",
+        "uv_b": "UV_B",
+        "uv_c": "UV_C",
+        "uv_abc": "UV_ABC",
+        "uv_d": "UV_D",
+        "uv_e": "UV_E"
+      },
+      "sol_source": "regex ^(\\d{5})M applied to label column LMST",
+      "session_rule": "gap > 60 s in TIMESTAMP; rows without a valid time -> #UNTIMED"
+    },
+    {
+      "label": "/home/claude/DHRUVION_DATA/raw/rems/SOL00011/RME_398422988RMD00110000000_______PA.LBL",
+      "table": "REMS_SCIENCE_TABLE",
+      "rows": 12960,
+      "measurements": {
+        "air_temperature": "AMBIENT_TEMP",
+        "ground_temperature": "BRIGHTNESS_TEMP",
+        "pressure": "PRESSURE",
+        "horizontal_wind_speed": "HORIZONTAL_WIND_SPEED",
+        "wind_direction": "WIND_DIRECTION",
+        "relative_humidity": "LOCAL_RELATIVE_HUMIDITY",
+        "uv_a": "UV_A",
+        "uv_b": "UV_B",
+        "uv_c": "UV_C",
+        "uv_abc": "UV_ABC",
+        "uv_d": "UV_D",
+        "uv_e": "UV_E"
+      },
+      "sol_source": "regex ^(\\d{5})M applied to label column LMST",
+      "session_rule": "gap > 60 s in TIMESTAMP; rows without a valid time -> #UNTIMED"
+    }
+  ],
+  "skipped": [],
+  "n_clean_rows": 18480
+}

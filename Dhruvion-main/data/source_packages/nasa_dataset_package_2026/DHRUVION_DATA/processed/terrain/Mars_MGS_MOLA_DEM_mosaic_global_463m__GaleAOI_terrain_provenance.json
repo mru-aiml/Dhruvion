@@ -1,0 +1,103 @@
+{
+  "created_utc": "2026-11-14T19:43:09+00:00",
+  "script": "05_process_terrain.py",
+  "parameters": {
+    "band": 1,
+    "elevation_units": "metre",
+    "unit_factor_to_metre": 1.0,
+    "roughness_method": "tri_riley",
+    "window": 3,
+    "script_version": "1.0.0"
+  },
+  "input": {
+    "path": "/home/claude/DHRUVION_DATA/raw/terrain/Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI.tif",
+    "sha256": "62d9595d0b431ddc635dea9c7aa3a3cd463dc03c5f4c4b6e561286653a773abf",
+    "md5": "334752435ce2f360b2889f3f9a0802d0",
+    "size_bytes": 257566,
+    "crs": "Equirectangular Mars",
+    "crs_wkt": "PROJCRS[\"Equirectangular Mars\",BASEGEOGCRS[\"GCS_Mars\",DATUM[\"D_Mars\",ELLIPSOID[\"Mars_localRadius\",3396190,0,LENGTHUNIT[\"metre\",1,ID[\"EPSG\",9001]]]],PRIMEM[\"Reference_Meridian\",0,ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]]],CONVERSION[\"unnamed\",METHOD[\"Equidistant Cylindrical (Spherical)\",ID[\"EPSG\",1029]],PARAMETER[\"Latitude of 1st standard parallel\",0,ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8823]],PARAMETER[\"Longitude of natural origin\",0,ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8802]],PARAMETER[\"False easting\",0,LENGTHUNIT[\"metre\",1],ID[\"EPSG\",8806]],PARAMETER[\"False northing\",0,LENGTHUNIT[\"metre\",1],ID[\"EPSG\",8807]]],CS[Cartesian,2],AXIS[\"easting\",east,ORDER[1],LENGTHUNIT[\"metre\",1,ID[\"EPSG\",9001]]],AXIS[\"northing\",north,ORDER[2],LENGTHUNIT[\"metre\",1,ID[\"EPSG\",9001]]]]",
+    "transform": [
+      463.0935415503709,
+      0.0,
+      8073109.709847616,
+      0.0,
+      -463.0935415503709,
+      -225063.46119348053
+    ],
+    "shape": [
+      410,
+      410
+    ],
+    "nodata": -32768.0
+  },
+  "ground_spacing": {
+    "dx_m_min": 459.64541089497857,
+    "dx_m_max": 462.07495335772643,
+    "dy_m_min": 463.09354155024255,
+    "dy_m_max": 463.09354155052534
+  },
+  "methods": {
+    "slope": "Horn (1981), 3x3 third-order finite difference, geodesic ground spacing on the CRS ellipsoid",
+    "roughness": "Terrain Ruggedness Index, Riley, DeGloria & Elliot (1999): sqrt(sum over 8 neighbours of (z_n - z_0)^2), metres",
+    "nodata": "Windows containing NoData or the raster edge -> NaN"
+  },
+  "scale_note": "Derivatives are at the DEM pixel baseline (~463.1 m); not rover-scale.",
+  "outputs": {
+    "elevation": "Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI_elevation_m.tif",
+    "slope": "Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI_slope_deg.tif",
+    "roughness": "Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI_roughness_tri_riley_m.tif",
+    "coverage": "Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI_coverage_mask.tif"
+  },
+  "statistics": {
+    "elevation_m": {
+      "n_valid": 168100,
+      "n_nodata": 0,
+      "min": -4607.0,
+      "max": 1347.0,
+      "mean": -1850.27392578125,
+      "std": 1377.35693359375,
+      "p01": -4476.0,
+      "p02": -4422.0,
+      "p25": -2850.0,
+      "median": -1958.0,
+      "p75": -495.0,
+      "p98": 377.0,
+      "p99": 545.0
+    },
+    "slope_deg": {
+      "n_valid": 166464,
+      "n_nodata": 1636,
+      "min": 0.0,
+      "max": 38.2916374206543,
+      "mean": 5.44228458404541,
+      "std": 4.72584867477417,
+      "p01": 0.23307767286896708,
+      "p02": 0.3516476720571518,
+      "p25": 1.8872390985488892,
+      "median": 4.081607818603516,
+      "p75": 7.628026247024536,
+      "p98": 18.758283538818354,
+      "p99": 21.581836929321287
+    },
+    "roughness_m": {
+      "n_valid": 166464,
+      "n_nodata": 1636,
+      "min": 0.0,
+      "max": 889.826416015625,
+      "mean": 114.02616882324219,
+      "std": 98.02290344238281,
+      "p01": 6.324555397033691,
+      "p02": 8.83176040649414,
+      "p25": 41.06093215942383,
+      "median": 86.23224639892578,
+      "p75": 158.0632781982422,
+      "p98": 391.6870013427734,
+      "p99": 454.3597439575194
+    },
+    "coverage_counts": {
+      "0": 0,
+      "1": 166464,
+      "2": 1636
+    }
+  }
+}

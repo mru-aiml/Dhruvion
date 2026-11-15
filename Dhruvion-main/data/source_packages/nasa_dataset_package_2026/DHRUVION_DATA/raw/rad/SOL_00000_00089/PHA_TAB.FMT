@@ -1,0 +1,89 @@
+/* PHA_TAB.FMT */                                                             
+/* Defines structure of the PHA tables */                                     
+                                                                              
+ INTERCHANGE_FORMAT      = ASCII                                              
+ ROW_BYTES               = 752  /* Includes <CR><LF> */                       
+ COLUMNS                 = 7                                                  
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = SCLK                                                     
+    COLUMN_NUMBER  = 1                                                        
+    START_BYTE     = 2                                                        
+    BYTES          = 16                                                       
+    DATA_TYPE      = ASCII_REAL                                               
+    DESCRIPTION    = "                                                        
+      SCLK refers to the spacecraft clock.                                    
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = UTC                                                      
+    COLUMN_NUMBER  = 2                                                        
+    START_BYTE     = 20                                                       
+    BYTES          = 17                                                       
+    DATA_TYPE      = CHARACTER                                                
+    DESCRIPTION    = "                                                        
+      The UTC column contains the date/time (YYYY-DDD HH:MM:SS) in UTC        
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = PRIORITY                                                 
+    COLUMN_NUMBER  = 3                                                        
+    START_BYTE     = 39                                                       
+    BYTES          = 3                                                        
+    DATA_TYPE      = ASCII_INTEGER                                            
+    DESCRIPTION    = "                                                        
+      The PRIORITY column refers to the software priority.                    
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = HW_PRIORITY                                              
+    COLUMN_NUMBER  = 4                                                        
+    START_BYTE     = 43                                                       
+    BYTES          = 6                                                        
+    DATA_TYPE      = ASCII_INTEGER                                            
+    DESCRIPTION    = "                                                        
+      The HW_PRIORITY column refers to the hardware priority.                 
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = L2_MASK                                                  
+    COLUMN_NUMBER  = 5                                                        
+    START_BYTE     = 51                                                       
+    BYTES          = 16                                                       
+    DATA_TYPE      = CHARACTER                                                
+    DESCRIPTION    = "                                                        
+      The L2_MASK is the L2 matching mask.                                    
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = SLOW_TOKEN_MASK                                          
+    COLUMN_NUMBER  = 6                                                        
+    START_BYTE     = 70                                                       
+    BYTES          = 32                                                       
+    DATA_TYPE      = CHARACTER                                                
+    DESCRIPTION    = "                                                        
+      The SLOW_TOKEN_MASK is the slow token mask.                             
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = RAD_00_35_CORR_00_35_VALUES                              
+    COLUMN_NUMBER  = 7                                                        
+    START_BYTE     = 103                                                      
+    BYTES          = 648                                                      
+    ITEMS          = 72                                                       
+    ITEM_BYTES     = 9                                                        
+    DATA_TYPE      = ASCII_REAL                                               
+    UNIT           = "MeV"                                                    
+    DESCRIPTION    = "                                                        
+      These are the rad_00 - rad_35 and corr_00 - corr_35 values where they   
+      alternate: rad_00, corr_00, rad_01, corr_01,...., rad_35, corr_35       
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+ /* PHA_TAB.FMT */                                                            

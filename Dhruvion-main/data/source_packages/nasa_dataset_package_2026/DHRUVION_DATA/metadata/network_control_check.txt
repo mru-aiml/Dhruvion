@@ -1,0 +1,3 @@
+https://pypi.org/simple/ HTTP=200
+https://github.com/ HTTP=200
+https://raw.githubusercontent.com/ HTTP=301

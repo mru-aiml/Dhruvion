@@ -1,0 +1,129 @@
+{
+  "_about": "Download plan for 02_download_datasets.py. Only entries with enabled=true are attempted. Entries whose exact product URL could not be confirmed in the build session are DISABLED with url=null: fill in the URL after confirming it on the archive (see notes), then set enabled=true. Never point an entry at a non-authoritative mirror.",
+  "items": [
+    {
+      "id": "MOLA_463M_GALE_SUBSET",
+      "enabled": true,
+      "type": "raster_subset",
+      "dataset_name": "MGS MOLA DEM global mosaic 463 m (USGS Astrogeology)",
+      "product_id": "Mars_MGS_MOLA_DEM_mosaic_global_463m",
+      "url": "https://planetarymaps.usgs.gov/mosaic/Mars_MGS_MOLA_DEM_mosaic_global_463m.tif",
+      "url_evidence": "prior_knowledge_unverified",
+      "dest_dir": "raw/terrain",
+      "dest_name": "Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI_window.tif",
+      "documented_units": "metre",
+      "units_evidence": "USGS product description (prior knowledge, re-confirm on product page): elevation in metres relative to the MOLA areoid",
+      "notes": "Reads only the AOI pixel window via GDAL /vsicurl/ HTTP range requests instead of the full ~2 GB file. Pixel values are copied unchanged. Set type to http_file to fetch the complete original file instead."
+    },
+    {
+      "id": "CTX_MOSAIC_TILE",
+      "enabled": true,
+      "type": "http_file",
+      "dataset_name": "Murray Lab Global CTX Mosaic of Mars - tile(s) covering Gale",
+      "product_id": null,
+      "url": "https://murray-lab.caltech.edu/CTX/V01/tiles/MurrayLab_GlobalCTXMosaic_V01_E136_N-08.zip",
+      "url_evidence": "user_research + user download (1,774,557,393 bytes)",
+      "dest_dir": "raw/ctx",
+      "extract": true,
+      "documented_units": "8-bit DN (not radiometrically calibrated)",
+      "notes": "1.8 GB. Crop/reduce with crop_for_upload.py before sharing."
+    },
+    {
+      "id": "CTX_OR_HIRISE_DTM",
+      "enabled": false,
+      "type": "http_file",
+      "dataset_name": "CTX- or HiRISE-derived DTM over Gale (USGS ARD / HiRISE DTM catalogue)",
+      "product_id": null,
+      "url": null,
+      "url_evidence": "TO CONFIRM: query USGS STAC (https://stac.astrogeology.usgs.gov/api/collections) or https://www.uahirise.org/dtm/ for products intersecting the AOI",
+      "dest_dir": "raw/terrain",
+      "documented_units": "TO CONFIRM from product label",
+      "notes": "Download the DTM GeoTIFF/IMG and its label. Check footprint before download."
+    },
+    {
+      "id": "REMS_RDR_SAMPLE",
+      "enabled": true,
+      "type": "http_file",
+      "dataset_name": "MSL REMS processed RDR (MODRDR and/or ENVRDR) - small sol sample",
+      "product_id": null,
+      "index_url": null,
+      "url_evidence": "user_research (directory listings verified; direct paths follow volume layout)",
+      "include_regex": "\\.(TAB|LBL|FMT|tab|lbl|fmt)$",
+      "max_files": 12,
+      "dest_dir": "raw/rems",
+      "notes": "Also add a second entry for the volume's DOCUMENT and LABEL directories (SIS + FMT files).",
+      "urls": [
+        "https://pds-atmospheres.nmsu.edu/PDS/data/mslrem_1001/DATA/SOL_00001_00089/SOL00009/RME_398245439RMD00090000000_______PA.LBL",
+        "https://pds-atmospheres.nmsu.edu/PDS/data/mslrem_1001/DATA/SOL_00001_00089/SOL00009/RME_398245439RMD00090000000_______PA.TAB",
+        "https://pds-atmospheres.nmsu.edu/PDS/data/mslrem_1001/DATA/SOL_00001_00089/SOL00010/RME_398334213RMD00100000000_______PA.LBL",
+        "https://pds-atmospheres.nmsu.edu/PDS/data/mslrem_1001/DATA/SOL_00001_00089/SOL00010/RME_398334213RMD00100000000_______PA.TAB",
+        "https://pds-atmospheres.nmsu.edu/PDS/data/mslrem_1001/DATA/SOL_00001_00089/SOL00011/RME_398422988RMD00110000000_______PA.LBL",
+        "https://pds-atmospheres.nmsu.edu/PDS/data/mslrem_1001/DATA/SOL_00001_00089/SOL00011/RME_398422988RMD00110000000_______PA.TAB"
+      ],
+      "url": null,
+      "dest_dirs": {
+        "https://pds-atmospheres.nmsu.edu/PDS/data/mslrem_1001/DATA/SOL_00001_00089/SOL00009/RME_398245439RMD00090000000_______PA.LBL": "raw/rems/SOL00009",
+        "https://pds-atmospheres.nmsu.edu/PDS/data/mslrem_1001/DATA/SOL_00001_00089/SOL00009/RME_398245439RMD00090000000_______PA.TAB": "raw/rems/SOL00009",
+        "https://pds-atmospheres.nmsu.edu/PDS/data/mslrem_1001/DATA/SOL_00001_00089/SOL00010/RME_398334213RMD00100000000_______PA.LBL": "raw/rems/SOL00010",
+        "https://pds-atmospheres.nmsu.edu/PDS/data/mslrem_1001/DATA/SOL_00001_00089/SOL00010/RME_398334213RMD00100000000_______PA.TAB": "raw/rems/SOL00010",
+        "https://pds-atmospheres.nmsu.edu/PDS/data/mslrem_1001/DATA/SOL_00001_00089/SOL00011/RME_398422988RMD00110000000_______PA.LBL": "raw/rems/SOL00011",
+        "https://pds-atmospheres.nmsu.edu/PDS/data/mslrem_1001/DATA/SOL_00001_00089/SOL00011/RME_398422988RMD00110000000_______PA.TAB": "raw/rems/SOL00011"
+      }
+    },
+    {
+      "id": "REMS_DOCUMENTATION",
+      "enabled": true,
+      "type": "http_file",
+      "dataset_name": "MSL REMS RDR volume documentation and format files",
+      "index_url": null,
+      "url_evidence": "user_research (URLs opened)",
+      "include_regex": "\\.(PDF|pdf|TXT|txt|LBL|lbl|FMT|fmt|CAT|cat)$",
+      "max_files": 40,
+      "dest_dir": "raw/rems/documentation",
+      "urls": [
+        "https://pds-atmospheres.nmsu.edu/PDS/data/mslrem_1001/DOCUMENT/REMS_RDR_SIS.TXT",
+        "https://pds-atmospheres.nmsu.edu/PDS/data/mslrem_1001/LABEL/MODRDR6.FMT"
+      ],
+      "url": null
+    },
+    {
+      "id": "RAD_RDR_SAMPLE",
+      "enabled": true,
+      "type": "pds_directory",
+      "dataset_name": "MSL RAD calibrated RDR (MSL-M-RAD-3-RDR-V1.0) - small sol sample",
+      "index_url": "https://pds-ppi.igpp.ucla.edu/data/MSL-M-RAD-3-RDR-V1.0/DATA/SOL_00000_00089/",
+      "url_evidence": "user_research (directory listing verified)",
+      "include_regex": "RAD_RDR_2012_22[0-2]_.*\\.(TXT|LBL)$|\\.FMT$",
+      "max_files": 30,
+      "dest_dir": "raw/rad/SOL_00000_00089"
+    },
+    {
+      "id": "RAD_DOCUMENTATION",
+      "enabled": true,
+      "type": "http_file",
+      "dataset_name": "MSL RAD RDR volume documentation and format files",
+      "index_url": null,
+      "url_evidence": "user_research (listed in DOCUMENT directory)",
+      "include_regex": "\\.(PDF|pdf|TXT|txt|LBL|lbl|FMT|fmt|CAT|cat)$",
+      "max_files": 40,
+      "dest_dir": "raw/rad/documentation",
+      "urls": [
+        "https://pds-ppi.igpp.ucla.edu/data/MSL-M-RAD-3-RDR-V1.0/DOCUMENT/RAD_RDR_SIS.PDF"
+      ],
+      "url": null
+    },
+    {
+      "id": "GALE_DEM_1M_OPTIONAL",
+      "enabled": false,
+      "type": "raster_subset",
+      "dataset_name": "MSL Gale Merged DEM 1 m v3 (USGS)",
+      "product_id": "MSL_Gale_DEM_Mosaic_1m_v3",
+      "url": "https://planetarymaps.usgs.gov/mosaic/Mars/MSL/MSL_Gale_DEM_Mosaic_1m_v3.tif",
+      "url_evidence": "user_research (URL not opened)",
+      "dest_dir": "raw/terrain",
+      "dest_name": "MSL_Gale_DEM_Mosaic_1m_v3__GaleAOI_window.tif",
+      "documented_units": "metre",
+      "notes": "3.6 GB full file; footprint 137.12-137.68 E, -5.10 to -4.13 only"
+    }
+  ]
+}

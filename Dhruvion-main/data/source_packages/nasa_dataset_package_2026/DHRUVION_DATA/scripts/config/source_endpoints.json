@@ -1,0 +1,119 @@
+{
+  "_about": "Authoritative endpoints probed by 00_check_source_access.py. 'evidence' records WHERE each URL came from. 'user_document' = cited in the DHRUVION planning documents supplied by the user. 'prior_knowledge_unverified' = recalled by the assistant from training knowledge and NOT confirmed live in the session that created this file; confirm on first successful run.",
+  "endpoints": [
+    {
+      "id": "ODE_PORTAL",
+      "url": "https://ode.rsl.wustl.edu/mars/",
+      "role": "Mars Orbital Data Explorer portal (CTX, HiRISE, MOLA discovery)",
+      "evidence": "user_document"
+    },
+    {
+      "id": "ODE_REST",
+      "url": "https://oderest.rsl.wustl.edu/live2/?query=products&results=c&output=JSON&target=mars&ihid=MRO&iid=CTX&pt=EDR&westernlon=136.2&easternlon=139.4&minlat=-7.0&maxlat=-3.8&loc=b",
+      "role": "ODE REST API product-count query for CTX EDRs over the Gale AOI",
+      "evidence": "user_research (ODE REST manual v2.1.6)"
+    },
+    {
+      "id": "USGS_ASTRO_DATA",
+      "url": "https://www.usgs.gov/centers/astrogeology-science-center/data",
+      "role": "USGS Astrogeology data and tools landing page",
+      "evidence": "user_document"
+    },
+    {
+      "id": "USGS_ARD",
+      "url": "https://www.usgs.gov/centers/astrogeology-science-center/science/analysis-ready-data",
+      "role": "USGS Analysis Ready Data page (CTX DTMs, HiRISE)",
+      "evidence": "user_document"
+    },
+    {
+      "id": "USGS_STAC",
+      "url": "https://stac.astrogeology.usgs.gov/api/collections",
+      "role": "USGS Astrogeology STAC API (ARD collections)",
+      "evidence": "prior_knowledge_unverified"
+    },
+    {
+      "id": "USGS_MOLA_463M",
+      "url": "https://planetarymaps.usgs.gov/mosaic/Mars_MGS_MOLA_DEM_mosaic_global_463m.tif",
+      "role": "USGS global MOLA DEM mosaic, 463 m/px GeoTIFF",
+      "evidence": "prior_knowledge_unverified"
+    },
+    {
+      "id": "USGS_HRSC_MOLA_200M",
+      "url": "https://planetarymaps.usgs.gov/mosaic/Mars/HRSC_MOLA_Blend/Mars_HRSC_MOLA_BlendDEM_Global_200mp_v2.tif",
+      "role": "USGS HRSC-MOLA blended global DEM, 200 m/px GeoTIFF",
+      "evidence": "user_research"
+    },
+    {
+      "id": "PDS_GEO_MOLA",
+      "url": "https://pds-geosciences.wustl.edu/missions/mgs/mola.html",
+      "role": "PDS Geosciences Node MOLA archive (MEGDR)",
+      "evidence": "prior_knowledge_unverified"
+    },
+    {
+      "id": "MURRAY_LAB_CTX",
+      "url": "https://murray-lab.caltech.edu/CTX/",
+      "role": "Caltech Murray Lab global CTX mosaic (5 m/px tiles)",
+      "evidence": "prior_knowledge_unverified"
+    },
+    {
+      "id": "MARS_TREK",
+      "url": "https://trek.nasa.gov/mars/",
+      "role": "NASA Mars Trek (Gale_CTX_BlockAdj_dd layer cited in user document)",
+      "evidence": "user_document"
+    },
+    {
+      "id": "HIRISE_DTM",
+      "url": "https://www.uahirise.org/dtm/",
+      "role": "HiRISE DTM catalogue (University of Arizona)",
+      "evidence": "prior_knowledge_unverified"
+    },
+    {
+      "id": "PDS_IMG",
+      "url": "https://pds-imaging.jpl.nasa.gov/",
+      "role": "PDS Cartography and Imaging Sciences Node (CTX/HiRISE archives)",
+      "evidence": "prior_knowledge_unverified"
+    },
+    {
+      "id": "NMSU_REMS_PAGE",
+      "url": "https://pdsatmospheres.nmsu.edu/data_and_services/atmospheres_data/MARS/curiosity/rems.html",
+      "role": "PDS Atmospheres Node REMS archive page",
+      "evidence": "user_document"
+    },
+    {
+      "id": "NMSU_REMS_PAGE_ALT",
+      "url": "https://atmos.nmsu.edu/data_and_services/atmospheres_data/MARS/curiosity/rems.html",
+      "role": "Alternate host name for REMS archive page",
+      "evidence": "user_document"
+    },
+    {
+      "id": "PDS_DSVIEW_RAD_RDR",
+      "url": "https://pds.nasa.gov/ds-view/pds/viewProfile.jsp?dsid=MSL-M-RAD-3-RDR-V1.0",
+      "role": "PDS data set profile for MSL RAD calibrated RDR",
+      "evidence": "user_document"
+    },
+    {
+      "id": "PDS_DSVIEW_RAD_EDR",
+      "url": "https://pds.nasa.gov/ds-view/pds/viewProfile.jsp?dsid=MSL-M-RAD-2-EDR-V1.0",
+      "role": "PDS data set profile for MSL RAD raw EDR",
+      "evidence": "user_document"
+    },
+    {
+      "id": "PDS_PPI_MSL_RAD_RDR",
+      "url": "https://pds-ppi.igpp.ucla.edu/data/MSL-M-RAD-3-RDR-V1.0/",
+      "role": "PDS PPI Node - MSL RAD calibrated RDR archive root",
+      "evidence": "user_research"
+    },
+    {
+      "id": "AN_MSL",
+      "url": "https://an.rsl.wustl.edu/msl/",
+      "role": "MSL Analyst's Notebook (cited as an.rsl.wustl.edu in user document)",
+      "evidence": "user_document"
+    },
+    {
+      "id": "NMSU_REMS_RDR_VOLUME",
+      "url": "https://pds-atmospheres.nmsu.edu/PDS/data/mslrem_1001/",
+      "role": "REMS RDR volume mslrem_1001",
+      "evidence": "user_research"
+    }
+  ]
+}

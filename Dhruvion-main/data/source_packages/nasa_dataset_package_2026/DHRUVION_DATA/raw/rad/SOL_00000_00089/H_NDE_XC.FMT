@@ -1,0 +1,21 @@
+/* H_NDE_XC.FMT */                                                            
+/* This file defines the structure of the X part of Neutral DE Histograms */  
+                                                                              
+ INTERCHANGE_FORMAT      = ASCII                                              
+ AXES                    = 1                                                  
+ AXIS_ITEMS              = (8)                                                
+ START_BYTE              = 1                                                  
+                                                                              
+  OBJECT           = ELEMENT                                                  
+    NAME           = H_NDE_X_ENERGY_CENTER_COMPONENT_VALUE                    
+    START_BYTE     = 33                                                       
+    BYTES          = 13                                                       
+    DATA_TYPE      = ASCII_REAL                                               
+    UNIT           = "MeV"                                                    
+    DESCRIPTION    = "                                                        
+      X values of the Neutral D & E (NDE) Histograms                          
+      X1 through X8 are the center energies (MeV)                             
+      "                                                                       
+  END_OBJECT       = ELEMENT                                                  
+                                                                              
+ /* End of H_NDE_XC.FMT */                                                    

@@ -1,0 +1,61 @@
+{
+  "created_utc": "2026-11-14T19:44:58+00:00",
+  "script": "06_process_ctx.py v1.0.0",
+  "input": {
+    "path": "/home/claude/DHRUVION_DATA/raw/ctx/MurrayLab_GlobalCTXMosaic_V01_E136_N-08__GaleAOI_x10.tif",
+    "sha256": "dbfe1ea652a328f2daf1501234a38f42a50409490882ac92b7aa5acf28293624",
+    "md5": "125880c032dbf1aa66f7d3f34dd2ce19",
+    "size_bytes": 9232340
+  },
+  "aoi": {
+    "min_lat": -7.0,
+    "max_lat": -3.8,
+    "min_lon_e": 136.2,
+    "max_lon_e": 139.4
+  },
+  "window": {
+    "col_off": 0,
+    "row_off": 0,
+    "width": 3794,
+    "height": 3460
+  },
+  "outputs": [
+    "MurrayLab_GlobalCTXMosaic_V01_E136_N-08__GaleAOI_x10__GaleAOI_clip.tif",
+    "MurrayLab_GlobalCTXMosaic_V01_E136_N-08__GaleAOI_x10__GaleAOI.png"
+  ],
+  "overlay": {
+    "png": "MurrayLab_GlobalCTXMosaic_V01_E136_N-08__GaleAOI_x10__GaleAOI.png",
+    "geotiff": "MurrayLab_GlobalCTXMosaic_V01_E136_N-08__GaleAOI_x10__GaleAOI_clip.tif",
+    "leaflet_bounds": [
+      [
+        -6.918712153475242,
+        136.1999156474062
+      ],
+      [
+        -4.0000380966075735,
+        139.4
+      ]
+    ],
+    "latitude_type": "planetocentric",
+    "longitude_direction": "east-positive",
+    "image_projection": "Mars_2015_Ocentric_Equirectangular_clon_0",
+    "decimation_factor": 1,
+    "stretch": "none (8-bit DN as stored)",
+    "nodata_handling": "declared NoData -> transparent",
+    "provenance": "OBSERVED imagery (clipped); PNG is a display product",
+    "alignment_with_dem": {
+      "dem": "Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI.tif",
+      "result": "NEAR_EQUIVALENT_CRS_DIFFERENT_GRID",
+      "max_coordinate_offset_m": 12.078,
+      "equivalence_tolerance_m": 5.0,
+      "dem_res": [
+        463.0935415503709,
+        463.0935415503709
+      ],
+      "image_res": [
+        49.99579126227329,
+        49.99829977373202
+      ]
+    }
+  }
+}

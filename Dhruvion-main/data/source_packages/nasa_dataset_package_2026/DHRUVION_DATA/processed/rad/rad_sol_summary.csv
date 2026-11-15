@@ -1,0 +1,7 @@
+sol,measurement,detector,unit,filter,n_observations,n_valid,n_missing,mean,min,max,median,std,utc_first,utc_last
+1,dose_rate_B,B (silicon detector),microGray / Hour,all_observations (unweighted mean of observation dose rates),14,14,0,8.924999999999999,7.25298,9.86733,8.995664999999999,0.5839413016470328,2012-220 02:25:43,2012-220 06:03:10
+1,dose_rate_E,E (BC-432 plastic scintillator),microGray / Hour,all_observations (unweighted mean of observation dose rates),14,14,0,8.583911428571428,7.05845,8.93606,8.66615,0.4590109748119343,2012-220 02:25:43,2012-220 06:03:10
+2,dose_rate_B,B (silicon detector),microGray / Hour,all_observations (unweighted mean of observation dose rates),20,20,0,9.274795,8.47095,10.51805,9.236464999999999,0.5563484923801666,2012-221 02:47:54,2012-221 08:12:32
+2,dose_rate_E,E (BC-432 plastic scintillator),microGray / Hour,all_observations (unweighted mean of observation dose rates),20,20,0,8.519719999999998,7.83995,8.71923,8.57747,0.1805490971278567,2012-221 02:47:54,2012-221 08:12:32
+3,dose_rate_B,B (silicon detector),microGray / Hour,all_observations (unweighted mean of observation dose rates),13,13,0,8.829352307692307,8.31507,9.23665,8.81333,0.2560199593831777,2012-222 04:26:10,2012-222 07:56:10
+3,dose_rate_E,E (BC-432 plastic scintillator),microGray / Hour,all_observations (unweighted mean of observation dose rates),13,13,0,8.320420769230768,7.71365,8.64109,8.34626,0.24057358252246283,2012-222 04:26:10,2012-222 07:56:10

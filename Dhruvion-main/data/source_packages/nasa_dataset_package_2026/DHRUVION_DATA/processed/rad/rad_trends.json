@@ -1,0 +1,28 @@
+{
+  "trends": [
+    {
+      "measurement": "dose_rate_B",
+      "detector": "B (silicon detector)",
+      "unit": "microGray / Hour",
+      "n_sols": 3,
+      "sols": [
+        1,
+        2,
+        3
+      ],
+      "note": "Fewer than 5 sols - trend not computed"
+    },
+    {
+      "measurement": "dose_rate_E",
+      "detector": "E (BC-432 plastic scintillator)",
+      "unit": "microGray / Hour",
+      "n_sols": 3,
+      "sols": [
+        1,
+        2,
+        3
+      ],
+      "note": "Fewer than 5 sols - trend not computed"
+    }
+  ]
+}

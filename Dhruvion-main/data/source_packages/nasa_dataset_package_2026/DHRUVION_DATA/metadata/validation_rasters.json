@@ -1,0 +1,185 @@
+{
+  "generated_utc": "2026-11-14T19:44:24+00:00",
+  "aoi": {
+    "min_lat": -7.0,
+    "max_lat": -3.8,
+    "min_lon_e": 136.2,
+    "max_lon_e": 139.4
+  },
+  "n_rasters": 2,
+  "rasters": [
+    {
+      "file": "/home/claude/DHRUVION_DATA/raw/ctx/MurrayLab_GlobalCTXMosaic_V01_E136_N-08__GaleAOI_x10.tif",
+      "role": "imagery",
+      "checked_utc": "2026-11-14T19:44:24+00:00",
+      "reasons_invalid": [],
+      "reasons_incomplete": [],
+      "limitations": [
+        "Units not stored in file; taken from source documentation",
+        "Partial AOI coverage: 87.8% of sample points valid"
+      ],
+      "driver": "GTiff",
+      "width": 3794,
+      "height": 3460,
+      "band_count": 1,
+      "dtype": "uint8",
+      "nodata": 0.0,
+      "transform": [
+        49.99579126227329,
+        0.0,
+        8073208.802699824,
+        0.0,
+        -49.99829977373202,
+        -237098.79009322493
+      ],
+      "native_bounds": [
+        8073208.802699824,
+        -410092.90731033776,
+        8262892.834748888,
+        -237098.79009322493
+      ],
+      "crs_name": "Mars_2015_Ocentric_Equirectangular_clon_0",
+      "crs_wkt": "PROJCRS[\"Mars_2015_Ocentric_Equirectangular_clon_0\",BASEGEOGCRS[\"GCS_Mars_2015_Ocentric\",DATUM[\"Mars (2015)\",ELLIPSOID[\"Mars_2015\",3396190,169.894447223612,LENGTHUNIT[\"metre\",1,ID[\"EPSG\",9001]]]],PRIMEM[\"Reference Meridian\",0,ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]]],CONVERSION[\"unnamed\",METHOD[\"Equidistant Cylindrical\",ID[\"EPSG\",1028]],PARAMETER[\"Latitude of 1st standard parallel\",0,ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8823]],PARAMETER[\"Longitude of natural origin\",0,ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8802]],PARAMETER[\"False easting\",0,LENGTHUNIT[\"metre\",1],ID[\"EPSG\",8806]],PARAMETER[\"False northing\",0,LENGTHUNIT[\"metre\",1],ID[\"EPSG\",8807]]],CS[Cartesian,2],AXIS[\"easting\",east,ORDER[1],LENGTHUNIT[\"metre\",1,ID[\"EPSG\",9001]]],AXIS[\"northing\",north,ORDER[2],LENGTHUNIT[\"metre\",1,ID[\"EPSG\",9001]]]]",
+      "crs_is_geographic": false,
+      "ellipsoid_semi_major_m": 3396190.0,
+      "ellipsoid_semi_minor_m": 3376200.0,
+      "native_resolution": [
+        49.99579126227329,
+        49.99829977373202
+      ],
+      "native_units": "metre",
+      "ground_spacing_m": {
+        "dx_min": 49.62749317273333,
+        "dx_max": 49.872534608672254,
+        "dy_min": 49.99829977353484,
+        "dy_max": 49.99829977393802
+      },
+      "geographic_bounds": {
+        "min_lon": 136.1999156474062,
+        "max_lon": 139.4,
+        "min_lat": -6.918712153475242,
+        "max_lat": -4.0000380966075735,
+        "longitude_convention": "-180..180 E",
+        "latitude_type": "planetocentric"
+      },
+      "units": "8-bit DN (display imagery)",
+      "units_source": "source documentation (download manifest)",
+      "pixel_counts": {
+        "total": 13127240,
+        "valid": 13127240,
+        "nodata_value": 0,
+        "nan": 0,
+        "inf": 0,
+        "invalid_fraction": 0.0
+      },
+      "value_range": {
+        "min": 1.0,
+        "max": 240.0,
+        "mean": 116.01916526246187
+      },
+      "aoi": {
+        "min_lat": -7.0,
+        "max_lat": -3.8,
+        "min_lon_e": 136.2,
+        "max_lon_e": 139.4
+      },
+      "aoi_valid_coverage_fraction": 0.8780487804878049,
+      "gale_center_covered_valid": true,
+      "validation_status": "VALIDATED WITH LIMITATIONS",
+      "approved_for_processing": true
+    },
+    {
+      "file": "/home/claude/DHRUVION_DATA/raw/terrain/Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI.tif",
+      "role": "elevation",
+      "checked_utc": "2026-11-14T19:44:24+00:00",
+      "reasons_invalid": [],
+      "reasons_incomplete": [],
+      "limitations": [
+        "Units not stored in file; taken from source documentation"
+      ],
+      "driver": "GTiff",
+      "width": 410,
+      "height": 410,
+      "band_count": 1,
+      "dtype": "int16",
+      "nodata": -32768.0,
+      "transform": [
+        463.0935415503709,
+        0.0,
+        8073109.709847616,
+        0.0,
+        -463.0935415503709,
+        -225063.46119348053
+      ],
+      "native_bounds": [
+        8073109.709847616,
+        -414931.81322913256,
+        8262978.061883268,
+        -225063.46119348053
+      ],
+      "crs_name": "Equirectangular Mars",
+      "crs_wkt": "PROJCRS[\"Equirectangular Mars\",BASEGEOGCRS[\"GCS_Mars\",DATUM[\"D_Mars\",ELLIPSOID[\"Mars_localRadius\",3396190,0,LENGTHUNIT[\"metre\",1,ID[\"EPSG\",9001]]]],PRIMEM[\"Reference_Meridian\",0,ANGLEUNIT[\"degree\",0.0174532925199433,ID[\"EPSG\",9122]]]],CONVERSION[\"unnamed\",METHOD[\"Equidistant Cylindrical (Spherical)\",ID[\"EPSG\",1029]],PARAMETER[\"Latitude of 1st standard parallel\",0,ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8823]],PARAMETER[\"Longitude of natural origin\",0,ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8802]],PARAMETER[\"False easting\",0,LENGTHUNIT[\"metre\",1],ID[\"EPSG\",8806]],PARAMETER[\"False northing\",0,LENGTHUNIT[\"metre\",1],ID[\"EPSG\",8807]]],CS[Cartesian,2],AXIS[\"easting\",east,ORDER[1],LENGTHUNIT[\"metre\",1,ID[\"EPSG\",9001]]],AXIS[\"northing\",north,ORDER[2],LENGTHUNIT[\"metre\",1,ID[\"EPSG\",9001]]]]",
+      "crs_is_geographic": false,
+      "ellipsoid_semi_major_m": 3396190.0,
+      "ellipsoid_semi_minor_m": 3396190.0,
+      "native_resolution": [
+        463.0935415503709,
+        463.0935415503709
+      ],
+      "native_units": "metre",
+      "ground_spacing_m": {
+        "dx_min": 459.64541089497857,
+        "dx_max": 462.07495335772643,
+        "dy_min": 463.09354155024255,
+        "dy_max": 463.09354155052534
+      },
+      "geographic_bounds": {
+        "min_lon": 136.19824389105233,
+        "max_lon": 139.4014378333073,
+        "min_lat": -7.00015066404996,
+        "max_lat": -3.7969567217949582,
+        "longitude_convention": "-180..180 E",
+        "latitude_type": "planetocentric"
+      },
+      "units": "metre",
+      "units_source": "source documentation (download manifest)",
+      "pixel_counts": {
+        "total": 168100,
+        "valid": 168100,
+        "nodata_value": 0,
+        "nan": 0,
+        "inf": 0,
+        "invalid_fraction": 0.0
+      },
+      "value_range": {
+        "min": -4607.0,
+        "max": 1347.0,
+        "mean": -1850.2737953599049
+      },
+      "aoi": {
+        "min_lat": -7.0,
+        "max_lat": -3.8,
+        "min_lon_e": 136.2,
+        "max_lon_e": 139.4
+      },
+      "aoi_valid_coverage_fraction": 1.0,
+      "gale_center_covered_valid": true,
+      "validation_status": "VALIDATED WITH LIMITATIONS",
+      "approved_for_processing": true
+    }
+  ],
+  "alignment_checks": [
+    {
+      "a": "/home/claude/DHRUVION_DATA/raw/ctx/MurrayLab_GlobalCTXMosaic_V01_E136_N-08__GaleAOI_x10.tif",
+      "b": "/home/claude/DHRUVION_DATA/raw/terrain/Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI.tif",
+      "max_coordinate_offset_m": 12.077941569732502,
+      "equivalence_tolerance_m": 4.99957912622733,
+      "result": "NEAR_EQUIVALENT_CRS_DIFFERENT_GRID",
+      "note": "Coordinates are interchangeable (checked numerically); grids differ, so combine by coordinates, never by array index",
+      "resolution_ratio": [
+        0.10796045890619536,
+        0.10796587576312308
+      ]
+    }
+  ]
+}

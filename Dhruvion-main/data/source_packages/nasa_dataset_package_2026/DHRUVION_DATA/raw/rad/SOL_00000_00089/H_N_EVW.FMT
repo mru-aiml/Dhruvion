@@ -1,0 +1,20 @@
+/* H_N_EVW.FMT */                                                             
+/* This file defines the structure of the eV part of Neutral Histograms */    
+                                                                              
+ INTERCHANGE_FORMAT      = ASCII                                              
+ AXES                    = 1                                                  
+ AXIS_ITEMS              = (48)                                               
+ START_BYTE              = 1                                                  
+                                                                              
+  OBJECT           = ELEMENT                                                  
+    NAME           = HIST_N_EV_WIDTH_COMPONENT_VALUE                          
+    START_BYTE     = 1                                                        
+    BYTES          = 13                                                       
+    DATA_TYPE      = ASCII_REAL                                               
+    UNIT           = "MeV"                                                    
+    DESCRIPTION    = "                                                        
+      Neutral Histogram: energy widths of histogram in MeV                    
+      "                                                                       
+  END_OBJECT       = ELEMENT                                                  
+                                                                              
+ /* End of H_N_EVW.FMT */                                                     

@@ -1,0 +1,108 @@
+{
+  "generated_utc": "2026-11-14T19:45:04+00:00",
+  "n_processed": 4,
+  "n_skipped": 12,
+  "n_failed": 0,
+  "entries": [
+    {
+      "dataset": "C01",
+      "name": "Existing local DHRUVION MOLA elevation, slope and roughness GeoTIFFs",
+      "action": "SKIPPED",
+      "reason": "Step 3 status NOT AVAILABLE: Files not supplied to this environment; nothing to validate"
+    },
+    {
+      "dataset": "C03",
+      "name": "MOLA Mission Experiment Gridded Data Records (MEGDR)",
+      "action": "SKIPPED",
+      "reason": "Step 3 status NOT AVAILABLE: Not selected for download in this run (duplicate, deferred or no plan entry): Skip unless C02 is unavailable (archival PDS fallback)."
+    },
+    {
+      "dataset": "C04",
+      "name": "HRSC and MOLA blended global DEM, 200 m/px, v2 (USGS)",
+      "action": "SKIPPED",
+      "reason": "Step 3 status NOT AVAILABLE: Not selected for download in this run (duplicate, deferred or no plan entry): Optional upgrade over C02: AOI window via raster_subset after confirming HRSC coverage of Gale."
+    },
+    {
+      "dataset": "C06",
+      "name": "NASA Mars Trek layer Gale_CTX_BlockAdj_dd",
+      "action": "SKIPPED",
+      "reason": "Step 3 status NOT AVAILABLE: Not selected for download in this run (duplicate, deferred or no plan entry): Frontend alternative to C05; inspect GetCapabilities before use."
+    },
+    {
+      "dataset": "C07",
+      "name": "MRO CTX Experiment Data Records over Gale (via ODE)",
+      "action": "SKIPPED",
+      "reason": "Step 3 status NOT AVAILABLE: Not selected for download in this run (duplicate, deferred or no plan entry): Fallback only if C05 is unavailable; run discovery first to obtain real product IDs."
+    },
+    {
+      "dataset": "C08",
+      "name": "USGS analysis-ready CTX DTMs (STAC catalogue)",
+      "action": "SKIPPED",
+      "reason": "Step 3 status NOT AVAILABLE: Download NOT_ATTEMPTED: Entry disabled: exact product URL not confirmed against the authoritative archive"
+    },
+    {
+      "dataset": "C09",
+      "name": "HiRISE DTMs and orthoimages over Gale",
+      "action": "SKIPPED",
+      "reason": "Step 3 status NOT AVAILABLE: Not selected for download in this run (duplicate, deferred or no plan entry): Only if rover-scale terrain is required and C10 is unavailable."
+    },
+    {
+      "dataset": "C10",
+      "name": "MSL Gale Merged Orthophoto Mosaic and Merged DEM (Calef & Parker, USGS)",
+      "action": "SKIPPED",
+      "reason": "Step 3 status NOT AVAILABLE: Not selected for download in this run (duplicate, deferred or no plan entry): High value for rover-scale route planning; confirm existence and size on the USGS search page before planning a subset."
+    },
+    {
+      "dataset": "C12",
+      "name": "Curiosity REMS ENVRDR (environmental RDR)",
+      "action": "SKIPPED",
+      "reason": "Step 3 status NOT AVAILABLE: Not selected for download in this run (duplicate, deferred or no plan entry): Use only if MODRDR lacks a needed field."
+    },
+    {
+      "dataset": "C13",
+      "name": "Curiosity REMS EDR (raw)",
+      "action": "SKIPPED",
+      "reason": "Step 3 status NOT AVAILABLE: Not selected for download in this run (duplicate, deferred or no plan entry): Skip."
+    },
+    {
+      "dataset": "C15",
+      "name": "Curiosity RAD EDR (raw binary)",
+      "action": "SKIPPED",
+      "reason": "Step 3 status NOT AVAILABLE: Not selected for download in this run (duplicate, deferred or no plan entry): Skip - use C14."
+    },
+    {
+      "dataset": "C16",
+      "name": "THEMIS thermal data over Gale",
+      "action": "SKIPPED",
+      "reason": "Step 3 status NOT AVAILABLE: Not selected for download in this run (duplicate, deferred or no plan entry): Deferred."
+    },
+    {
+      "dataset": "C02",
+      "file": "/home/claude/DHRUVION_DATA/raw/terrain/Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI.tif",
+      "script": "05_process_terrain.py",
+      "action": "PROCESSED",
+      "exit_code": 0
+    },
+    {
+      "dataset": "C05",
+      "file": "/home/claude/DHRUVION_DATA/raw/ctx/MurrayLab_GlobalCTXMosaic_V01_E136_N-08__GaleAOI_x10.tif",
+      "script": "06_process_ctx.py",
+      "action": "PROCESSED",
+      "exit_code": 0
+    },
+    {
+      "instrument": "rems",
+      "script": "07_process_rems.py",
+      "exit_code": 0,
+      "action": "PROCESSED",
+      "reason": null
+    },
+    {
+      "instrument": "rad",
+      "script": "08_process_rad.py",
+      "exit_code": 0,
+      "action": "PROCESSED",
+      "reason": null
+    }
+  ]
+}

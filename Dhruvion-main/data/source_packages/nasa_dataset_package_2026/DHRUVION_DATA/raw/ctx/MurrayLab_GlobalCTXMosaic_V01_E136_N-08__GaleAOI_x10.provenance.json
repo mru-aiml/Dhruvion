@@ -1,0 +1,32 @@
+{
+  "created_utc": "2026-11-14T19:28:58+00:00",
+  "script": "crop_for_upload.py",
+  "source_file": "MurrayLab_GlobalCTXMosaic_V01_E136_N-08.zip",
+  "source_size_bytes": 1774557393,
+  "source_sha256": "e7021d4e3177664f9e1f2387ed6038cc84abff4c5fa049837f49797552fbffdb",
+  "aoi_west_south_east_north": [
+    136.2,
+    -7.0,
+    139.4,
+    -3.8
+  ],
+  "source_window": {
+    "col_off": 2370,
+    "row_off": 0,
+    "width": 37937,
+    "height": 34599
+  },
+  "source_pixel_size": [
+    4.999974485306295,
+    4.9999744853063035
+  ],
+  "shrink_factor": 10,
+  "output_pixel_size": [
+    49.9957912622733,
+    49.99829977373202
+  ],
+  "resampling": "average",
+  "nodata": 0.0,
+  "crs": "Mars_2015_Ocentric_Equirectangular_clon_0",
+  "output": "MurrayLab_GlobalCTXMosaic_V01_E136_N-08__GaleAOI_x10.tif"
+}

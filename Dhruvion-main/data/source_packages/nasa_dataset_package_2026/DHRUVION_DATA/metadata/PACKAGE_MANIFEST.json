@@ -1,0 +1,737 @@
+{
+  "generated_utc": "2026-11-14T19:49:48+00:00",
+  "note": "SHA-256 of every packaged file except this manifest",
+  "n_files": 146,
+  "files": [
+    {
+      "path": "DHRUVION_DATA/documentation/FINAL_REPORT.md",
+      "size_bytes": 8189,
+      "sha256": "dc68709e10c48cdd04c4d8876c076ac86cf48624da8da753eabdbc8363034755"
+    },
+    {
+      "path": "DHRUVION_DATA/documentation/README.md",
+      "size_bytes": 5133,
+      "sha256": "79f53d0cae9891cd367b3f76f0dce1450992e31c115181456b03a3c55311977d"
+    },
+    {
+      "path": "DHRUVION_DATA/documentation/TEAM_HANDOVER.md",
+      "size_bytes": 7932,
+      "sha256": "21957163a68c49526cea875708f6c93693f377314b13392bdf53dc17ab095d7f"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/EXCLUDED_FROM_PACKAGE.json",
+      "size_bytes": 255,
+      "sha256": "c1d81b3d770e63c553c6577b27906bc84686408de195fd64093acd7d41d728a7"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/FINAL_DATASET_CATALOG.json",
+      "size_bytes": 24238,
+      "sha256": "0b97407aaac59c9cc32378a0147b9238a6cec9531e3488ac7d1618bb743ec9b6"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/column_dictionaries/rad/RAD_RDR_2012_220_02_25_0001_V00__dose_elements.json",
+      "size_bytes": 16193,
+      "sha256": "f1cc55d93e8c9bd0b5efd1957332f1c837708387693288f92d16381a151108f4"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/column_dictionaries/rad/RAD_RDR_2012_221_02_47_0002_V00__dose_elements.json",
+      "size_bytes": 22140,
+      "sha256": "9a2a2c7ad3281e5f02d4e07a50648338f341f48be8df771d124740f8f8b3477f"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/column_dictionaries/rad/RAD_RDR_2012_222_04_26_0003_V00__dose_elements.json",
+      "size_bytes": 15209,
+      "sha256": "4b847a68e7c4c8406dc563448238778c5d89542cef37166c586e33b214d554ee"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/column_dictionaries/rems/RME_398245439RMD00090000000_______PA__REMS_SCIENCE_TABLE.json",
+      "size_bytes": 30635,
+      "sha256": "f7a7e66fef266104a11e776ad1ed14a570a5fe8e2cde8bad7bc9a587e222a6c7"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/column_dictionaries/rems/RME_398422988RMD00110000000_______PA__REMS_SCIENCE_TABLE.json",
+      "size_bytes": 30719,
+      "sha256": "bb28f1a43050fc6b1d3b282d5993a44dae6a6ea5353425e1131a5eedd07f5f63"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/dataset_discovery_catalog.csv",
+      "size_bytes": 17434,
+      "sha256": "0328b852fedaa5729fbf564e4e1367bcfa69d376ed4f347401acd386e5545056"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/dataset_discovery_catalog.json",
+      "size_bytes": 29293,
+      "sha256": "7ec77bbcc449d4958447628c83cdee644afec248f19583cf075a100018353800"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/download_manifest.csv",
+      "size_bytes": 25982,
+      "sha256": "09470c51a435b39e3d8c9fda4e52e55b7314293908ade70989473737ca7b156b"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/download_manifest.json",
+      "size_bytes": 50308,
+      "sha256": "7539dd2c266f453396057aec2cdd7c4051df3a20ee47afc55f34bf11aba08746"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/logs/00_check_source_access.log",
+      "size_bytes": 2746,
+      "sha256": "7f579c04885571109222f6c13c9b1708d225a1a8f2c0822eccbf396b8850d522"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/logs/00_inventory_workspace.log",
+      "size_bytes": 357,
+      "sha256": "0d75f13d0678b2e1faa364cbabbdf9f5213322becc0a07a577825b015a17abb3"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/logs/01_discover_ode_products.log",
+      "size_bytes": 3124,
+      "sha256": "9028736dcfa5b19104a7b1a2af74cabd83f02964909968824fb29b07483a7224"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/logs/02_download_datasets.log",
+      "size_bytes": 916,
+      "sha256": "ac88ecaf01a67fa497faf16a4baecd3f40d313d7ecb45519a2c7121c7b336c7a"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/logs/02b_ingest_user_files.log",
+      "size_bytes": 5238,
+      "sha256": "a281f2fbed9e4b2c6727aaae919d6dabb3cd5ad4d8e99c8a4115e0c5c1b343f2"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/logs/03_validate_rasters.log",
+      "size_bytes": 1549,
+      "sha256": "17c843b58ad70261714c30e3dc46e6e5aae68bbba7125cdc66c60c0ed1f386dd"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/logs/04_validate_pds_tables.log",
+      "size_bytes": 2331,
+      "sha256": "691e85da2ca02f0a5d0ca6a15b377e5d4ac4c2fa7ba7dd86f59116f2e564634e"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/logs/05_process_terrain.log",
+      "size_bytes": 1429,
+      "sha256": "aae0a801fc7001789b6a9a1114b282955cca03a32910282bcf8bd75f6202bc87"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/logs/06_process_ctx.log",
+      "size_bytes": 798,
+      "sha256": "9a422da6844eac8c95de3465e4766128ccdf613a972c0a8eef9f0af88be8470c"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/logs/07_process_rems.log",
+      "size_bytes": 1165,
+      "sha256": "7d18185d905306bc820e4b2c0c1d41911ca14031b0149a6237bb093fc5561591"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/logs/08_process_rad.log",
+      "size_bytes": 1110,
+      "sha256": "8656cc8db2b49860e8ddd41452fc6bed600124d70f8f82602f7e7c4697b1a975"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/logs/09_build_catalogs.log",
+      "size_bytes": 1230,
+      "sha256": "82048933e073c17ee2bc6c9e150987aa598b202cf6fb14352b4cc7e69124b915"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/logs/10_package_and_verify.log",
+      "size_bytes": 137,
+      "sha256": "cbe20b19a6fd3d089f285d23735b3a71eaab8997893184d09ffb9514f73292a0"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/logs/run_step4.log",
+      "size_bytes": 308,
+      "sha256": "454a62d30c6e5d9fc97dadc8facc85c4454bcee2f71c47335b8be7d4eac0e96b"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/network_access_log.csv",
+      "size_bytes": 4948,
+      "sha256": "0d0999adddcbc9b78469e08665ee99a7b9d51407d7a4a3e157b6dee62ee8a782"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/network_access_log.json",
+      "size_bytes": 10805,
+      "sha256": "0330ae739814af6665466a9afa72374ab54606671cf3ad0f7d9863082178bafc"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/network_control_check.txt",
+      "size_bytes": 107,
+      "sha256": "a23d242d001a8870ed39141c4fa285a9dea6ccfd9a950a8ffab1d6765ae7e465"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/ode_discovery/ode_MRO_CTX_EDR_ERROR.json",
+      "size_bytes": 597,
+      "sha256": "2b40b9ebf549905841bdae68713423dc84caa8e3bbe523163bbe9211c8fd5a18"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/ode_discovery/ode_MRO_HIRISE_DTM_ERROR.json",
+      "size_bytes": 603,
+      "sha256": "f3d83f8ee1f5a1d0d0ee6c4f22c1906744e2d58bd17d51f60c85cdf1e77a12b6"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/step4_run_log.json",
+      "size_bytes": 4488,
+      "sha256": "003bebe14eda0844243858f94f940a0511530a3fe6e48bd97d87bdcff2195769"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/validated_dataset_catalog.json",
+      "size_bytes": 15478,
+      "sha256": "9b0795dd136df67eb60842b8c92f1fed6add997362a811c11dd4e9b65fa7aaaa"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/validation_pds_tables.json",
+      "size_bytes": 17365,
+      "sha256": "7c02e3ee1cac9bcdd7386606989dfb2f1ef241ecf7649ec72b0c183f78e5b55b"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/validation_rasters.json",
+      "size_bytes": 7248,
+      "sha256": "ec201e4aab060e2c0638d8d0fa1dc3b117ed3f0689fc074313b4c9377bbb76b7"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/validation_summary.csv",
+      "size_bytes": 7398,
+      "sha256": "0fbd82aae26f221c3e0de6a93700340e3a4359ad79be11af341b55e12ec2f966"
+    },
+    {
+      "path": "DHRUVION_DATA/metadata/workspace_inventory.json",
+      "size_bytes": 1589,
+      "sha256": "6357ac619a2d22a7e024825048040f15999c0c545e61fdebbcb68516b2b42f65"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/ctx/MurrayLab_GlobalCTXMosaic_V01_E136_N-08__GaleAOI_x10__GaleAOI.png",
+      "size_bytes": 10474881,
+      "sha256": "c99151cc97f54f0abfab9bbae6f750a2d4769ec1c59fb19f0ae1ac8a5eb56685"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/ctx/MurrayLab_GlobalCTXMosaic_V01_E136_N-08__GaleAOI_x10__GaleAOI_clip.tif",
+      "size_bytes": 10733200,
+      "sha256": "8498f38bb99b689e5b7257d84a383cb9c7047e2715f0d285e1a634a44a32eeb8"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/ctx/MurrayLab_GlobalCTXMosaic_V01_E136_N-08__GaleAOI_x10__GaleAOI_overlay_metadata.json",
+      "size_bytes": 1019,
+      "sha256": "f84098fc3c9390eb3b7c6e1108df5a6fc3153247c507fc8ac500706975cd9c9e"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/ctx/MurrayLab_GlobalCTXMosaic_V01_E136_N-08__GaleAOI_x10__ctx_provenance.json",
+      "size_bytes": 1838,
+      "sha256": "b0ef489b4d7dfa5c9efe76516997a40f1b24406eac4684fbf2a1b7479c12408b"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/ctx/README.md",
+      "size_bytes": 451,
+      "sha256": "41cb8bc9f6a7cadccfb53521189bc642da30dba925cd6c8bda1bf3fb3e0c1ddb"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/rad/README.md",
+      "size_bytes": 307,
+      "sha256": "1b2f88dbf4de078e7500cf68cc1290ff9d029610aecf4928ecb39a37c9c73085"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/rad/rad_observations_clean.csv",
+      "size_bytes": 23543,
+      "sha256": "3c4e3a1234f1810d6a927eb3bb3634b2e5e3b7948379eb6e3e897f67dcf46077"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/rad/rad_observations_clean.json",
+      "size_bytes": 54322,
+      "sha256": "7ada70ab533bf47422a468a72bfb1ed0ec5c6614a1f0101e9cc0bc19a2061617"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/rad/rad_processing_provenance.json",
+      "size_bytes": 1563,
+      "sha256": "20c04f9a31feb8b9fb75f6830569289701ff42ae71a663a7efae7a16821d9e6b"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/rad/rad_sol_summary.csv",
+      "size_bytes": 1474,
+      "sha256": "6eee9324f7d83ef63382b7ab83ccabb1fddb45e7f37b1ca7529d480d7e3cd6cb"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/rad/rad_sol_summary.json",
+      "size_bytes": 3095,
+      "sha256": "2f4b17cf73e23b9d8d9ff0abf443bebc57c03fa72210cf426c9d1dc3756e80b2"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/rad/rad_trends.json",
+      "size_bytes": 544,
+      "sha256": "6edc3c7ec7c42c8f87bf5f850ee94315c87c0d57db9d657a76ddc8e54e04181b"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/rems/README.md",
+      "size_bytes": 408,
+      "sha256": "3e47bd329a2f8a93c06dc2971e32c8c78bddeecbf9b5dac8f058f7a8f6a6bbbb"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/rems/rems_missing_values_report.csv",
+      "size_bytes": 2567,
+      "sha256": "d5db302f0f1a698fcbdf4a693758b74a3f5aa84feacb47ce1364161a6535d5f4"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/rems/rems_observations_clean.csv",
+      "size_bytes": 4952739,
+      "sha256": "2ec007a0c2d1d2c5022aec1db03fa6aa20e1c9797deb5cd8e2b204064fd2a1ef"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/rems/rems_observations_clean.json",
+      "size_bytes": 23224549,
+      "sha256": "d98a0d2b36617e7b98842b6acb2cf0a43fe6013bc02b8099df74d31115768507"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/rems/rems_processing_provenance.json",
+      "size_bytes": 2668,
+      "sha256": "71f79a8fd7c827aa6c3525793aacb7ab4d57f744305e66a265493f47343e9ad5"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/rems/rems_session_summary.csv",
+      "size_bytes": 233625,
+      "sha256": "8692bb85b82630831b85679f3c275917b954341590c240e1f111fbd18868c38b"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/rems/rems_session_summary.json",
+      "size_bytes": 592277,
+      "sha256": "e5ed9996de6a777d0b52a0931d92693e4ada76f17196a9958f1218a620f0dc5c"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/rems/rems_sol_summary.csv",
+      "size_bytes": 10630,
+      "sha256": "7b1c634927a9824d8a58ee6a8ec9c9c8b32c8962f8093de758b9ba24995c7e3e"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/rems/rems_sol_summary.json",
+      "size_bytes": 29056,
+      "sha256": "8b1eb3ed263177662e44340b8328f9396eb162d89969c7c3ea2312addd585d0d"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/rems/rems_trends.json",
+      "size_bytes": 3976,
+      "sha256": "58da4afbf28f0e95771c3bf04bee829243a526a291c2b9175435f0777244d085"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/terrain/Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI_coverage.png",
+      "size_bytes": 1262,
+      "sha256": "7343e2be5378c2ac7aae74ec111ee0cd3ef9ef75a2ae2ddd6a5561b8f73ee0b4"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/terrain/Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI_coverage_mask.tif",
+      "size_bytes": 3427,
+      "sha256": "998c5df3aa2c57b7f6a3ea87de5451ca829a52bfc3e079dc35f0b67f19dc1a6e"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/terrain/Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI_elevation.png",
+      "size_bytes": 136134,
+      "sha256": "e1cd4e41bbb2bc54f258299c1957644b6cebe68c8093e02873e748d9bed082eb"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/terrain/Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI_elevation_m.tif",
+      "size_bytes": 207305,
+      "sha256": "025cbbf96ac24316980309dccc6a23fd4ca498a477f120d01d92c0593ebe121d"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/terrain/Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI_overlay_metadata.json",
+      "size_bytes": 1813,
+      "sha256": "dac65ae7f85b38c707d41574a45acbd45a8ee086113a2e9ccd083a42bf759e46"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/terrain/Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI_roughness.png",
+      "size_bytes": 300720,
+      "sha256": "499c4bdb9f6503a0f7e8f051788c5489e2eec0365767bc7dd1aec505784606fd"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/terrain/Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI_roughness_tri_riley_m.tif",
+      "size_bytes": 538404,
+      "sha256": "35c23d200f2dfd1147cfa0a09ab91599a57190b0729879c0304d35d05b85fc75"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/terrain/Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI_slope.png",
+      "size_bytes": 338693,
+      "sha256": "0c7f015bf5a213a479c20c14dc6cafd26dfcc25c1c993996fd6446518d22b379"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/terrain/Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI_slope_deg.tif",
+      "size_bytes": 544263,
+      "sha256": "20fe7a33847c6fd43735d29e832129beb91a63c50a3237491ebb758c56a39dfb"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/terrain/Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI_terrain_provenance.json",
+      "size_bytes": 3902,
+      "sha256": "a67a230ac5a7a20190e928773e3ceaecb8526bcd78599c0e6156c48114bed483"
+    },
+    {
+      "path": "DHRUVION_DATA/processed/terrain/README.md",
+      "size_bytes": 815,
+      "sha256": "f4dab8b2f5826d3f9e15d977dc99ebf523da6c17347e9f179815537c4fc06af9"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/ctx/MurrayLab_GlobalCTXMosaic_V01_E136_N-08__GaleAOI_x10.provenance.json",
+      "size_bytes": 826,
+      "sha256": "506e5fe0b789fbd3d50b0df5dbac3b71fc16f31688a20d22f8b46564bacd6d19"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/ctx/MurrayLab_GlobalCTXMosaic_V01_E136_N-08__GaleAOI_x10.tif",
+      "size_bytes": 9232340,
+      "sha256": "dbfe1ea652a328f2daf1501234a38f42a50409490882ac92b7aa5acf28293624"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/ctx/README.md",
+      "size_bytes": 308,
+      "sha256": "669bf980f407a53a71e209e89297feb1cdb6bdf8eeea90bb9c6dcf876fdf4c6e"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/README.md",
+      "size_bytes": 320,
+      "sha256": "2a96638daa0aea015462680de3db60bef9021c11e61235fd172f37949f85a917"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/D_LETCNT.FMT",
+      "size_bytes": 1600,
+      "sha256": "ac2cfcfae04353c49229a07fae8795ebcc7a115de43f9da192d48022b3768cae"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/D_LET_EVC.FMT",
+      "size_bytes": 1600,
+      "sha256": "a6d0a32a73977b93cc5d89ba4a0e827816297366c08deff2910ea2060ae156eb"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/D_LET_EVW.FMT",
+      "size_bytes": 1600,
+      "sha256": "57c162afcc55523ac9a9a7dafa7025938e84ae18bdbb3c2d10a53daf0ea1dac4"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/HIST_PP.FMT",
+      "size_bytes": 4000,
+      "sha256": "95e2aa655f39568c0d4244c35572f040fa92827f79f70f16b10f9fe4b9af0725"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/HIST_PPXC.FMT",
+      "size_bytes": 1680,
+      "sha256": "24dbc51a9efc5005b1c59466891dfc831f021a597b4fc114f7cc0912de1eedfc"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/HIST_PPXW.FMT",
+      "size_bytes": 1680,
+      "sha256": "28f2eeefb6006de3ee464df64e8316d7b70f1b8d264a983830ee9faccc70366c"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/HIST_SP.FMT",
+      "size_bytes": 3840,
+      "sha256": "a6d628bc956bb384afa85fe80b8cc5474225e3d0295416fba887430d088b5db1"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/HIST_SPXC.FMT",
+      "size_bytes": 1680,
+      "sha256": "78ea5efeb7116d4e1a72ecbb1790ae3a5de3d9031a714a9d1952165a7951f947"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/HIST_SPXW.FMT",
+      "size_bytes": 1680,
+      "sha256": "b35f2a29f393f788b3a979af7b9addde7f0ce7cb700915d877452bf9c6294b8d"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/H_NDE.FMT",
+      "size_bytes": 4000,
+      "sha256": "0a319018ae98171ba2981ac250dd15c9a6cf88c03fb0a2b75305a3b1dde6a060"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/H_NDE_XC.FMT",
+      "size_bytes": 1680,
+      "sha256": "591b8fe5b1e7c63ee832326fd3d9fb4953eef6cbd6aed29ec55aadc1f6fef8a3"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/H_NDE_XW.FMT",
+      "size_bytes": 1678,
+      "sha256": "ffc958ace3f325b72356afe35f6c3de38b1704cc2357ac12922fa99955d59c33"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/H_N_CNT.FMT",
+      "size_bytes": 1600,
+      "sha256": "06760971904c379ddc1cfa8f859e31d77683bced03576cbc6cb071370cd81ee8"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/H_N_EVC.FMT",
+      "size_bytes": 1600,
+      "sha256": "1d558296da1cc54d286e58da65c2b1ae38acd6544b1a98979286133a76e10f0a"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/H_N_EVW.FMT",
+      "size_bytes": 1600,
+      "sha256": "d624d9f88c1ebf9166abf615c748d8e10d7ced18b9baf7d1b30bee4799df061e"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/L1_CNTR.FMT",
+      "size_bytes": 11120,
+      "sha256": "f91054abe15d27ef4694dbd2818a3202500546d0de9e5f11b2d51c3e5394ba28"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/L2_CNTR.FMT",
+      "size_bytes": 9120,
+      "sha256": "c19a0f360cdce8b17558e67adf5e88046a3575027f21ee79d58367e83765b208"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/PHA_TAB.FMT",
+      "size_bytes": 7120,
+      "sha256": "5a1e8fdb16d84276a48124a6c137cdcc12c570c45d0a29fda55fbb7127efc8d0"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/RAD_RDR_2012_220_02_25_0001_V00.LBL",
+      "size_bytes": 128320,
+      "sha256": "6eb5e69243b26f845ebeda9575048ac92a72a6f2ae084431170452b4a328c25c"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/RAD_RDR_2012_220_02_25_0001_V00.TXT",
+      "size_bytes": 6575409,
+      "sha256": "4d08d57a55b5c48a72eaf61c554e7ebf31d5a3d50f1f7b8327d9bab8d575fc87"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/RAD_RDR_2012_221_02_47_0002_V00.LBL",
+      "size_bytes": 182880,
+      "sha256": "5637b21a0ee0d736af7738d423b0b522757a0842c61b35af59970731ad0319b4"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/RAD_RDR_2012_221_02_47_0002_V00.TXT",
+      "size_bytes": 9993622,
+      "sha256": "4164af456db82a6882c4d711982a4c0d8c0474f15a081f1d50b7bba3aaf2f22c"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/RAD_RDR_2012_222_04_26_0003_V00.LBL",
+      "size_bytes": 120160,
+      "sha256": "5bba6128c6d7486a633605d18c676901de947c279701246d5544a08caa6b2001"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/SOL_00000_00089/RAD_RDR_2012_222_04_26_0003_V00.TXT",
+      "size_bytes": 6550678,
+      "sha256": "f9d238e33e98abdfb52845828b3b7e56ee6c3fae5088d145356c94ae68690c39"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rad/documentation/RAD_RDR_SIS.pdf",
+      "size_bytes": 1311144,
+      "sha256": "3cfe8335d8c8d5c1ae6dd0b2775c57aa341ef2481f31f82d70593a3a51791239"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rems/README.md",
+      "size_bytes": 328,
+      "sha256": "e509f5c477205c41af82f967ca8881be86fe64f2786f65303529f25bada73c99"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rems/SOL00009/RME_398245439RMD00090000000_______PA.LBL",
+      "size_bytes": 3026,
+      "sha256": "1a635a9e2041cb2ed7eccbf8bfe7de8bc7036854575f1c37c3a157c8745ffae3"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rems/SOL00009/RME_398245439RMD00090000000_______PA.TAB",
+      "size_bytes": 2053440,
+      "sha256": "2d7eee88333bdf6128df030a62810bca332e0ac29b0817e7f7ae427c6d16fbc8"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rems/SOL00010/RME_398334213RMD00100000000_______PA.LBL",
+      "size_bytes": 3029,
+      "sha256": "3e05f99b1014f26c84babe61ce61df9f105cb81c37551f242d255ff333398b8d"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rems/SOL00011/RME_398422988RMD00110000000_______PA.LBL",
+      "size_bytes": 3029,
+      "sha256": "5ebc6ea1edb535a76a76f8e4fa4c5ac5a78737f3d9241f703de9aa059aacb1bb"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rems/SOL00011/RME_398422988RMD00110000000_______PA.TAB",
+      "size_bytes": 4821120,
+      "sha256": "7fe1e90b08f42f2d3b3b5851a2b0d00d732c9af590284cabd5953584f6c395c6"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rems/documentation/MODRDR6.FMT",
+      "size_bytes": 24665,
+      "sha256": "9609aa0d596bcbafdcca21c6c06bd4134fee6b8d5cbefd81a68133a212864b1a"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/rems/documentation/REMS_RDR_SIS.TXT",
+      "size_bytes": 329601,
+      "sha256": "31923356589c542be5439df294161b928b43882c4e9154ee2f6b6da198a5d906"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/terrain/Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI.provenance.json",
+      "size_bytes": 816,
+      "sha256": "f1d7542d41dfc1e874fcf8ae35e1ce19211aea8d79e3eb33ea1599f73bc2efca"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/terrain/Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI.tif",
+      "size_bytes": 257566,
+      "sha256": "62d9595d0b431ddc635dea9c7aa3a3cd463dc03c5f4c4b6e561286653a773abf"
+    },
+    {
+      "path": "DHRUVION_DATA/raw/terrain/README.md",
+      "size_bytes": 257,
+      "sha256": "bbbd5641aea62c59a95260827bdcd2c58622000f0c029eed5891f8aead4f5020"
+    },
+    {
+      "path": "DHRUVION_DATA/reports/phase1_inspection_report.md",
+      "size_bytes": 16232,
+      "sha256": "e34966d36b34f10f293605fd6affe76dde91419b5e67bffc728dfa1ffaf38ab1"
+    },
+    {
+      "path": "DHRUVION_DATA/reports/phase2_download_report.md",
+      "size_bytes": 13779,
+      "sha256": "42796ef40dc09d4366608f656f14a4704364da2f80847310315f78095f865072"
+    },
+    {
+      "path": "DHRUVION_DATA/reports/phase3_validation_report.md",
+      "size_bytes": 11955,
+      "sha256": "c77ed9106bc020ada20136b01f77ee0d145af9a5df1a16027abaada7d43ff7ee"
+    },
+    {
+      "path": "DHRUVION_DATA/reports/phase4_processing_report.md",
+      "size_bytes": 10937,
+      "sha256": "fe457770e5da1fc60757460bdba0ac3b48bba3b5584d74c333ab831b310705d1"
+    },
+    {
+      "path": "DHRUVION_DATA/reports/test_results.txt",
+      "size_bytes": 1439,
+      "sha256": "11ad34735e7f8a26a5aa110795eeed1df4bc849ab303ab3652b2c94e73a59c66"
+    },
+    {
+      "path": "DHRUVION_DATA/reports/test_results_junit.xml",
+      "size_bytes": 3045,
+      "sha256": "5aa8105fb90b1d1770a77a9e87382079048d4209488d42aeb8771817a59e73a5"
+    },
+    {
+      "path": "DHRUVION_DATA/requirements.txt",
+      "size_bytes": 607,
+      "sha256": "4741c91b23adb07d1dcfaaa1a919171f9f7beae1939006f413c6e533a3b69225"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/00_check_source_access.py",
+      "size_bytes": 4353,
+      "sha256": "8e91f832559765d9a6584deb891859426bfef31fb912dd46d368c32d557bd221"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/00_inventory_workspace.py",
+      "size_bytes": 4652,
+      "sha256": "e6dc1ff1b9b7ee3b3f9ae0dada10edccbdfe51702a24bbfb09b774c909af93b2"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/01_discover_ode_products.py",
+      "size_bytes": 7073,
+      "sha256": "d499cbf6e08e2517cb0a627684dbef70441bd4f268327a7239b923234eb17557"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/02_download_datasets.py",
+      "size_bytes": 15054,
+      "sha256": "8836d30034491e623779c8daeed0ee552ef6d08bf2c7d4f7a4f4a81884f303b4"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/02b_ingest_user_files.py",
+      "size_bytes": 3881,
+      "sha256": "3e92b28c440297b34f9934b91d11404ebe372273c47e10d3a30c5cd6e4e0756c"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/03_validate_rasters.py",
+      "size_bytes": 15414,
+      "sha256": "b06cb02a7cf446a1f38200d596e9d49c9f9e54e20cdc9878a595c82984e0049f"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/04_validate_pds_tables.py",
+      "size_bytes": 9972,
+      "sha256": "f4e715f4f5600d09c68bfe465b3e9abe23a9da252803c63a5738c15c737136cc"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/05_process_terrain.py",
+      "size_bytes": 13275,
+      "sha256": "6a070fc35a9b70470324661dd73e622c2b1a08e5e56133be51d59890ab2596bb"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/06_process_ctx.py",
+      "size_bytes": 8663,
+      "sha256": "152ab1e07a2e6425a65f3bfae74441402a4be404111ad68c66a1e0e43115dcab"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/07_process_rems.py",
+      "size_bytes": 3686,
+      "sha256": "ede64d09b6a2ae14c1ac1f76268a8a923b5fc026a139e4fe6b4c4f1f85fa9f84"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/08_process_rad.py",
+      "size_bytes": 8645,
+      "sha256": "2f8fe7b146baccca585d5e20c2305607d6f105950de419636d42f99245972fda"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/09_build_catalogs.py",
+      "size_bytes": 11455,
+      "sha256": "cb0c5cc11b99e3b74f8529c58e11c8c79c942b8340bfdcf4b145a59b2de99ef9"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/10_package_and_verify.py",
+      "size_bytes": 9886,
+      "sha256": "e05ef087adf6bdd830bf3ad956ef299daae7d4cfa3a9594db2d68b08c494703b"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/config/download_plan.json",
+      "size_bytes": 7059,
+      "sha256": "53cef7f6d896c75354084df1706bcc1bd8407d834d6245cf2b50d964a1d098e3"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/config/ingest_spec_2026-11-14.json",
+      "size_bytes": 25186,
+      "sha256": "1505634139f3cf45a3b5e0ce68d446ce186eb80930a9c8de14f0696aa2459187"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/config/rad_column_map.json",
+      "size_bytes": 972,
+      "sha256": "863f704910a7b715617883a36c864cdaac63e5447c1bd4bdeb332ee3cab70646"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/config/rems_column_map.json",
+      "size_bytes": 4934,
+      "sha256": "f9e95a9a51af31a16823e47a2f835975a70d37a6d7c0c71e3a4709108f8c918a"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/config/source_endpoints.json",
+      "size_bytes": 4768,
+      "sha256": "6fea0a4688c9359362b0bf00b51f5a6e4ee9fb5fb888badd76e6d64f9e9369cc"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/crop_for_upload.py",
+      "size_bytes": 6181,
+      "sha256": "7952b6a034f148af8f66fbb800393c181ad5615932d1227c933a5ae4ea485f7c"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/dhruvion_common.py",
+      "size_bytes": 12944,
+      "sha256": "daacebe1c233b90a63644e998a45352dbfde5b9b4a1473925f95a91c0e85b8aa"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/pds3_table.py",
+      "size_bytes": 12366,
+      "sha256": "62a37006070921ff5ad1ca00623de2c938447405032d05d089f159b8caef5dab"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/rad_rdr.py",
+      "size_bytes": 8478,
+      "sha256": "227a40a06987bd69fb6daa4ca330b7100ebfe3762ca67b0105ac4a2e157b5ee7"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/rover_tables.py",
+      "size_bytes": 17075,
+      "sha256": "f5669969e5b7b1a8655195cde65d9ea7e48f09ca273db0ed99ac53293f617434"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/run_pipeline.sh",
+      "size_bytes": 1150,
+      "sha256": "23e6bac3c9aa561c06993aa3988f1ea0a918b59367cbc908d385cb8a57ae670a"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/run_step4.py",
+      "size_bytes": 5022,
+      "sha256": "c67ce466bc882e962d207d19ca0aef4ab283ce72efe4a67badfa41fcb70e3d3e"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/terrain_math.py",
+      "size_bytes": 10838,
+      "sha256": "4bc6844898a8aa7e6a1c0b5c1d32472432f668917326e150b82f7397e7a63b15"
+    },
+    {
+      "path": "DHRUVION_DATA/scripts/tests/test_pipeline.py",
+      "size_bytes": 27522,
+      "sha256": "5b057ac69c26958a1436786623a617b5c6541c3e0b14ff408134e1f326e9f12b"
+    }
+  ]
+}

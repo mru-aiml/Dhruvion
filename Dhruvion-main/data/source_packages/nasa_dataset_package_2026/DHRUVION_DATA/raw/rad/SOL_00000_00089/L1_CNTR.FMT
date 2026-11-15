@@ -1,0 +1,139 @@
+/* L1_CNTR.FMT  */                                                            
+/* This file defines the structure of the L1 Counter Tables */                
+                                                                              
+ INTERCHANGE_FORMAT      = ASCII                                              
+ ROW_BYTES               = 137   /* Includes <CR><LF> */                      
+ COLUMNS                 = 13                                                 
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = CHANNEL                                                  
+    COLUMN_NUMBER  = 1                                                        
+    START_BYTE     = 2                                                        
+    BYTES          = 2                                                        
+    DATA_TYPE      = ASCII_INTEGER                                            
+    DESCRIPTION    = "The channel number from 0-35."                          
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = CHANNEL_NAME                                             
+    COLUMN_NUMBER  = 2                                                        
+    START_BYTE     = 6                                                        
+    BYTES          = 6           /* Does NOT include double quotes */         
+    DATA_TYPE      = CHARACTER                                                
+    DESCRIPTION    = "The channel name (ID)."                                 
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = FAST                                                     
+    COLUMN_NUMBER  = 3                                                        
+    START_BYTE     = 14                                                       
+    BYTES          = 10                                                       
+    DATA_TYPE      = ASCII_INTEGER                                            
+    UNIT           = "Counts"                                                 
+    DESCRIPTION    = "The fast trigger counts."                               
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = SLOW                                                     
+    COLUMN_NUMBER  = 4                                                        
+    START_BYTE     = 25                                                       
+    BYTES          = 10                                                       
+    DATA_TYPE      = ASCII_INTEGER                                            
+    UNIT           = "Counts"                                                 
+    DESCRIPTION    = "The slow trigger counts."                               
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = DURATION                                                 
+    COLUMN_NUMBER  = 5                                                        
+    START_BYTE     = 36                                                       
+    BYTES          = 10                                                       
+    DATA_TYPE      = ASCII_INTEGER                                            
+    UNIT           = "Seconds"                                                
+    DESCRIPTION    = "The time duration (secs) the detector was active."      
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = ALIVE_PERCENT                                            
+    COLUMN_NUMBER  = 6                                                        
+    START_BYTE     = 47                                                       
+    BYTES          = 8                                                        
+    DATA_TYPE      = ASCII_REAL                                               
+    UNIT           = "Percent"                                                
+    DESCRIPTION    = "                                                        
+      The percent the detector was active during the observation.             
+       (The duration divided by the total observation time.)                  
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = FAST_DAC                                                 
+    COLUMN_NUMBER  = 7                                                        
+    START_BYTE     = 56                                                       
+    BYTES          = 10                                                       
+    DATA_TYPE      = ASCII_INTEGER                                            
+    UNIT           = "N/A"                                                    
+    DESCRIPTION    = "The baseline fast trigger threshold."                   
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = SLOW_DAC                                                 
+    COLUMN_NUMBER  = 8                                                        
+    START_BYTE     = 67                                                       
+    BYTES          = 10                                                       
+    DATA_TYPE      = ASCII_INTEGER                                            
+    UNIT           = "N/A"                                                    
+    DESCRIPTION    = "The baseline slow trigger threshold."                   
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = FAST_ACTUAL                                              
+    COLUMN_NUMBER  = 9                                                        
+    START_BYTE     = 78                                                       
+    BYTES          = 11                                                       
+    DATA_TYPE      = ASCII_INTEGER                                            
+    UNIT           = "N/A"                                                    
+    DESCRIPTION    = "The actual fast trigger setting."                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = SLOW_ACTUAL                                              
+    COLUMN_NUMBER  = 10                                                       
+    START_BYTE     = 90                                                       
+    BYTES          = 11                                                       
+    DATA_TYPE      = ASCII_INTEGER                                            
+    UNIT           = "N/A"                                                    
+    DESCRIPTION    = "The actual slow trigger setting."                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = INPUT_GAIN                                               
+    COLUMN_NUMBER  = 11                                                       
+    START_BYTE     = 102                                                      
+    BYTES          = 10                                                       
+    DATA_TYPE      = ASCII_INTEGER                                            
+    UNIT           = "N/A"                                                    
+    DESCRIPTION    = "The input gain setting."                                
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = FAST_SHAPER                                              
+    COLUMN_NUMBER  = 12                                                       
+    START_BYTE     = 113                                                      
+    BYTES          = 11                                                       
+    DATA_TYPE      = ASCII_INTEGER                                            
+    UNIT           = "N/A"                                                    
+    DESCRIPTION    = "The fast shaper gain setting."                          
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = SLOW_SHAPER                                              
+    COLUMN_NUMBER  = 13                                                       
+    START_BYTE     = 125                                                      
+    BYTES          = 11                                                       
+    DATA_TYPE      = ASCII_INTEGER                                            
+    UNIT           = "N/A"                                                    
+    DESCRIPTION    = "The slow shaper gain setting."                          
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+ /* End of L1_CNTR.FMT */                                                     

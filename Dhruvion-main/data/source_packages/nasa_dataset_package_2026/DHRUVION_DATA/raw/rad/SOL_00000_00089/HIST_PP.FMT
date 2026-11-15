@@ -1,0 +1,50 @@
+/* HIST_PP.FMT */                                                             
+/* This file defines the structure for the PP Histograms Y + 24x3 part */     
+                                                                              
+ INTERCHANGE_FORMAT      = ASCII                                              
+ ROW_BYTES               = 346  /* Includes <CR><LF> */                       
+ COLUMNS                 = 3                                                  
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = HIST_PP_Y_ENERGY_CENTER_RATIOS                           
+    COLUMN_NUMBER  = 1                                                        
+    START_BYTE     = 4                                                        
+    BYTES          = 13                                                       
+    DATA_TYPE      = ASCII_REAL                                               
+    UNIT           = "N/A"                                                    
+    DESCRIPTION    = "                                                        
+      Y values of the Penetrating Particle (PP) Histograms                    
+      Y1 through Y24 are the center energy bin ratios (dimensionless)         
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = HIST_PP_Y_ENERGY_WIDTH_RATIOS                            
+    COLUMN_NUMBER  = 2                                                        
+    START_BYTE     = 20                                                       
+    BYTES          = 13                                                       
+    DATA_TYPE      = ASCII_REAL                                               
+    UNIT           = "N/A"                                                    
+    DESCRIPTION    = "                                                        
+      Y values of the Penetrating Particle (PP) Histograms                    
+      Y1 through Y24 are the energy width ratios (dimensionless)              
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = HIST_PP_VALUES                                           
+    COLUMN_NUMBER  = 3                                                        
+    START_BYTE     = 33                                                       
+    BYTES          = 312                                                      
+    ITEMS          = 24                                                       
+    ITEM_BYTES     = 13                                                       
+    DATA_TYPE      = ASCII_REAL                                               
+    UNIT           = "Counts"                                                 
+    DESCRIPTION    = "                                                        
+      The HIST_PP_VALUES column contains the Penetrating Particle (PP)        
+      Histogram values associated with the X portion (energies in MeV)        
+      and the Y portion (energy bin ratios).                                  
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+ /* End of HIST_PP.FMT */                                                     

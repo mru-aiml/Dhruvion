@@ -1,0 +1,167 @@
+{
+  "status": "CONFIRMED",
+  "confirmed_by": "Claude (AI assistant) by reading every column DESCRIPTION/UNIT in MODRDR6.FMT and REMS_RDR_SIS.TXT sections 3.1.6 and 3.2; independent review by a team member is recommended",
+  "confirmed_against": "MODRDR6.FMT (mslrem_1001/LABEL) and REMS_RDR_SIS.TXT Issue 9 (mslrem_1001/DOCUMENT)",
+  "missing_value_sentinels": {
+    "values": [
+      -999.0
+    ],
+    "source": "REMS_RDR_SIS.TXT section 3.2 and change-log Issue 9: data not known or invalid are set to -999 (stored as -999.00 or -9.990E+02), replacing UNK/NULL"
+  },
+  "time": {
+    "sol_column": null,
+    "sol_from_column_regex": {
+      "column": "LMST",
+      "regex": "^(\\d{5})M"
+    },
+    "sol_from_path_regex": "SOL(\\d{5})",
+    "session_time_column": "TIMESTAMP",
+    "session_time_type": "numeric_seconds",
+    "session_gap_seconds": 60,
+    "_notes": "LMST format SSSSSMHH:MM:SS.sss (MODRDR6.FMT); TIMESTAMP = seconds since noon 1-Jan-2000; REMS samples at ~1 Hz, so a gap > 60 s starts a new observation session"
+  },
+  "measurements": {
+    "air_temperature": {
+      "column": "AMBIENT_TEMP",
+      "quantity": "Estimated ambient air temperature",
+      "expected_unit": "KELVIN",
+      "quality_column": "AMBIENT_TEMP_CONFIDENCE_LEVEL",
+      "quality_rules": [
+        "no_zeros",
+        "all_ones"
+      ]
+    },
+    "ground_temperature": {
+      "column": "BRIGHTNESS_TEMP",
+      "quantity": "Ground brightness temperature (GTS)",
+      "expected_unit": "KELVIN",
+      "quality_column": "GTS_CONFIDENCE_LEVEL",
+      "quality_rules": [
+        "no_zeros",
+        "all_ones"
+      ]
+    },
+    "pressure": {
+      "column": "PRESSURE",
+      "quantity": "Atmospheric pressure",
+      "expected_unit": "PASCAL",
+      "quality_column": "PS_CONFIDENCE_LEVEL",
+      "quality_rules": [
+        "no_zeros",
+        "all_ones"
+      ]
+    },
+    "horizontal_wind_speed": {
+      "column": "HORIZONTAL_WIND_SPEED",
+      "quantity": "Horizontal wind speed (label DESCRIPTION text is a copy of the wind-direction text - archive quirk; name and unit identify speed)",
+      "expected_unit": "METERS/SECOND",
+      "quality_column": "WS_CONFIDENCE_LEVEL",
+      "quality_rules": [
+        "no_zeros",
+        "all_ones"
+      ]
+    },
+    "wind_direction": {
+      "column": "WIND_DIRECTION",
+      "quantity": "Wind direction (incoming, clockwise from North)",
+      "expected_unit": "DEGREE",
+      "circular": true,
+      "quality_column": "WS_CONFIDENCE_LEVEL",
+      "quality_rules": [
+        "no_zeros",
+        "all_ones"
+      ]
+    },
+    "relative_humidity": {
+      "column": "LOCAL_RELATIVE_HUMIDITY",
+      "quantity": "Local relative humidity at the humidity sensor",
+      "expected_unit": "%",
+      "quality_column": "HS_CONFIDENCE_LEVEL",
+      "quality_rules": [
+        "no_zeros",
+        "all_ones"
+      ]
+    },
+    "uv_a": {
+      "column": "UV_A",
+      "quantity": "UV irradiance band A",
+      "expected_unit": "W/m**2",
+      "quality_column": "UVS_CONFIDENCE_LEVEL",
+      "quality_rules": [
+        "no_zeros",
+        "all_ones"
+      ]
+    },
+    "uv_b": {
+      "column": "UV_B",
+      "quantity": "UV irradiance band B",
+      "expected_unit": "W/m**2",
+      "quality_column": "UVS_CONFIDENCE_LEVEL",
+      "quality_rules": [
+        "no_zeros",
+        "all_ones"
+      ]
+    },
+    "uv_c": {
+      "column": "UV_C",
+      "quantity": "UV irradiance band C",
+      "expected_unit": "W/m**2",
+      "quality_column": "UVS_CONFIDENCE_LEVEL",
+      "quality_rules": [
+        "no_zeros",
+        "all_ones"
+      ]
+    },
+    "uv_abc": {
+      "column": "UV_ABC",
+      "quantity": "UV irradiance band ABC",
+      "expected_unit": "W/m**2",
+      "quality_column": "UVS_CONFIDENCE_LEVEL",
+      "quality_rules": [
+        "no_zeros",
+        "all_ones"
+      ]
+    },
+    "uv_d": {
+      "column": "UV_D",
+      "quantity": "UV irradiance band D",
+      "expected_unit": "W/m**2",
+      "quality_column": "UVS_CONFIDENCE_LEVEL",
+      "quality_rules": [
+        "no_zeros",
+        "all_ones"
+      ]
+    },
+    "uv_e": {
+      "column": "UV_E",
+      "quantity": "UV irradiance band E",
+      "expected_unit": "W/m**2",
+      "quality_column": "UVS_CONFIDENCE_LEVEL",
+      "quality_rules": [
+        "no_zeros",
+        "all_ones"
+      ]
+    }
+  },
+  "preserve_columns": [
+    "LMST",
+    "LTST",
+    "BRIGHTNESS_TEMP_LONG_TERM_UNCERTAINTY",
+    "BRIGHTNESS_TEMP_SHORT_TERM_UNCERTAINTY",
+    "PRESSURE_UNCERTAINTY",
+    "LOCAL_RELATIVE_HUMIDITY_UNCERTAINTY",
+    "HS_TEMP",
+    "UV_A_UNCERTAINTY",
+    "UV_B_UNCERTAINTY",
+    "UV_C_UNCERTAINTY",
+    "UV_ABC_UNCERTAINTY",
+    "UV_D_UNCERTAINTY",
+    "UV_E_UNCERTAINTY",
+    "PS_CONFIGURATION"
+  ],
+  "quality_rule_definitions": {
+    "no_zeros": "no factor reported as non-optimal ('0'); unknown factors ('X') allowed",
+    "all_ones": "every factor optimal ('1') - strictest",
+    "source": "REMS_RDR_SIS.TXT section 3.1.6"
+  }
+}

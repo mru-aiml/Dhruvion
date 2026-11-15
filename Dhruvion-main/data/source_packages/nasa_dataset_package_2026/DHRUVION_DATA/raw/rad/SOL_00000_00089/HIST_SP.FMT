@@ -1,0 +1,48 @@
+/* HIST_SP.FMT */                                                             
+/* This file defines the structure for the SP Histograms Y + 16x12 part  */   
+                                                                              
+ INTERCHANGE_FORMAT      = ASCII                                              
+ ROW_BYTES               = 242  /* Includes <CR><LF> */                       
+ COLUMNS                 = 3                                                  
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = HIST_SP_Y_ENERGY_CENTERS                                 
+    COLUMN_NUMBER  = 1                                                        
+    START_BYTE     = 4                                                        
+    BYTES          = 13                                                       
+    DATA_TYPE      = ASCII_REAL                                               
+    UNIT           = "MeV^2"                                                  
+    DESCRIPTION    = "                                                        
+      The Y_AXIS column contains the center energies squared (MeV^2).         
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = HIST_SP_Y_ENERGY_WIDTHS                                  
+    COLUMN_NUMBER  = 2                                                        
+    START_BYTE     = 20                                                       
+    BYTES          = 13                                                       
+    DATA_TYPE      = ASCII_REAL                                               
+    UNIT           = "MeV^2"                                                  
+    DESCRIPTION    = "                                                        
+      The Y_AXIS column contains the energy widths squared (MeV^2).           
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+  OBJECT           = COLUMN                                                   
+    NAME           = HIST_SP_VALUES                                           
+    COLUMN_NUMBER  = 3                                                        
+    START_BYTE     = 33                                                       
+    BYTES          = 208                                                      
+    ITEMS          = 16                                                       
+    ITEM_BYTES     = 13                                                       
+    DATA_TYPE      = ASCII_REAL                                               
+    UNIT           = "Counts"                                                 
+    DESCRIPTION    = "                                                        
+      The HIST_SP_VALUES column contains the Stopping Particle (SP)           
+      Histogram values associated with the X portion (energy bin ratios)      
+      and the Y portion (energies squared in MeV).                            
+      "                                                                       
+  END_OBJECT       = COLUMN                                                   
+                                                                              
+ /* End of HIST_SP.FMT */                                                     

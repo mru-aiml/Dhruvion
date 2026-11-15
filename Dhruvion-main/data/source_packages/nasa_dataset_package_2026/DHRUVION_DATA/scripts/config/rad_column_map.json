@@ -1,0 +1,20 @@
+{
+  "status": "CONFIRMED",
+  "confirmed_by": "Claude (AI assistant) from the RAD RDR labels (OBSnn_TOT_DOSE_B/E_ELEMENT objects) and RAD_RDR_SIS.pdf v3.2; independent review recommended",
+  "confirmed_against": "RAD RDR labels (DATA/SOL_00000_00089) and RAD_RDR_SIS.pdf v3.2 (28 Aug 2013) section 4.2.1.6 'Dosimetry': total dose for the B and E detectors in microGray/hour",
+  "measurements": {
+    "dose_rate_B": {
+      "label_object_suffix": "TOT_DOSE_B_ELEMENT",
+      "detector": "B (silicon detector)",
+      "quantity": "Dosimetry total dose rate, detector B",
+      "expected_unit": "microGray / Hour"
+    },
+    "dose_rate_E": {
+      "label_object_suffix": "TOT_DOSE_E_ELEMENT",
+      "detector": "E (BC-432 plastic scintillator)",
+      "quantity": "Dosimetry total dose rate, detector E",
+      "expected_unit": "microGray / Hour"
+    }
+  },
+  "qc_note": "QC and rover position fields are placeholders per SIS v3.2 section 4.2.1.2 - never used for filtering"
+}

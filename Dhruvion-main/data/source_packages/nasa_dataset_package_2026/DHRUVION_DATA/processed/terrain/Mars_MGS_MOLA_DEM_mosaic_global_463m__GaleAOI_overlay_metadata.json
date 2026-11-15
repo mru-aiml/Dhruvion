@@ -1,0 +1,56 @@
+{
+  "bounds_latlon": {
+    "south": -7.00015066404996,
+    "north": -3.7969567217949582,
+    "west": 136.19824389105233,
+    "east": 139.4014378333073
+  },
+  "leaflet_bounds": [
+    [
+      -7.00015066404996,
+      136.19824389105233
+    ],
+    [
+      -3.7969567217949582,
+      139.4014378333073
+    ]
+  ],
+  "latitude_type": "planetocentric",
+  "longitude_direction": "east-positive",
+  "image_projection": "Equirectangular Mars",
+  "note": "PNG pixels are on the source raster grid. For an equirectangular source a lat/lon image overlay is geometrically exact; do NOT place it on a Web-Mercator (EPSG:3857) map without reprojection.",
+  "layers": {
+    "elevation": {
+      "png": "Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI_elevation.png",
+      "colormap": "terrain",
+      "units": "metre",
+      "display_vmin": -4422.0,
+      "display_vmax": 377.0,
+      "stretch": "linear; values outside clipped for display only"
+    },
+    "slope": {
+      "png": "Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI_slope.png",
+      "colormap": "magma",
+      "units": "degree",
+      "display_vmin": 0.0,
+      "display_vmax": 21.581836929321287,
+      "stretch": "linear; values outside clipped for display only"
+    },
+    "roughness": {
+      "png": "Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI_roughness.png",
+      "colormap": "viridis",
+      "units": "metre",
+      "display_vmin": 8.83176040649414,
+      "display_vmax": 391.6870013427734,
+      "stretch": "linear; values outside clipped for display only"
+    },
+    "coverage": {
+      "png": "Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI_coverage.png",
+      "legend": {
+        "transparent": "elevation, slope and roughness valid",
+        "grey": "no elevation data",
+        "amber": "elevation valid, slope/roughness undefined"
+      }
+    }
+  }
+}

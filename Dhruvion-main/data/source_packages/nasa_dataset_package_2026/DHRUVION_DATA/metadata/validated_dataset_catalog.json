@@ -1,0 +1,350 @@
+{
+  "generated_utc": "2026-11-14T19:46:18+00:00",
+  "status_counts": {
+    "NOT AVAILABLE": 12,
+    "VALIDATED WITH LIMITATIONS": 4
+  },
+  "status_vocabulary": [
+    "VALIDATED",
+    "VALIDATED WITH LIMITATIONS",
+    "INVALID",
+    "INCOMPLETE",
+    "NOT AVAILABLE"
+  ],
+  "datasets": [
+    {
+      "candidate_id": "C01",
+      "dataset_name": "Existing local DHRUVION MOLA elevation, slope and roughness GeoTIFFs",
+      "category": "terrain",
+      "validation_status": "NOT AVAILABLE",
+      "not_available_reason": "Files not supplied to this environment; nothing to validate",
+      "files": [],
+      "support_files": [],
+      "approved_files": []
+    },
+    {
+      "candidate_id": "C02",
+      "dataset_name": "MGS MOLA DEM global mosaic, 463 m/px (USGS Astrogeology)",
+      "category": "terrain",
+      "validation_status": "VALIDATED WITH LIMITATIONS",
+      "not_available_reason": null,
+      "files": [
+        {
+          "file": "raw/terrain/Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI.tif",
+          "sha256": "62d9595d0b431ddc635dea9c7aa3a3cd463dc03c5f4c4b6e561286653a773abf",
+          "size_bytes": 257566,
+          "validation_status": "VALIDATED WITH LIMITATIONS",
+          "approved_for_processing": true,
+          "limitations": [
+            "Units not stored in file; taken from source documentation"
+          ],
+          "reasons": []
+        }
+      ],
+      "support_files": [
+        "raw/terrain/Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI.provenance.json"
+      ],
+      "approved_files": [
+        "raw/terrain/Mars_MGS_MOLA_DEM_mosaic_global_463m__GaleAOI.tif"
+      ]
+    },
+    {
+      "candidate_id": "C03",
+      "dataset_name": "MOLA Mission Experiment Gridded Data Records (MEGDR)",
+      "category": "terrain",
+      "validation_status": "NOT AVAILABLE",
+      "not_available_reason": "Not selected for download in this run (duplicate, deferred or no plan entry): Skip unless C02 is unavailable (archival PDS fallback).",
+      "files": [],
+      "support_files": [],
+      "approved_files": []
+    },
+    {
+      "candidate_id": "C04",
+      "dataset_name": "HRSC and MOLA blended global DEM, 200 m/px, v2 (USGS)",
+      "category": "terrain",
+      "validation_status": "NOT AVAILABLE",
+      "not_available_reason": "Not selected for download in this run (duplicate, deferred or no plan entry): Optional upgrade over C02: AOI window via raster_subset after confirming HRSC coverage of Gale.",
+      "files": [],
+      "support_files": [],
+      "approved_files": []
+    },
+    {
+      "candidate_id": "C05",
+      "dataset_name": "Global CTX Mosaic of Mars (Caltech Murray Lab) - Gale tile(s)",
+      "category": "ctx",
+      "validation_status": "VALIDATED WITH LIMITATIONS",
+      "not_available_reason": null,
+      "files": [
+        {
+          "file": "raw/ctx/MurrayLab_GlobalCTXMosaic_V01_E136_N-08__GaleAOI_x10.tif",
+          "sha256": "dbfe1ea652a328f2daf1501234a38f42a50409490882ac92b7aa5acf28293624",
+          "size_bytes": 9232340,
+          "validation_status": "VALIDATED WITH LIMITATIONS",
+          "approved_for_processing": true,
+          "limitations": [
+            "Units not stored in file; taken from source documentation",
+            "Partial AOI coverage: 87.8% of sample points valid"
+          ],
+          "reasons": []
+        }
+      ],
+      "support_files": [
+        "raw/ctx/MurrayLab_GlobalCTXMosaic_V01_E136_N-08__GaleAOI_x10.provenance.json"
+      ],
+      "approved_files": [
+        "raw/ctx/MurrayLab_GlobalCTXMosaic_V01_E136_N-08__GaleAOI_x10.tif"
+      ]
+    },
+    {
+      "candidate_id": "C06",
+      "dataset_name": "NASA Mars Trek layer Gale_CTX_BlockAdj_dd",
+      "category": "ctx",
+      "validation_status": "NOT AVAILABLE",
+      "not_available_reason": "Not selected for download in this run (duplicate, deferred or no plan entry): Frontend alternative to C05; inspect GetCapabilities before use.",
+      "files": [],
+      "support_files": [],
+      "approved_files": []
+    },
+    {
+      "candidate_id": "C07",
+      "dataset_name": "MRO CTX Experiment Data Records over Gale (via ODE)",
+      "category": "ctx",
+      "validation_status": "NOT AVAILABLE",
+      "not_available_reason": "Not selected for download in this run (duplicate, deferred or no plan entry): Fallback only. ODE REST parameters now confirmed from manual v2.1.6 (query=products, westernlon/easternlon/minlat/maxlat, loc=b); script updated.",
+      "files": [],
+      "support_files": [],
+      "approved_files": []
+    },
+    {
+      "candidate_id": "C08",
+      "dataset_name": "USGS analysis-ready CTX DTMs (STAC catalogue)",
+      "category": "terrain",
+      "validation_status": "NOT AVAILABLE",
+      "not_available_reason": "Download NOT_ATTEMPTED: Entry disabled: exact product URL not confirmed against the authoritative archive",
+      "files": [],
+      "support_files": [],
+      "approved_files": []
+    },
+    {
+      "candidate_id": "C09",
+      "dataset_name": "HiRISE DTMs and orthoimages over Gale",
+      "category": "terrain",
+      "validation_status": "NOT AVAILABLE",
+      "not_available_reason": "Not selected for download in this run (duplicate, deferred or no plan entry): Only if rover-scale terrain is required and C10 is unavailable.",
+      "files": [],
+      "support_files": [],
+      "approved_files": []
+    },
+    {
+      "candidate_id": "C10",
+      "dataset_name": "MSL Gale Merged Orthophoto Mosaic and Merged DEM (Calef & Parker, USGS)",
+      "category": "terrain",
+      "validation_status": "NOT AVAILABLE",
+      "not_available_reason": "Not selected for download in this run (duplicate, deferred or no plan entry): High value for rover-scale route planning; confirm existence and size on the USGS search page before planning a subset.",
+      "files": [],
+      "support_files": [],
+      "approved_files": []
+    },
+    {
+      "candidate_id": "C11",
+      "dataset_name": "Curiosity REMS MODRDR (processed environmental tables)",
+      "category": "rems",
+      "validation_status": "VALIDATED WITH LIMITATIONS",
+      "not_available_reason": null,
+      "files": [
+        {
+          "file": "raw/rems/SOL00009/RME_398245439RMD00090000000_______PA.LBL",
+          "sha256": "1a635a9e2041cb2ed7eccbf8bfe7de8bc7036854575f1c37c3a157c8745ffae3",
+          "size_bytes": 3026,
+          "validation_status": "VALIDATED WITH LIMITATIONS",
+          "approved_for_processing": true,
+          "limitations": [
+            "REMS_SCIENCE_TABLE: 22 numeric column(s) contain values such as -999 that the label does not declare as missing - treat them as missing only where the SIS documents it"
+          ],
+          "reasons": []
+        },
+        {
+          "file": "raw/rems/SOL00009/RME_398245439RMD00090000000_______PA.TAB",
+          "sha256": "2d7eee88333bdf6128df030a62810bca332e0ac29b0817e7f7ae427c6d16fbc8",
+          "size_bytes": 2053440,
+          "validation_status": "VALIDATED WITH LIMITATIONS",
+          "approved_for_processing": true,
+          "limitations": [
+            "REMS_SCIENCE_TABLE: 22 numeric column(s) contain values such as -999 that the label does not declare as missing - treat them as missing only where the SIS documents it"
+          ],
+          "reasons": []
+        },
+        {
+          "file": "raw/rems/SOL00010/RME_398334213RMD00100000000_______PA.LBL",
+          "sha256": "3e05f99b1014f26c84babe61ce61df9f105cb81c37551f242d255ff333398b8d",
+          "size_bytes": 3029,
+          "validation_status": "INCOMPLETE",
+          "approved_for_processing": false,
+          "limitations": [],
+          "reasons": [
+            "Referenced file missing: Data file RME_398334213RMD00100000000_______PA.TAB not found near /home/claude/DHRUVION_DATA/raw/rems/SOL00010/RME_398334213RMD00100000000_______PA.LBL"
+          ]
+        },
+        {
+          "file": "raw/rems/SOL00011/RME_398422988RMD00110000000_______PA.LBL",
+          "sha256": "5ebc6ea1edb535a76a76f8e4fa4c5ac5a78737f3d9241f703de9aa059aacb1bb",
+          "size_bytes": 3029,
+          "validation_status": "VALIDATED WITH LIMITATIONS",
+          "approved_for_processing": true,
+          "limitations": [
+            "REMS_SCIENCE_TABLE: 22 numeric column(s) contain values such as -999 that the label does not declare as missing - treat them as missing only where the SIS documents it"
+          ],
+          "reasons": []
+        },
+        {
+          "file": "raw/rems/SOL00011/RME_398422988RMD00110000000_______PA.TAB",
+          "sha256": "7fe1e90b08f42f2d3b3b5851a2b0d00d732c9af590284cabd5953584f6c395c6",
+          "size_bytes": 4821120,
+          "validation_status": "VALIDATED WITH LIMITATIONS",
+          "approved_for_processing": true,
+          "limitations": [
+            "REMS_SCIENCE_TABLE: 22 numeric column(s) contain values such as -999 that the label does not declare as missing - treat them as missing only where the SIS documents it"
+          ],
+          "reasons": []
+        }
+      ],
+      "support_files": [],
+      "approved_files": [
+        "raw/rems/SOL00009/RME_398245439RMD00090000000_______PA.LBL",
+        "raw/rems/SOL00009/RME_398245439RMD00090000000_______PA.TAB",
+        "raw/rems/SOL00011/RME_398422988RMD00110000000_______PA.LBL",
+        "raw/rems/SOL00011/RME_398422988RMD00110000000_______PA.TAB"
+      ]
+    },
+    {
+      "candidate_id": "C12",
+      "dataset_name": "Curiosity REMS ENVRDR (environmental RDR)",
+      "category": "rems",
+      "validation_status": "NOT AVAILABLE",
+      "not_available_reason": "Not selected for download in this run (duplicate, deferred or no plan entry): Use only if MODRDR lacks a needed field.",
+      "files": [],
+      "support_files": [],
+      "approved_files": []
+    },
+    {
+      "candidate_id": "C13",
+      "dataset_name": "Curiosity REMS EDR (raw)",
+      "category": "rems",
+      "validation_status": "NOT AVAILABLE",
+      "not_available_reason": "Not selected for download in this run (duplicate, deferred or no plan entry): Skip.",
+      "files": [],
+      "support_files": [],
+      "approved_files": []
+    },
+    {
+      "candidate_id": "C14",
+      "dataset_name": "Curiosity RAD calibrated RDR",
+      "category": "rad",
+      "validation_status": "VALIDATED WITH LIMITATIONS",
+      "not_available_reason": null,
+      "files": [
+        {
+          "file": "raw/rad/SOL_00000_00089/RAD_RDR_2012_220_02_25_0001_V00.LBL",
+          "sha256": "6eb5e69243b26f845ebeda9575048ac92a72a6f2ae084431170452b4a328c25c",
+          "size_bytes": 128320,
+          "validation_status": "VALIDATED WITH LIMITATIONS",
+          "approved_for_processing": true,
+          "limitations": [
+            "QC and ROVER_LAT/LON/ELEV are placeholders per RAD RDR SIS v3.2 sec. 4.2.1.2 - not used as quality flags or location",
+            "Only TOT_DOSE_B/E dose-rate elements are parsed; counters, histograms, LET arrays and PHA tables are present but not parsed"
+          ],
+          "reasons": []
+        },
+        {
+          "file": "raw/rad/SOL_00000_00089/RAD_RDR_2012_220_02_25_0001_V00.TXT",
+          "sha256": "4d08d57a55b5c48a72eaf61c554e7ebf31d5a3d50f1f7b8327d9bab8d575fc87",
+          "size_bytes": 6575409,
+          "validation_status": "VALIDATED WITH LIMITATIONS",
+          "approved_for_processing": true,
+          "limitations": [
+            "QC and ROVER_LAT/LON/ELEV are placeholders per RAD RDR SIS v3.2 sec. 4.2.1.2 - not used as quality flags or location",
+            "Only TOT_DOSE_B/E dose-rate elements are parsed; counters, histograms, LET arrays and PHA tables are present but not parsed"
+          ],
+          "reasons": []
+        },
+        {
+          "file": "raw/rad/SOL_00000_00089/RAD_RDR_2012_221_02_47_0002_V00.LBL",
+          "sha256": "5637b21a0ee0d736af7738d423b0b522757a0842c61b35af59970731ad0319b4",
+          "size_bytes": 182880,
+          "validation_status": "VALIDATED WITH LIMITATIONS",
+          "approved_for_processing": true,
+          "limitations": [
+            "QC and ROVER_LAT/LON/ELEV are placeholders per RAD RDR SIS v3.2 sec. 4.2.1.2 - not used as quality flags or location",
+            "Only TOT_DOSE_B/E dose-rate elements are parsed; counters, histograms, LET arrays and PHA tables are present but not parsed"
+          ],
+          "reasons": []
+        },
+        {
+          "file": "raw/rad/SOL_00000_00089/RAD_RDR_2012_221_02_47_0002_V00.TXT",
+          "sha256": "4164af456db82a6882c4d711982a4c0d8c0474f15a081f1d50b7bba3aaf2f22c",
+          "size_bytes": 9993622,
+          "validation_status": "VALIDATED WITH LIMITATIONS",
+          "approved_for_processing": true,
+          "limitations": [
+            "QC and ROVER_LAT/LON/ELEV are placeholders per RAD RDR SIS v3.2 sec. 4.2.1.2 - not used as quality flags or location",
+            "Only TOT_DOSE_B/E dose-rate elements are parsed; counters, histograms, LET arrays and PHA tables are present but not parsed"
+          ],
+          "reasons": []
+        },
+        {
+          "file": "raw/rad/SOL_00000_00089/RAD_RDR_2012_222_04_26_0003_V00.LBL",
+          "sha256": "5bba6128c6d7486a633605d18c676901de947c279701246d5544a08caa6b2001",
+          "size_bytes": 120160,
+          "validation_status": "VALIDATED WITH LIMITATIONS",
+          "approved_for_processing": true,
+          "limitations": [
+            "QC and ROVER_LAT/LON/ELEV are placeholders per RAD RDR SIS v3.2 sec. 4.2.1.2 - not used as quality flags or location",
+            "Only TOT_DOSE_B/E dose-rate elements are parsed; counters, histograms, LET arrays and PHA tables are present but not parsed"
+          ],
+          "reasons": []
+        },
+        {
+          "file": "raw/rad/SOL_00000_00089/RAD_RDR_2012_222_04_26_0003_V00.TXT",
+          "sha256": "f9d238e33e98abdfb52845828b3b7e56ee6c3fae5088d145356c94ae68690c39",
+          "size_bytes": 6550678,
+          "validation_status": "VALIDATED WITH LIMITATIONS",
+          "approved_for_processing": true,
+          "limitations": [
+            "QC and ROVER_LAT/LON/ELEV are placeholders per RAD RDR SIS v3.2 sec. 4.2.1.2 - not used as quality flags or location",
+            "Only TOT_DOSE_B/E dose-rate elements are parsed; counters, histograms, LET arrays and PHA tables are present but not parsed"
+          ],
+          "reasons": []
+        }
+      ],
+      "support_files": [],
+      "approved_files": [
+        "raw/rad/SOL_00000_00089/RAD_RDR_2012_220_02_25_0001_V00.LBL",
+        "raw/rad/SOL_00000_00089/RAD_RDR_2012_220_02_25_0001_V00.TXT",
+        "raw/rad/SOL_00000_00089/RAD_RDR_2012_221_02_47_0002_V00.LBL",
+        "raw/rad/SOL_00000_00089/RAD_RDR_2012_221_02_47_0002_V00.TXT",
+        "raw/rad/SOL_00000_00089/RAD_RDR_2012_222_04_26_0003_V00.LBL",
+        "raw/rad/SOL_00000_00089/RAD_RDR_2012_222_04_26_0003_V00.TXT"
+      ]
+    },
+    {
+      "candidate_id": "C15",
+      "dataset_name": "Curiosity RAD EDR (raw binary)",
+      "category": "rad",
+      "validation_status": "NOT AVAILABLE",
+      "not_available_reason": "Not selected for download in this run (duplicate, deferred or no plan entry): Skip - use C14.",
+      "files": [],
+      "support_files": [],
+      "approved_files": []
+    },
+    {
+      "candidate_id": "C16",
+      "dataset_name": "THEMIS thermal data over Gale",
+      "category": "other",
+      "validation_status": "NOT AVAILABLE",
+      "not_available_reason": "Not selected for download in this run (duplicate, deferred or no plan entry): Deferred.",
+      "files": [],
+      "support_files": [],
+      "approved_files": []
+    }
+  ]
+}
