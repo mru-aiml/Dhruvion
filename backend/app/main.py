@@ -3,6 +3,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
+from sqlalchemy.orm import Session
 
 from app.core.config import settings
 from app.core.logging_config import setup_logging
@@ -16,6 +17,8 @@ from app.api.routes_v2 import router as routes_v2_router
 from app.api.auth import router as auth_router
 from app.core.database import Base, engine
 from app.core import models  # noqa: F401
+from app.core.models import User
+from app.core.security import hash_password
 from app.data_pipeline.dataset_paths import get_dataset_paths
 
 # Setup logging first
@@ -77,6 +80,33 @@ app.include_router(routes_missions_router, prefix=settings.API_PREFIX)
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
+
+
+def _seed_demo_user() -> None:
+    """Seed demo user idempotently on startup."""
+    DEMO_EMAIL = "demo@dhruvion.io"
+    DEMO_PASSWORD = "Mission2026!"
+    DEMO_NAME = "Demo Operator"
+    
+    with Session(engine) as db:
+        existing = db.query(User).filter(User.email == DEMO_EMAIL).first()
+        if existing:
+            return
+        password_hash = hash_password(DEMO_PASSWORD)
+        demo_user = User(
+            email=DEMO_EMAIL,
+            full_name=DEMO_NAME,
+            password_hash=password_hash,
+            is_active=True,
+        )
+        db.add(demo_user)
+        db.commit()
+
+
+# Seed demo user on startup (idempotent)
+@app.on_event("startup")
+async def seed_demo_user_on_startup():
+    _seed_demo_user()
 
 
 @app.get("/")

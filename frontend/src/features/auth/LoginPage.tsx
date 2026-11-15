@@ -72,14 +72,27 @@ export default function LoginPage() {
       const dest = location.state?.from?.pathname ?? "/overview";
       navigate(dest, { replace: true });
     } catch (err: any) {
-      const detail = err?.response?.data?.detail;
-      let message = "Login failed. Check your credentials.";
-      if (Array.isArray(detail)) {
-        message = detail.map((d: any) => d?.msg ?? JSON.stringify(d)).join("; ");
-      } else if (typeof detail === "string") {
-        message = detail;
-      } else if (detail?.message) {
-        message = detail.message;
+      const responseData = err?.response?.data;
+      let message = "Incorrect email or password. Please try again.";
+
+      // Handle standardized error response format: { error: { code, message, details }, request_id }
+      if (responseData?.error) {
+        const { code, message: errMessage } = responseData.error;
+        if (code === "HTTP_ERROR" && errMessage?.includes("credentials")) {
+          message = "Incorrect email or password. Please try again.";
+        } else if (code === "HTTP_ERROR") {
+          message = errMessage || message;
+        } else {
+          message = errMessage || message;
+        }
+      } else if (Array.isArray(responseData?.detail)) {
+        // FastAPI validation error array
+        message = responseData.detail.map((d: any) => d?.msg ?? JSON.stringify(d)).join("; ");
+      } else if (typeof responseData?.detail === "string") {
+        // Plain string detail
+        message = responseData.detail;
+      } else if (responseData?.detail?.message) {
+        message = responseData.detail.message;
       }
       setError(message);
     } finally {
