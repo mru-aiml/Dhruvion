@@ -580,6 +580,11 @@ function RouteMap({
           zoomControl={false}
           attributionControl={true}
           proxyBaseUrl={API_ORIGIN}
+          onMapReady={() => {
+            if (import.meta.env.DEV) {
+              console.log('[EmergencyPage] Map ready');
+            }
+          }}
           tileLayers={[
             {
               id: "mola_basemap",

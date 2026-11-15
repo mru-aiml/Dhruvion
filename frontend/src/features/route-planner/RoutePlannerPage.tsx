@@ -320,11 +320,17 @@ export default function RoutePlannerPage() {
                   maxZoom: 8,
                   tileSize: 256,
                   visible: true,
-                  // Use backend proxy for NASA Trek layers to avoid CORS issues
-                  useProxy: basemap !== "mola_roughness" && LAYER_TILE_URLS[basemap]?.includes("trek.nasa.gov"),
+                  // Use backend proxy for all NASA Trek layers to avoid CORS issues
+                  useProxy: LAYER_TILE_URLS[basemap]?.includes("trek.nasa.gov"),
                   proxyLayerId: basemap,
                 },
               ]}
+              onMapReady={() => {
+                if (import.meta.env.DEV) {
+                  console.log('[RoutePlannerPage] Map ready, basemap:', basemap);
+                  console.log('[RoutePlannerPage] API_ORIGIN:', API_ORIGIN);
+                }
+              }}
               markers={[
                 startMarker,
                 destMarker,

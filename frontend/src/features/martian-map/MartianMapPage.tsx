@@ -347,6 +347,13 @@ export default function MartianMapPage() {
             markers={demoTargetMarkers}
             polylines={demoRoutePolyline}
             onMapClick={(x, y) => setCoords({ x, y })}
+            onMapReady={() => {
+              if (import.meta.env.DEV) {
+                console.log('[MartianMapPage] Map ready, center:', center, 'zoom:', 5);
+                console.log('[MartianMapPage] API_ORIGIN:', API_ORIGIN);
+                console.log('[MartianMapPage] tileLayerConfigs:', tileLayerConfigs.map(l => ({ id: l.id, useProxy: l.useProxy, proxyLayerId: l.proxyLayerId, visible: l.visible })));
+              }
+            }}
             onPointerMove={(_lat, _lng) => {
               // Could update a coordinate readout here
             }}

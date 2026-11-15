@@ -361,6 +361,11 @@ export default function ScienceExplorerPage() {
                 attributionControl={true}
                 containerHeight="100%"
                 proxyBaseUrl={API_ORIGIN}
+                onMapReady={() => {
+                  if (import.meta.env.DEV) {
+                    console.log('[ScienceExplorerPage] Map ready');
+                  }
+                }}
                 tileLayers={[
                   {
                     id: "mola_basemap",

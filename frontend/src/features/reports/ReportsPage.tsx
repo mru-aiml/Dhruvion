@@ -310,6 +310,11 @@ export default function ReportsPage() {
                       attributionControl={false}
                       containerHeight="100%"
                       proxyBaseUrl={API_ORIGIN}
+                      onMapReady={() => {
+                        if (import.meta.env.DEV) {
+                          console.log('[ReportsPage] Map ready');
+                        }
+                      }}
                       tileLayers={[
                         {
                           id: "mola_basemap",

@@ -118,6 +118,9 @@ function NasaTileLayer({
   const map = useMap();
 
   useEffect(() => {
+    // Guard: map not ready yet
+    if (!map) return;
+
     if (!visible) {
       if (layerRef.current) {
         map.removeLayer(layerRef.current);
@@ -147,7 +150,7 @@ function NasaTileLayer({
     layerRef.current = tileLayer;
 
     return () => {
-      if (layerRef.current) {
+      if (layerRef.current && map) {
         map.removeLayer(layerRef.current);
         layerRef.current = null;
       }
@@ -172,6 +175,9 @@ function StandardTileLayer({
   const map = useMap();
 
   useEffect(() => {
+    // Guard: map not ready yet
+    if (!map) return;
+
     if (!visible) {
       if (layerRef.current) {
         map.removeLayer(layerRef.current);
@@ -191,7 +197,7 @@ function StandardTileLayer({
     layerRef.current = tileLayer;
 
     return () => {
-      if (layerRef.current) {
+      if (layerRef.current && map) {
         map.removeLayer(layerRef.current);
         layerRef.current = null;
       }
@@ -219,6 +225,9 @@ function ProxyTileLayer({
   const map = useMap();
 
   useEffect(() => {
+    // Guard: map not ready yet
+    if (!map) return;
+
     if (!visible) {
       if (layerRef.current) {
         map.removeLayer(layerRef.current);
@@ -231,6 +240,10 @@ function ProxyTileLayer({
     // Proxy endpoint: /api/tiles/{layer}/{z}/{x}/{y}.png
     const proxyUrl = `${proxyBaseUrl}/api/tiles/${proxyLayerId}/{z}/{x}/{y}.png`;
 
+    if (import.meta.env.DEV) {
+      console.log('[ProxyTileLayer] Creating tile layer:', { proxyLayerId, proxyBaseUrl, proxyUrl });
+    }
+
     const tileLayer = L.tileLayer(proxyUrl, {
       attribution,
       maxZoom,
@@ -242,7 +255,7 @@ function ProxyTileLayer({
     layerRef.current = tileLayer;
 
     return () => {
-      if (layerRef.current) {
+      if (layerRef.current && map) {
         map.removeLayer(layerRef.current);
         layerRef.current = null;
       }
