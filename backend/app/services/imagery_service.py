@@ -1,6 +1,7 @@
 """Imagery service for managing and serving Mars surface imagery tiles and overlays."""
 
 import logging
+import json
 import urllib.request
 from dataclasses import dataclass
 from pathlib import Path
@@ -10,6 +11,7 @@ from enum import Enum
 from app.core.config import settings
 from app.core.exceptions import UnavailableError, NotFoundError
 from app.core.logging_config import get_logger
+from app.data_pipeline.dataset_paths import get_dataset_paths, static_url_for
 
 logger = get_logger(__name__)
 
@@ -343,15 +345,20 @@ class ImageryService:
     
     def get_layer_catalog(self, region_id: Optional[str] = None) -> Dict[str, Any]:
         """Get the layer catalog formatted for API response."""
+        if region_id and region_id != "gale_crater":
+            raise NotFoundError("Unknown region", details={"region_id": region_id})
+
         layers = []
         for layer in self._layer_catalog.values():
-            if region_id and layer.metadata.get("region_id") != region_id:
-                continue
-            
             layer_dict = {
                 "id": layer.id,
                 "name": layer.name,
                 "layer_type": layer.layer_type,
+                "imagery_type": (
+                    layer.imagery_type.value
+                    if isinstance(layer.imagery_type, ImageryType)
+                    else str(layer.imagery_type)
+                ),
                 "status": layer.status,
                 "availability": layer.availability,
                 "source": layer.source,
@@ -380,6 +387,84 @@ class ImageryService:
         if not layer:
             return False
         return layer.availability in ("available", "partial")
+
+    # --------------------------------------------------------------- CTX
+    def get_ctx_imagery(self) -> Dict[str, Any]:
+        """Return the processed CTX overlay with package-derived georeferencing."""
+        paths = get_dataset_paths()
+        if paths is None:
+            return {
+                "available": False,
+                "reason": "DHRUVION_DATA package not found.",
+                "provenance": "unavailable",
+            }
+        metadata: Dict[str, Any] = {}
+        if paths.ctx_overlay_metadata.exists():
+            try:
+                metadata = json.loads(paths.ctx_overlay_metadata.read_text(encoding="utf-8"))
+            except Exception as exc:  # pragma: no cover - corrupt package metadata
+                logger.warning("Could not read CTX overlay metadata: %s", exc)
+        alignment = metadata.get("alignment_with_dem", {})
+        overlay_url = static_url_for(paths.ctx_png)
+        return {
+            "available": bool(overlay_url) and paths.ctx_tif.exists(),
+            "id": "gale_ctx_local",
+            "name": "Gale CTX Mosaic (processed clip)",
+            "layer_type": "overlay",
+            "provenance": "observed",
+            "units": "DN (8-bit, not reflectance)",
+            "projection": metadata.get("image_projection", "Mars_2015_Ocentric_Equirectangular_clon_0"),
+            "latitude_type": metadata.get("latitude_type", "planetocentric"),
+            "longitude_direction": metadata.get("longitude_direction", "east-positive"),
+            "bounds": {
+                "leaflet_bounds": metadata.get("leaflet_bounds"),
+                "bounds_latlon": _leaflet_to_latlon(metadata.get("leaflet_bounds")),
+            },
+            "resolution_m": (alignment.get("image_res") or [None])[0],
+            "overlay_url": overlay_url,
+            "geotiff": _relative(paths.ctx_tif),
+            "alignment_with_dem": alignment,
+            "partial_coverage": True,
+            "display": {
+                "stretch": metadata.get("stretch"),
+                "nodata_handling": metadata.get("nodata_handling"),
+            },
+            "source": {
+                "name": "Global CTX Mosaic of Mars (Caltech Murray Lab), Gale AOI",
+                "provider": "NASA/JPL/MSSS imagery, Caltech Murray Lab mosaic",
+                "product_id": "MurrayLab_GlobalCTXMosaic_V01_E136_N-08",
+                "source_uri": "https://murray-lab.caltech.edu/CTX/V01/tiles/",
+            },
+            "warnings": [
+                "Pixel values are 8-bit DN, not calibrated reflectance.",
+                "Partial coverage: lat -6.9187..-4.0, lon 136.1999..139.4.",
+                "CTX/DEM are near-equivalent CRS with a different grid; do not assume pixel alignment.",
+            ],
+            "limitations": [
+                "Do not stretch or repeat the CTX image into areas it does not cover.",
+                "Use the Mars equirectangular projection, never Web Mercator.",
+            ],
+        }
+
+
+def _relative(path: Path) -> Optional[str]:
+    paths = get_dataset_paths()
+    if paths is None:
+        return None
+    try:
+        return path.resolve().relative_to(paths.root.resolve()).as_posix()
+    except (OSError, ValueError):
+        return path.name
+
+
+def _leaflet_to_latlon(bounds: Any) -> Optional[Dict[str, float]]:
+    if not isinstance(bounds, (list, tuple)) or len(bounds) != 2:
+        return None
+    try:
+        (south, west), (north, east) = bounds
+        return {"south": float(south), "north": float(north), "west": float(west), "east": float(east)}
+    except (TypeError, ValueError):
+        return None
 
 
 # Global service instance

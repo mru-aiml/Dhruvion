@@ -12,20 +12,18 @@ import {
   Target,
   X,
 } from "lucide-react";
-import { ImageOverlay, MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
+import { MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import PageHeader from "../../components/common/PageHeader";
 import SectionCard from "../../components/common/SectionCard";
 import StatusPill from "../../components/common/StatusPill";
 import Button from "../../components/common/Button";
-import Toggle from "../../components/common/Toggle";
+
 import { SelectInput, TextInput } from "../../components/common/Field";
 import { EmptyState } from "../../components/common/States";
 import { ProvenanceBadge, SimulatedLabel } from "../../components/common/StatusBadge";
 import {
-  API_ORIGIN,
-  GALE_BOUNDS,
   MOLA_ATTRIBUTION,
   MOLA_BASEMAP_URL,
   MarsCRS,
@@ -60,7 +58,7 @@ export default function ScienceExplorerPage() {
   const [typeFilter, setTypeFilter] = useState("all");
   const [priorityFilter, setPriorityFilter] = useState<PriorityFilter>("all");
   const [visitedFilter, setVisitedFilter] = useState<VisitedFilter>("all");
-  const [showElevation, setShowElevation] = useState(true);
+
   const [selected, setSelected] = useState<ScienceTarget | null>(DEMO_TARGETS[0] ?? null);
 
   const types = useMemo(
@@ -313,16 +311,6 @@ export default function ScienceExplorerPage() {
             actions={
               <>
                 <StatusPill tone="observed">Basemap</StatusPill>
-                <div className="flex items-center gap-2">
-                  <span className="text-[9px] uppercase tracking-[0.08em] text-text-muted">
-                    Elevation
-                  </span>
-                  <Toggle
-                    checked={showElevation}
-                    onChange={setShowElevation}
-                    description="Toggle MOLA elevation overlay"
-                  />
-                </div>
               </>
             }
             flush
@@ -362,13 +350,6 @@ export default function ScienceExplorerPage() {
                   tileSize={256}
                   maxZoom={8}
                 />
-                {showElevation && (
-                  <ImageOverlay
-                    url={`${API_ORIGIN}/static/mola/gale/elevation.png`}
-                    bounds={GALE_BOUNDS}
-                    opacity={0.5}
-                  />
-                )}
                 {DEMO_TARGETS.map((target) => {
                   const active = selected?.id === target.id;
                   return (
@@ -415,15 +396,8 @@ export default function ScienceExplorerPage() {
             {selected ? (
               <div className="space-y-4">
                 <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_220px]">
-                  <div className="min-w-0">
-                    <img
-                      src="/geo-target.svg"
-                      alt="Prototype geological target visualization"
-                      className="h-28 w-full rounded-control border border-line object-cover"
-                    />
-                    <p className="mt-1.5 text-[9px] uppercase tracking-[0.08em] text-text-muted">
-                      Prototype visualization · not mission imagery
-                    </p>
+                  <div className="min-w-0 rounded-control border border-line/70 bg-surface2/40 p-4 text-center text-xs text-text-muted">
+                    No mission imagery available for this simulated target. The map displays the NASA Mars Trek MOLA colour hillshade basemap; catalogue markers are simulated and are not verified observations.
                   </div>
 
                   <dl className="grid grid-cols-2 gap-x-3 gap-y-2.5 lg:grid-cols-1">

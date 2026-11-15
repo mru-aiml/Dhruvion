@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Crosshair,
   Layers,
@@ -19,60 +19,98 @@ import Toggle from "../../components/common/Toggle";
 import { EmptyState, ErrorState, LoadingState } from "../../components/common/States";
 import { ProvenanceBadge, SimulatedLabel } from "../../components/common/StatusBadge";
 import {
-  API_ORIGIN,
   GALE_BOUNDS,
-  LAYER_MAX_ZOOM,
-  LAYER_TILE_URLS,
-  MARS_BOUNDS,
   MOLA_ATTRIBUTION,
   MOLA_BASEMAP_URL,
+  MARS_BOUNDS,
   MarsCRS,
+  assetUrl,
+  boundsCenter,
+  layerLeafletBounds,
+  toLeafletBounds,
 } from "../../components/map/mars";
 import { endpoints } from "../../services/api/endpoints";
 import { pushNotification } from "../../utils/notifications";
 import { apiErrorMessage } from "../../services/api/client";
-import { DEMO_LAYERS, DEMO_ROUTE_COORDS, DEMO_TARGETS } from "../../data/demo";
-import type { LayerMeta, ScienceTarget } from "../../types";
+import { DEMO_ROUTE_COORDS, DEMO_TARGETS } from "../../data/demo";
+import type {
+  CoverageClass,
+  CtxImagery,
+  DatasetCatalogResponse,
+  ImageryResponse,
+  LayerMeta,
+  Region,
+  ScienceTarget,
+  TerrainQueryResponse,
+} from "../../types";
+
+const REGION_ID = "gale_crater";
 
 const DEFAULT_ENABLED: Record<string, boolean> = {
   mars_trek_mola_colorshade: true,
+  gale_ctx_local: false,
+  mola_roughness_trek: false,
+  mars_mola_hrsc_blend: false,
+  viking_mdim: false,
   mola_elevation: false,
   slope: false,
   roughness: false,
 };
 
-interface TerrainPoint {
-  elevation_m: number | null;
-  slope_deg: number | null;
-  roughness: number | null;
-  availability: string;
+interface TileEntry {
+  id: string;
+  name: string;
+  url: string;
+  maxZoom: number;
+  status: string;
+  resolutionM: number | null;
+  warnings?: string[];
 }
 
 export default function MartianMapPage() {
-  const [layers, setLayers] = useState<LayerMeta[]>(DEMO_LAYERS);
+  const [region, setRegion] = useState<Region | null>(null);
+  const [layers, setLayers] = useState<LayerMeta[]>([]);
+  const [imagery, setImagery] = useState<ImageryResponse | null>(null);
+  const [datasets, setDatasets] = useState<DatasetCatalogResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
   const [enabled, setEnabled] = useState<Record<string, boolean>>(DEFAULT_ENABLED);
   const [showDemoTargets, setShowDemoTargets] = useState(true);
-  const [showDemoRoute, setShowDemoRoute] = useState(true);
+  const [showDemoRoute, setShowDemoRoute] = useState(false);
   const [selected, setSelected] = useState<ScienceTarget | null>(DEMO_TARGETS[0] ?? null);
   const [coords, setCoords] = useState<{ x: number; y: number } | null>(null);
-  const [terrain, setTerrain] = useState<TerrainPoint | null>(null);
+  const [terrain, setTerrain] = useState<TerrainQueryResponse | null>(null);
   const [terrainLoading, setTerrainLoading] = useState(false);
   const [terrainError, setTerrainError] = useState<string | null>(null);
 
   useEffect(() => {
+    let active = true;
     setLoading(true);
     setError(null);
-    endpoints
-      .layers("gale_crater")
-      .then((response) => {
-        if (response.items && response.items.length) setLayers(response.items);
-        setError(null);
+    Promise.allSettled([
+      endpoints.regions(),
+      endpoints.layers(REGION_ID),
+      endpoints.imagery(),
+      endpoints.datasets(),
+    ])
+      .then(([regionsResult, layersResult, imageryResult, datasetsResult]) => {
+        if (!active) return;
+        if (regionsResult.status === "fulfilled") {
+          setRegion(regionsResult.value.items.find((item) => item.id === REGION_ID) ?? regionsResult.value.items[0] ?? null);
+        }
+        if (layersResult.status === "fulfilled") {
+          setLayers(layersResult.value.items);
+        } else {
+          setError(apiErrorMessage(layersResult.reason));
+        }
+        if (imageryResult.status === "fulfilled") setImagery(imageryResult.value);
+        if (datasetsResult.status === "fulfilled") setDatasets(datasetsResult.value);
       })
-      .catch((reason) => setError(apiErrorMessage(reason)))
-      .finally(() => setLoading(false));
+      .finally(() => active && setLoading(false));
+    return () => {
+      active = false;
+    };
   }, [reloadKey]);
 
   useEffect(() => {
@@ -81,15 +119,10 @@ export default function MartianMapPage() {
     setTerrainLoading(true);
     setTerrainError(null);
     endpoints
-      .terrain("gale_crater", coords.x, coords.y)
+      .terrain(REGION_ID, coords.x, coords.y)
       .then((response) => {
         if (!active) return;
-        setTerrain({
-          elevation_m: response.values.elevation_m,
-          slope_deg: response.values.slope_deg,
-          roughness: response.values.roughness,
-          availability: response.availability,
-        });
+        setTerrain(response);
         if (response.availability === "unavailable") {
           pushNotification("Terrain query outside MOLA coverage.", "/map");
         }
@@ -110,13 +143,87 @@ export default function MartianMapPage() {
   const resetLayers = () => {
     setEnabled(DEFAULT_ENABLED);
     setShowDemoTargets(true);
-    setShowDemoRoute(true);
+    setShowDemoRoute(false);
   };
 
-  const tileLayers = layers.filter((layer) => layer.id in LAYER_TILE_URLS && layer.id !== "mars_trek_mola_colorshade");
-  const overlayLayers = layers.filter((layer) => Boolean(layer.overlay_url));
+  const regionBounds = toLeafletBounds(region?.bounds_latlon) ?? GALE_BOUNDS;
+  const center = boundsCenter(region?.bounds_latlon);
+
+  const basemap = imagery?.tiles?.["mars_trek_mola_colorshade"];
+  const basemapUrl = basemap?.tile_url_template ?? MOLA_BASEMAP_URL;
+
+  const tileLayers: TileEntry[] = useMemo(() => {
+    const catalog = new Map(layers.map((layer) => [layer.id, layer]));
+    const entries: TileEntry[] = [];
+    Object.entries(imagery?.tiles ?? {}).forEach(([id, tile]) => {
+      if (id === "mars_trek_mola_colorshade") return;
+      const meta = catalog.get(id);
+      entries.push({
+        id,
+        name: meta?.name ?? tile.name,
+        url: tile.tile_url_template,
+        maxZoom: tile.max_zoom ?? 8,
+        status: meta?.status ?? "observed",
+        resolutionM: meta?.resolution_m ?? null,
+        warnings: meta?.warnings,
+      });
+    });
+    layers
+      .filter((layer) => layer.layer_type === "tiles" && layer.tile_url_template)
+      .forEach((layer) => {
+        if (!entries.some((entry) => entry.id === layer.id) && layer.id !== "mars_trek_mola_colorshade") {
+          entries.push({
+            id: layer.id,
+            name: layer.name,
+            url: layer.tile_url_template as string,
+            maxZoom: layer.max_zoom ?? 8,
+            status: layer.status,
+            resolutionM: layer.resolution_m ?? null,
+            warnings: layer.warnings,
+          });
+        }
+      });
+    return entries;
+  }, [imagery, layers]);
+
+  const overlays = useMemo(() => {
+    const entries = layers
+      .filter((layer) => layer.overlay_url && layer.availability !== "unavailable")
+      .map((layer) => ({
+        id: layer.id,
+        name: layer.name,
+        url: assetUrl(layer.overlay_url),
+        bounds: layerLeafletBounds(layer.bounds) ?? regionBounds,
+        status: layer.status,
+        resolutionM: layer.resolution_m ?? null,
+        warnings: layer.warnings,
+        display: layer.display,
+      }));
+    const ctx: CtxImagery | undefined = imagery?.ctx;
+    if (ctx?.available && ctx.overlay_url) {
+      entries.push({
+        id: "gale_ctx_local",
+        name: ctx.name,
+        url: assetUrl(ctx.overlay_url),
+        bounds: layerLeafletBounds(ctx.bounds) ?? regionBounds,
+        status: "observed",
+        resolutionM: ctx.resolution_m,
+        warnings: ctx.warnings,
+        display: ctx.display,
+      });
+    }
+    return entries.filter((entry) => Boolean(entry.url));
+  }, [layers, imagery, regionBounds]);
+
   const unavailableLayers = layers.filter((layer) => layer.availability === "unavailable");
   const availableCount = layers.filter((layer) => layer.availability !== "unavailable").length;
+  const datasetCounts = useMemo(() => {
+    const counts: Record<string, number> = { available: 0, partial: 0, unavailable: 0, other: 0 };
+    (datasets?.datasets ?? []).forEach((dataset) => {
+      counts[dataset.status] = (counts[dataset.status] ?? 0) + 1;
+    });
+    return counts;
+  }, [datasets]);
 
   const markerIcon = useCallback(
     () =>
@@ -133,12 +240,14 @@ export default function MartianMapPage() {
       <PageHeader
         eyebrow="Surface workspace"
         title="Interactive Martian Map"
-        description="NASA Mars Trek imagery and locally processed MOLA overlays. Basemaps are observed; slope and roughness are derived. The coordinate grid is a prototype CRS."
+        description="NASA Mars Trek imagery and locally processed MOLA/CTX overlays. Basemaps and elevation are observed; slope and roughness are derived. Overlay bounds, projection and units come from the dataset metadata, not hardcoded map constants."
         meta={
           <>
-            <StatusPill tone="observed">MOLA basemap</StatusPill>
-            <StatusPill tone="derived">Local analysis</StatusPill>
-            <StatusPill tone="simulated">Prototype CRS</StatusPill>
+            <StatusPill tone="observed">MOLA / CTX observed</StatusPill>
+            <StatusPill tone="derived">Slope · roughness derived</StatusPill>
+            <StatusPill tone="neutral" dot={false}>
+              Mars equirectangular · planetocentric
+            </StatusPill>
           </>
         }
         actions={
@@ -163,7 +272,7 @@ export default function MartianMapPage() {
 
           <MapContainer
             crs={MarsCRS}
-            center={[-5.4, 137.4]}
+            center={center}
             zoom={5}
             minZoom={0}
             maxZoom={8}
@@ -174,10 +283,10 @@ export default function MartianMapPage() {
           >
             {enabled.mars_trek_mola_colorshade && (
               <TileLayer
-                url={MOLA_BASEMAP_URL}
+                url={basemapUrl}
                 attribution={MOLA_ATTRIBUTION}
                 tileSize={256}
-                maxZoom={8}
+                maxZoom={basemap?.max_zoom ?? 8}
               />
             )}
             {tileLayers
@@ -185,20 +294,20 @@ export default function MartianMapPage() {
               .map((layer) => (
                 <TileLayer
                   key={layer.id}
-                  url={LAYER_TILE_URLS[layer.id]}
+                  url={layer.url}
                   attribution="NASA Mars Trek"
                   tileSize={256}
-                  maxZoom={LAYER_MAX_ZOOM[layer.id] ?? 8}
+                  maxZoom={layer.maxZoom}
                 />
               ))}
-            {overlayLayers
+            {overlays
               .filter((layer) => enabled[layer.id])
               .map((layer) => (
                 <ImageOverlay
                   key={layer.id}
-                  url={`${API_ORIGIN}${layer.overlay_url}`}
-                  bounds={GALE_BOUNDS}
-                  opacity={0.62}
+                  url={layer.url as string}
+                  bounds={layer.bounds}
+                  opacity={layer.id === "gale_ctx_local" ? 0.9 : 0.62}
                 />
               ))}
 
@@ -221,13 +330,13 @@ export default function MartianMapPage() {
               ))}
 
             <MapClick setCoords={setCoords} />
-            <MapControls />
+            <MapControls center={center} />
             <MapReadout coordinate={coords} />
           </MapContainer>
 
           <div className="pointer-events-none absolute left-3 top-3 z-[900] flex flex-wrap items-center gap-1.5">
             <span className="rounded border border-line/80 bg-black/65 px-2 py-1 text-[9px] uppercase tracking-[0.1em] text-text-secondary backdrop-blur-sm">
-              Gale Crater · Mars
+              {region?.name ?? "Gale Crater"} · Mars
             </span>
             <span className="rounded border border-safe-green/30 bg-black/65 px-2 py-1 text-[9px] uppercase tracking-[0.1em] text-safe-green backdrop-blur-sm">
               Basemap observed
@@ -245,7 +354,7 @@ export default function MartianMapPage() {
           <SectionCard
             eyebrow="Data sources"
             title="Layers"
-            description={`${availableCount} of ${layers.length || 11} catalogued layers available in this build.`}
+            description={`${availableCount} of ${layers.length || 0} catalogued layers available · ${region?.resolution_m ? `${region.resolution_m.toFixed(0)} m/px regional grid` : "resolution pending"}.`}
             actions={
               <Button variant="ghost" size="sm" onClick={resetLayers}>
                 Reset
@@ -257,8 +366,8 @@ export default function MartianMapPage() {
             <LayerGroup title="Observed basemaps">
               <LayerRow
                 id="mars_trek_mola_colorshade"
-                name="Mars Trek MOLA Color-Shaded Relief"
-                meta="Observed · 463 m/px"
+                name={basemap?.name ?? "Mars Trek MOLA Color-Shaded Relief"}
+                meta="observed · NASA Mars Trek tiles"
                 enabled={Boolean(enabled.mars_trek_mola_colorshade)}
                 onToggle={() => toggle("mars_trek_mola_colorshade")}
                 tone="observed"
@@ -268,7 +377,7 @@ export default function MartianMapPage() {
                   key={layer.id}
                   name={layer.name}
                   meta={`${layer.status} · ${
-                    layer.resolution_m ? `${layer.resolution_m} m/px` : layer.layer_type
+                    layer.resolutionM ? `${layer.resolutionM} m/px` : "tile layer"
                   }`}
                   enabled={Boolean(enabled[layer.id])}
                   onToggle={() => toggle(layer.id)}
@@ -279,18 +388,18 @@ export default function MartianMapPage() {
             </LayerGroup>
 
             <LayerGroup title="Local analysis overlays">
-              {overlayLayers.map((layer) => (
+              {overlays.map((layer) => (
                 <LayerRow
                   key={layer.id}
                   name={layer.name}
-                  meta={`${layer.status} · ${layer.resolution_m ?? "—"} m/px`}
+                  meta={`${layer.status} · ${layer.resolutionM ? `${layer.resolutionM.toFixed(1)} m/px` : "metadata bounds"}`}
                   enabled={Boolean(enabled[layer.id])}
                   onToggle={() => toggle(layer.id)}
                   tone={layer.status === "derived" ? "derived" : "observed"}
                   title={layer.warnings?.join(" ")}
                 />
               ))}
-              {overlayLayers.length === 0 && (
+              {overlays.length === 0 && (
                 <p className="px-3 py-3 text-[11px] text-text-muted">No local overlays available.</p>
               )}
             </LayerGroup>
@@ -318,7 +427,7 @@ export default function MartianMapPage() {
             <LayerGroup title="Simulated overlays" hint="Frontend-only demonstration">
               <LayerRow
                 name="Demo science targets"
-                meta="simulated · 3 points"
+                meta="simulated · 3 points · catalog unavailable"
                 enabled={showDemoTargets}
                 onToggle={() => setShowDemoTargets((value) => !value)}
                 tone="simulated"
@@ -333,15 +442,43 @@ export default function MartianMapPage() {
             </LayerGroup>
           </SectionCard>
 
+          <SectionCard
+            eyebrow="NASA package"
+            title="Dataset status"
+            actions={
+              <StatusPill tone={datasetCounts.available > 0 ? "observed" : "unavailable"}>
+                {datasets?.datasets.length ?? 0} entries
+              </StatusPill>
+            }
+            bodyClassName="p-3.5"
+          >
+            <dl className="space-y-1.5 text-[11px]">
+              <StatusRow label="Available" value={datasetCounts.available ?? 0} tone="text-safe-green" />
+              <StatusRow label="Partial" value={datasetCounts.partial ?? 0} tone="text-warning-amber" />
+              <StatusRow label="Unavailable" value={datasetCounts.unavailable ?? 0} tone="text-critical-red" />
+              <StatusRow label="Catalog version" value={datasets?.catalog_version ?? "—"} tone="text-text-secondary" />
+            </dl>
+            {imagery?.ctx && (
+              <p className="mt-3 border-t border-line/50 pt-2 text-[10px] leading-relaxed text-text-muted">
+                CTX: {imagery.ctx.units}. Partial coverage lat{" "}
+                {imagery.ctx.bounds.bounds_latlon?.south.toFixed(3)}..{imagery.ctx.bounds.bounds_latlon?.north.toFixed(3)}, lon{" "}
+                {imagery.ctx.bounds.bounds_latlon?.west.toFixed(3)}..{imagery.ctx.bounds.bounds_latlon?.east.toFixed(3)}. Not
+                stretched into uncovered areas.
+              </p>
+            )}
+          </SectionCard>
+
           <SectionCard eyebrow="Map key" title="Legend" bodyClassName="p-3.5">
             <ul className="space-y-2 text-[11px]">
               <LegendItem color="#F06B3D" label="Simulated traverse" />
               <LegendItem color="#55C7D9" label="Simulated science target" dot />
-              <LegendItem color="#D9A06A" label="Derived elevation overlay" fill />
+              <LegendItem color="#D9A06A" label="MOLA elevation overlay" fill />
+              <LegendItem color="#8FA6B8" label="Local CTX mosaic (DN)" fill />
               <LegendItem color="#E45C5C" label="Hazard overlay (unavailable)" muted />
             </ul>
             <p className="mt-3 border-t border-line/50 pt-2 text-[10px] leading-relaxed text-text-muted">
-              Unavailable layers remain disabled and are never rendered as empty safe terrain.
+              Unknown coverage is never rendered as safe terrain. Overlay bounds come from
+              dataset metadata; Web Mercator is not used for Mars.
             </p>
           </SectionCard>
 
@@ -368,21 +505,30 @@ export default function MartianMapPage() {
                   </StatusPill>
                 </div>
                 <div className="mt-2 grid grid-cols-3 gap-2 text-[10px]">
-                  <Value label="Elev" value={terrain?.elevation_m} unit="m" />
-                  <Value label="Slope" value={terrain?.slope_deg} unit="°" />
-                  <Value label="Rough" value={terrain?.roughness} unit="" />
+                  <Value label="Elev" value={terrain?.values.elevation_m} unit=" m" />
+                  <Value label="Slope" value={terrain?.values.slope_deg} unit="°" />
+                  <Value label="Rough" value={terrain?.values.roughness} unit=" m" />
                 </div>
                 <div className="mt-2 text-[9px] uppercase tracking-[0.08em] text-text-muted">
-                  Prototype grid x {coords.x.toFixed(2)} · y {coords.y.toFixed(2)}
+                  Planetocentric lon {coords.x.toFixed(4)}° · lat {coords.y.toFixed(4)}°
                 </div>
+                {terrain?.coverage && <CoverageLine coverage={terrain.coverage} />}
+                {terrain?.source?.provider && (
+                  <p className="mt-1 text-[9px] leading-relaxed text-text-muted">
+                    {terrain.source.provider} · {terrain.classification ?? "OBSERVED + DERIVED"}
+                  </p>
+                )}
+                {terrain?.limitations?.[0] && (
+                  <p className="mt-1 text-[9px] leading-relaxed text-text-muted">{terrain.limitations[0]}</p>
+                )}
                 {terrainError && (
                   <p className="mt-1.5 text-[10px] text-critical-red">{terrainError}</p>
                 )}
               </div>
             ) : (
               <p className="mb-3 rounded-control border border-dashed border-line/70 px-2.5 py-2 text-[10px] leading-relaxed text-text-muted">
-                Click the map to query the local MOLA raster. Values are unavailable outside
-                coverage.
+                Click the map to query the processed MOLA raster. Values are unavailable outside
+                coverage and are never zero-filled.
               </p>
             )}
 
@@ -419,15 +565,15 @@ export default function MartianMapPage() {
                 )}
                 <div className="flex flex-wrap items-center gap-1.5 pt-1">
                   <ProvenanceBadge status={selected.provenance[0] ?? "simulated"} />
-                  <StatusPill tone="neutral" dot={false}>
-                    Target actions pending API
+                  <StatusPill tone="unavailable" dot={false}>
+                    No verified target catalogue
                   </StatusPill>
                 </div>
               </div>
             ) : (
               <EmptyState
                 title="No feature selected"
-                description="Select a simulated target marker to inspect its catalogue record."
+                description="Select a simulated target marker to inspect its demonstration record."
                 icon={<Target size={18} aria-hidden />}
                 className="px-3 py-5"
               />
@@ -453,7 +599,7 @@ function MapClick({ setCoords }: { setCoords: (coords: { x: number; y: number })
   return null;
 }
 
-function MapControls() {
+function MapControls({ center }: { center: L.LatLngExpression }) {
   const map = useMap();
   return (
     <div className="absolute right-3 top-14 z-[1000] flex flex-col overflow-hidden rounded-control border border-line/80 bg-surface1/90 backdrop-blur-sm">
@@ -463,11 +609,14 @@ function MapControls() {
       <MapButton label="Zoom out" onClick={() => map.zoomOut()}>
         <Minus size={15} />
       </MapButton>
-      <MapButton label="Recenter on Gale Crater" onClick={() => map.setView([-5.4, 137.4], 5)}>
+      <MapButton label="Recenter on Gale Crater" onClick={() => map.fitBounds(GALE_BOUNDS)}>
         <Crosshair size={15} />
       </MapButton>
       <MapButton label="Fit Mars" onClick={() => map.fitBounds(MARS_BOUNDS)}>
         <Layers size={15} />
+      </MapButton>
+      <MapButton label="Center on region metadata" onClick={() => map.setView(center, 5)}>
+        <Target size={15} />
       </MapButton>
     </div>
   );
@@ -516,12 +665,31 @@ function MapReadout({ coordinate }: { coordinate: { x: number; y: number } | nul
   return (
     <div className="pointer-events-none absolute bottom-6 left-3 z-[900] rounded border border-line/80 bg-black/65 px-2 py-1 text-[9px] uppercase tracking-[0.08em] text-text-secondary backdrop-blur-sm">
       <span className="tabular">
-        {coordinate ? `x ${coordinate.x.toFixed(2)} · y ${coordinate.y.toFixed(2)}` : "Click map for point query"}
+        {coordinate ? `lon ${coordinate.x.toFixed(3)} · lat ${coordinate.y.toFixed(3)}` : "Click map for point query"}
       </span>
       <span className="mx-1.5 text-text-muted">/</span>
       <span className="tabular text-text-muted">
         z{view.zoom} · {view.lat.toFixed(2)}°, {view.lng.toFixed(2)}°
       </span>
+    </div>
+  );
+}
+
+function CoverageLine({ coverage }: { coverage: CoverageClass }) {
+  return (
+    <div className="mt-1.5 rounded border border-line/60 bg-surface1/50 px-1.5 py-1 text-[9px] leading-relaxed text-text-muted">
+      <span className="uppercase tracking-[0.08em]">Coverage class {coverage.class ?? "—"}</span>
+      <span className="mx-1">·</span>
+      {coverage.label}
+    </div>
+  );
+}
+
+function StatusRow({ label, value, tone }: { label: string; value: number | string; tone: string }) {
+  return (
+    <div className="flex items-center justify-between gap-2">
+      <dt className="text-text-muted">{label}</dt>
+      <dd className={`tabular ${tone}`}>{value}</dd>
     </div>
   );
 }

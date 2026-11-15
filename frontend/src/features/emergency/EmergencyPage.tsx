@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AlertTriangle,
   CheckCircle2,
   Clock,
   Compass,
+  Loader2,
   MapPin,
   Navigation,
   RotateCcw,
@@ -11,80 +12,121 @@ import {
   ShieldCheck,
   X,
 } from "lucide-react";
-import { MapContainer, Polyline, TileLayer } from "react-leaflet";
+import { MapContainer, Polyline, TileLayer, useMap } from "react-leaflet";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import PageHeader from "../../components/common/PageHeader";
 import SectionCard from "../../components/common/SectionCard";
 import StatCard from "../../components/common/StatCard";
 import StatusPill from "../../components/common/StatusPill";
 import Button from "../../components/common/Button";
-import { FeasibilityBadge, SimulatedLabel } from "../../components/common/StatusBadge";
+import { FeasibilityBadge, ProvenanceBadge, SimulatedLabel } from "../../components/common/StatusBadge";
 import { MarsCRS, MOLA_ATTRIBUTION, MOLA_BASEMAP_URL } from "../../components/map/mars";
+import { endpoints } from "../../services/api/endpoints";
+import { apiErrorMessage } from "../../services/api/client";
+import { loadMission, saveMission } from "../../services/missionStore";
+import type { MissionPlanResponse, RerouteResponse, Route } from "../../types";
 
-const ORIGINAL_ROUTE: [number, number][] = [
-  [-5.45, 137.35],
-  [-5.42, 137.38],
-  [-5.4, 137.4],
-  [-5.38, 137.42],
-];
-const ALT_ROUTE: [number, number][] = [
-  [-5.45, 137.35],
-  [-5.44, 137.36],
-  [-5.4, 137.41],
-  [-5.38, 137.42],
-];
-
-const SCENARIO = {
-  remainingMin: 90,
-  distanceToBaseKm: 2.1,
-  originalDistanceKm: 3.2,
-  originalDurationMin: 38,
-  alternativeDistanceKm: 3.52,
-  alternativeDurationMin: 44,
-  distanceDeltaM: 320,
-  durationDeltaMin: 6,
-  reserveMin: 46,
-};
+const REGION_ID = "gale_crater";
+const DEFAULT_START = { lat: -4.5, lon: 137.2 };
+const DEFAULT_DEST = { lat: -4.55, lon: 137.3 };
+const DEFAULT_TIME_LIMIT = 600;
+const MARS_RADIUS_M = 3_396_190;
+const BLOCKAGE_BUFFER_M = 1500;
 
 export default function EmergencyPage() {
-  const [generated, setGenerated] = useState(false);
-  const [confirm, setConfirm] = useState(false);
+  const [mission, setMission] = useState<MissionPlanResponse | null>(null);
+  const [result, setResult] = useState<RerouteResponse | null>(null);
+  const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState(false);
-  const timerRef = useRef<number | null>(null);
+  const [confirm, setConfirm] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(
-    () => () => {
-      if (timerRef.current !== null) window.clearTimeout(timerRef.current);
-    },
-    [],
-  );
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      try {
+        const current = await ensureMission();
+        if (active) setMission(current);
+      } catch (reason) {
+        if (active) setError(apiErrorMessage(reason));
+      } finally {
+        if (active) setLoading(false);
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, []);
 
-  const generate = () => {
+  const originalRoute = mission?.route ?? null;
+  const alternativeRoute = asRoute(result?.alternative_route);
+  const remainingMin =
+    mission?.time_budget.remaining_after_plan_min ?? mission?.time_budget.limit_min ?? null;
+  const distanceToBaseKm = mission ? groundDistanceM(mission.destination, mission.start) / 1000 : null;
+  const generated = result !== null;
+  const feasibility = result?.feasibility_status;
+
+  const generate = async () => {
     setGenerating(true);
-    timerRef.current = window.setTimeout(() => {
-      setGenerating(false);
-      setGenerated(true);
+    setError(null);
+    try {
+      let current = mission ?? (await ensureMission());
+      setMission(current);
+      const route = current.route;
+      const blockage = blockedPoint(route);
+      if (!blockage) {
+        throw new Error("The mission route has no geometry to block.");
+      }
+
+      const body = (missionId: string) => ({
+        mission_id: missionId,
+        original_route_id: route.id,
+        blocked_geometry: blockage,
+        scenario_status: "simulated",
+        remaining_time_min:
+          current.time_budget.remaining_after_plan_min ??
+          current.time_budget.limit_min ??
+          DEFAULT_TIME_LIMIT,
+        strategy: current.route_strategy ?? "balanced",
+        buffer_m: BLOCKAGE_BUFFER_M,
+      });
+
+      let response: RerouteResponse;
+      try {
+        response = await endpoints.reroute(body(current.mission_id));
+      } catch {
+        // Backend missions are in memory; replan once if the stored mission went stale.
+        current = await planDefaultMission();
+        saveMission(current);
+        setMission(current);
+        response = await endpoints.reroute(body(current.mission_id));
+      }
+
+      setResult(response);
       setConfirm(false);
-      timerRef.current = null;
-    }, 700);
+    } catch (reason) {
+      setError(apiErrorMessage(reason));
+    } finally {
+      setGenerating(false);
+    }
   };
 
   const resetScenario = () => {
-    if (timerRef.current !== null) {
-      window.clearTimeout(timerRef.current);
-      timerRef.current = null;
-    }
-    setGenerating(false);
-    setGenerated(false);
+    setResult(null);
     setConfirm(false);
+    setError(null);
   };
+
+  const rerouteFeasible =
+    feasibility === "feasible" ? true : feasibility === "caution" ? false : false;
 
   return (
     <div className="space-y-5">
       <PageHeader
         eyebrow="Contingency workspace"
         title="Emergency Navigation"
-        description="A simulated blocked-traverse scenario for Gale Crater. The obstruction and reroute are injected for training; no observed hazard dataset is connected in this build."
+        description="A simulated blockage is injected at the midpoint of the current backend mission route. The alternative path, distances and durations are computed by the real coverage-aware A* planner; no observed hazard dataset is connected."
         meta={
           <>
             <SimulatedLabel />
@@ -109,78 +151,109 @@ export default function EmergencyPage() {
         }
       />
 
-      <IncidentBanner />
+      <IncidentBanner mission={mission} remainingMin={remainingMin} />
 
       <div aria-live="polite">
         {generated && (
-          <div className="panel flex flex-wrap items-start gap-3 border-safe-green/45 bg-safe-green/[0.06] p-3.5">
-            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-control border border-safe-green/40 bg-safe-green/10 text-safe-green">
-              <CheckCircle2 size={18} aria-hidden />
+          <div
+            className={`panel flex flex-wrap items-start gap-3 p-3.5 ${
+              feasibility === "feasible"
+                ? "border-safe-green/45 bg-safe-green/[0.06]"
+                : "border-warning-amber/45 bg-warning-amber/[0.06]"
+            }`}
+          >
+            <span
+              className={`grid h-9 w-9 shrink-0 place-items-center rounded-control border ${
+                feasibility === "feasible"
+                  ? "border-safe-green/40 bg-safe-green/10 text-safe-green"
+                  : "border-warning-amber/40 bg-warning-amber/10 text-warning-amber"
+              }`}
+            >
+              {feasibility === "feasible" ? (
+                <CheckCircle2 size={18} aria-hidden />
+              ) : (
+                <AlertTriangle size={18} aria-hidden />
+              )}
             </span>
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div>
-                  <div className="text-[9px] font-semibold uppercase tracking-[0.12em] text-safe-green">
-                    Reroute complete
+                  <div
+                    className={`text-[9px] font-semibold uppercase tracking-[0.12em] ${
+                      feasibility === "feasible" ? "text-safe-green" : "text-warning-amber"
+                    }`}
+                  >
+                    {feasibility === "feasible" ? "Reroute complete" : "Reroute limited"}
                   </div>
                   <h2 className="mt-0.5 font-heading text-sm font-semibold text-text-primary">
-                    Alternative route generated and validated
+                    {result?.reason ?? "Alternative route evaluated"}
                   </h2>
                 </div>
-                <StatusPill tone="feasible">Return feasible</StatusPill>
+                {feasibility && <FeasibilityBadge status={feasibility} />}
               </div>
               <p className="mt-1.5 max-w-3xl text-[11px] leading-relaxed text-text-secondary">
-                The simulated alternative avoids the blocked mid-traverse segment and returns
-                within the remaining {SCENARIO.remainingMin} min budget, leaving an estimated{" "}
-                {SCENARIO.reserveMin} min reserve. Feasibility is a scenario estimate, not a
-                certified traverse plan.
+                Computed by the backend A* planner over the processed MOLA grid with a simulated{" "}
+                {BLOCKAGE_BUFFER_M} m blockage buffer at the route midpoint. Values are planning
+                estimates, not a certified traverse.
               </p>
             </div>
           </div>
         )}
       </div>
 
+      {error && <div className="text-xs text-critical-red">{error}</div>}
+
       <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
         <StatCard
           label="Remaining mission time"
-          value={SCENARIO.remainingMin}
-          unit="min"
+          value={loading ? "—" : fmt(remainingMin)}
+          unit={remainingMin === null ? undefined : "min"}
           icon={Clock}
           tone="warning"
-          status={<StatusPill tone="caution">Low reserve</StatusPill>}
-          footnote="Scenario clock. Not live telemetry."
+          status={
+            remainingMin === null ? (
+              <StatusPill tone="neutral">Unavailable</StatusPill>
+            ) : remainingMin < 30 ? (
+              <StatusPill tone="caution">Low reserve</StatusPill>
+            ) : (
+              <StatusPill tone="neutral">Planning budget</StatusPill>
+            )
+          }
+          footnote="Derived from the mission time budget. Not live telemetry."
         />
         <StatCard
           label="Distance to base"
-          value={SCENARIO.distanceToBaseKm}
-          unit="km"
+          value={loading ? "—" : distanceToBaseKm === null ? "—" : distanceToBaseKm.toFixed(2)}
+          unit={distanceToBaseKm === null ? undefined : "km"}
           icon={Navigation}
           tone="danger"
           status={<StatusPill tone="critical">Return required</StatusPill>}
-          footnote="Straight-line scenario distance to the landing site."
+          footnote="Straight-line distance from the mission destination to the recorded start."
         />
         <StatCard
           label="Alternative route"
-          value={generated ? "Available" : "Not generated"}
+          value={generated ? (alternativeRoute ? "Available" : "Unavailable") : "Not generated"}
           icon={RouteIcon}
-          tone={generated ? "safe" : "warning"}
+          tone={generated && alternativeRoute ? "safe" : "warning"}
           status={
-            generated ? (
+            generated && alternativeRoute ? (
               <StatusPill tone="feasible">Rerouted</StatusPill>
             ) : (
               <StatusPill tone="caution">Action required</StatusPill>
             )
           }
-          footnote="Frontend-computed demonstration reroute."
+          footnote="Backend A* detour around the simulated blockage."
         />
         <StatCard
           label="Return status"
-          value={generated ? "FEASIBLE" : "UNVERIFIED"}
+          value={feasibility ? feasibility.replace(/_/g, " ").toUpperCase() : "UNVERIFIED"}
           icon={ShieldCheck}
-          tone={generated ? "safe" : "neutral"}
+          tone={feasibility === "feasible" ? "safe" : feasibility ? "warning" : "neutral"}
           status={
-            generated ? (
-              <StatusPill tone="feasible">Validated</StatusPill>
+            feasibility ? (
+              <StatusPill tone={feasibility === "feasible" ? "feasible" : "caution"}>
+                {feasibility === "feasible" ? "Validated" : "Review required"}
+              </StatusPill>
             ) : (
               <StatusPill tone="neutral">Awaiting reroute</StatusPill>
             )
@@ -192,8 +265,8 @@ export default function EmergencyPage() {
       {!generated ? (
         <SectionCard
           eyebrow="Contingency protocol"
-          title="Generate a safe alternative route"
-          description="The original traverse is treated as blocked. Re-planning is a local scenario calculation and does not query an observed hazard service."
+          title="Generate an alternative route"
+          description="The current mission route is treated as blocked at its midpoint. Re-planning uses the real terrain grid and the supplied simulated blockage geometry."
           actions={
             <>
               <StatusPill tone="critical">Blocked</StatusPill>
@@ -206,18 +279,18 @@ export default function EmergencyPage() {
               {[
                 {
                   icon: AlertTriangle,
-                  title: "Mark obstruction",
-                  body: "Flag the mid-traverse segment as blocked in the scenario.",
+                  title: "Inject obstruction",
+                  body: "A simulated point blockage is placed at the midpoint of the mission route.",
                 },
                 {
                   icon: Compass,
                   title: "Re-plan around it",
-                  body: "Compute a demonstration detour around the affected segment.",
+                  body: "The backend A* planner computes a detour over the MOLA coverage grid.",
                 },
                 {
                   icon: ShieldCheck,
-                  title: "Validate return",
-                  body: "Check the detour against the remaining 90 min budget.",
+                  title: "Validate the result",
+                  body: "Feasibility is checked against the remaining mission time budget.",
                 },
               ].map((step, index) => {
                 const Icon = step.icon;
@@ -247,11 +320,12 @@ export default function EmergencyPage() {
               <Button
                 variant="danger"
                 size="lg"
-                icon={<AlertTriangle size={15} />}
+                icon={generating ? <Loader2 size={15} className="animate-spin" /> : <AlertTriangle size={15} />}
                 onClick={() => setConfirm(true)}
+                disabled={loading || !mission}
                 className="w-full"
               >
-                Generate alternative
+                {generating ? "Computing detour" : "Generate alternative"}
               </Button>
               <p className="text-center text-[9px] uppercase tracking-[0.1em] text-text-muted">
                 Simulated · no rover command sent
@@ -267,7 +341,7 @@ export default function EmergencyPage() {
             actions={
               <>
                 <StatusPill tone="critical">Original blocked</StatusPill>
-                <StatusPill tone="feasible">Alternative feasible</StatusPill>
+                <FeasibilityBadge status={feasibility ?? "unverified"} />
               </>
             }
             flush
@@ -277,13 +351,13 @@ export default function EmergencyPage() {
                 <RouteMap
                   kind="original"
                   heading="Before · blocked"
-                  route={ORIGINAL_ROUTE}
+                  route={originalRoute ? routePositions(originalRoute) : []}
                   color="#E45C5C"
                 />
                 <RouteMap
                   kind="alternative"
                   heading="After · rerouted"
-                  route={ALT_ROUTE}
+                  route={alternativeRoute ? routePositions(alternativeRoute) : []}
                   color="#65B88A"
                 />
               </div>
@@ -292,16 +366,16 @@ export default function EmergencyPage() {
                 <RouteSummary
                   tone="critical"
                   label="Original route"
-                  distance={SCENARIO.originalDistanceKm}
-                  duration={SCENARIO.originalDurationMin}
-                  note="Blocked at mid-traverse"
+                  distanceKm={originalRoute ? originalRoute.distance_m / 1000 : null}
+                  durationMin={originalRoute?.estimated_duration_min ?? null}
+                  note="Blocked at midpoint"
                 />
                 <RouteSummary
                   tone="safe"
                   label="Alternative route"
-                  distance={SCENARIO.alternativeDistanceKm}
-                  duration={SCENARIO.alternativeDurationMin}
-                  note="Avoids blocked segment"
+                  distanceKm={alternativeRoute ? alternativeRoute.distance_m / 1000 : null}
+                  durationMin={alternativeRoute?.estimated_duration_min ?? null}
+                  note={alternativeRoute ? "Avoids blocked segment" : "No alternative found"}
                 />
               </div>
 
@@ -312,7 +386,7 @@ export default function EmergencyPage() {
                   </span>
                   <span className="flex items-center gap-1.5 text-text-secondary">
                     <span className="h-0.5 w-4 border-t-2 border-dashed border-safe-green" />{" "}
-                    Alternative · feasible
+                    Alternative · computed
                   </span>
                 </div>
                 <span className="text-[9px] uppercase tracking-[0.08em] text-text-muted">
@@ -324,51 +398,89 @@ export default function EmergencyPage() {
 
           <SectionCard
             eyebrow="Rerouting results"
-            title="Scenario delta"
-            actions={<FeasibilityBadge status="feasible" />}
+            title="Backend delta"
+            actions={<FeasibilityBadge status={feasibility ?? "unverified"} />}
             bodyClassName="p-4"
           >
             <dl className="space-y-2.5">
-              <ResultRow label="New distance" value={`${SCENARIO.alternativeDistanceKm.toFixed(2)} km`} />
-              <ResultRow label="New duration" value={`${SCENARIO.alternativeDurationMin} min`} />
+              <ResultRow
+                label="New distance"
+                value={
+                  alternativeRoute
+                    ? `${(alternativeRoute.distance_m / 1000).toFixed(2)} km`
+                    : "unavailable"
+                }
+              />
+              <ResultRow
+                label="New duration"
+                value={alternativeRoute ? fmtMin(alternativeRoute.estimated_duration_min) : "unavailable"}
+              />
               <ResultRow
                 label="Distance delta"
-                value={`+${SCENARIO.distanceDeltaM} m`}
-                tone="warning"
+                value={formatDelta(result?.distance_delta_m, "m", 0)}
+                tone={deltaTone(result?.distance_delta_m)}
               />
               <ResultRow
                 label="Duration delta"
-                value={`+${SCENARIO.durationDeltaMin} min`}
-                tone="warning"
+                value={formatDelta(result?.duration_delta_min, "min", 1)}
+                tone={deltaTone(result?.duration_delta_min)}
               />
               <ResultRow
                 label="Remaining budget"
-                value={`${SCENARIO.reserveMin} min reserve`}
+                value={remainingMin === null ? "unavailable" : `${remainingMin} min`}
                 tone="safe"
               />
-              <ResultRow label="Reroute reason" value="Simulated rockfall on original segment" />
+              <ResultRow label="Scenario" value="Simulated midpoint blockage" />
             </dl>
 
-            <div className="mt-4 rounded-control border border-safe-green/30 bg-safe-green/[0.05] p-2.5">
-              <div className="flex items-center gap-1.5 text-[9px] font-semibold uppercase tracking-[0.12em] text-safe-green">
-                <CheckCircle2 size={12} aria-hidden /> Return validated
+            <div
+              className={`mt-4 rounded-control border p-2.5 ${
+                rerouteFeasible
+                  ? "border-safe-green/30 bg-safe-green/[0.05]"
+                  : "border-warning-amber/30 bg-warning-amber/[0.05]"
+              }`}
+            >
+              <div
+                className={`flex items-center gap-1.5 text-[9px] font-semibold uppercase tracking-[0.12em] ${
+                  rerouteFeasible ? "text-safe-green" : "text-warning-amber"
+                }`}
+              >
+                {rerouteFeasible ? (
+                  <CheckCircle2 size={12} aria-hidden />
+                ) : (
+                  <AlertTriangle size={12} aria-hidden />
+                )}
+                {rerouteFeasible ? "Return validated" : "Review required"}
               </div>
               <p className="mt-1 text-[10px] leading-relaxed text-text-secondary">
-                44 min detour fits inside the 90 min remaining budget with an estimated 46 min
-                reserve under scenario assumptions.
+                {result?.reason ?? "No backend feasibility reason returned."}
               </p>
             </div>
 
-            <div className="mt-3 border-t border-line/50 pt-2.5">
-              <div className="flex flex-wrap items-center gap-1.5">
-                <SimulatedLabel />
-                <StatusPill tone="unavailable">No observed evidence</StatusPill>
+            {result?.warnings && result.warnings.length > 0 && (
+              <div className="mt-3 border-t border-line/50 pt-2.5">
+                <div className="text-[9px] uppercase tracking-[0.1em] text-warning-amber">
+                  Warnings
+                </div>
+                <ul className="mt-1 list-disc space-y-0.5 pl-4 text-[10px] leading-relaxed text-text-secondary">
+                  {result.warnings.slice(0, 4).map((warning) => (
+                    <li key={warning}>{warning}</li>
+                  ))}
+                </ul>
               </div>
-              <p className="mt-1.5 text-[10px] leading-relaxed text-text-muted">
-                Evidence: simulated scenario only. No hazard raster or observation supports this
-                obstruction or the detour geometry.
-              </p>
+            )}
+
+            <div className="mt-3 flex flex-wrap items-center gap-1.5 border-t border-line/50 pt-2.5">
+              <SimulatedLabel />
+              <StatusPill tone="unavailable">No observed evidence</StatusPill>
+              {(result?.provenance ?? []).map((entry) => (
+                <ProvenanceBadge key={entry} status={entry} />
+              ))}
             </div>
+            <p className="mt-1.5 text-[10px] leading-relaxed text-text-muted">
+              Evidence: simulated scenario plus derived terrain routing. No hazard raster or
+              observation supports this obstruction.
+            </p>
           </SectionCard>
         </div>
       )}
@@ -376,6 +488,7 @@ export default function EmergencyPage() {
       {confirm && (
         <ConfirmReroute
           generating={generating}
+          remainingMin={remainingMin}
           onCancel={() => setConfirm(false)}
           onConfirm={generate}
         />
@@ -384,7 +497,13 @@ export default function EmergencyPage() {
   );
 }
 
-function IncidentBanner() {
+function IncidentBanner({
+  mission,
+  remainingMin,
+}: {
+  mission: MissionPlanResponse | null;
+  remainingMin: number | null;
+}) {
   return (
     <section
       role="alert"
@@ -408,16 +527,16 @@ function IncidentBanner() {
             <StatusPill tone="critical">Danger</StatusPill>
           </div>
           <p className="mt-1.5 max-w-3xl text-xs leading-relaxed text-text-secondary">
-            A rockfall obstruction has been injected into the demo scenario across the
-            mid-traverse segment. This is a training simulation, not live rover telemetry, and no
-            observed hazard dataset is connected.
+            A point obstruction is injected at the midpoint of the current mission route for this
+            training scenario. This is not live rover telemetry and no observed hazard dataset is
+            connected.
           </p>
           <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 border-t border-critical-red/20 pt-2.5 sm:grid-cols-4">
             {[
-              ["Hazard type", "Rockfall (simulated)"],
-              ["Blocked segment", "Mid-traverse"],
-              ["Scenario time", "09:26"],
-              ["Remaining time", `${SCENARIO.remainingMin} min`],
+              ["Hazard type", "Point blockage (simulated)"],
+              ["Blocked segment", "Midpoint of mission route"],
+              ["Mission", mission?.mission_id ?? "unavailable"],
+              ["Remaining time", remainingMin === null ? "unavailable" : `${remainingMin} min`],
             ].map(([label, value]) => (
               <div key={label} className="min-w-0">
                 <dt className="text-[9px] uppercase tracking-[0.1em] text-text-muted">{label}</dt>
@@ -443,6 +562,9 @@ function RouteMap({
   color: string;
 }) {
   const critical = kind === "original";
+  const center = route.length
+    ? route[Math.floor(route.length / 2)]
+    : ([-5.4, 137.4] as [number, number]);
   return (
     <div className="min-w-0">
       <div
@@ -452,7 +574,7 @@ function RouteMap({
       >
         <MapContainer
           crs={MarsCRS}
-          center={[-5.4, 137.4]}
+          center={center}
           zoom={7}
           style={{ height: "100%", width: "100%", background: "#14100c" }}
           zoomControl={false}
@@ -466,15 +588,20 @@ function RouteMap({
             tileSize={256}
             maxZoom={8}
           />
-          <Polyline
-            positions={route}
-            pathOptions={{
-              color,
-              weight: 3.5,
-              opacity: 0.95,
-              dashArray: critical ? undefined : "7 5",
-            }}
-          />
+          {route.length > 1 && (
+            <>
+              <Polyline
+                positions={route}
+                pathOptions={{
+                  color,
+                  weight: 3.5,
+                  opacity: 0.95,
+                  dashArray: critical ? undefined : "7 5",
+                }}
+              />
+              <FitRoute route={route} />
+            </>
+          )}
         </MapContainer>
         <div
           className={`pointer-events-none absolute left-2.5 top-2.5 rounded border bg-black/70 px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.1em] backdrop-blur-sm ${
@@ -492,9 +619,16 @@ function RouteMap({
             </span>
           </div>
         )}
+        {!route.length && (
+          <div className="pointer-events-none absolute inset-0 grid place-items-center bg-black/40">
+            <span className="rounded border border-line bg-black/70 px-3 py-1 text-[10px] uppercase tracking-[0.12em] text-text-muted">
+              No geometry returned
+            </span>
+          </div>
+        )}
       </div>
       <div className="mt-1 text-[9px] uppercase tracking-[0.08em] text-text-muted">
-        {critical ? "Original scenario route" : "Demonstration detour"} · prototype CRS
+        {critical ? "Original mission route" : "Backend-computed detour"} · Mars equirectangular
       </div>
     </div>
   );
@@ -503,14 +637,14 @@ function RouteMap({
 function RouteSummary({
   tone,
   label,
-  distance,
-  duration,
+  distanceKm,
+  durationMin,
   note,
 }: {
   tone: "critical" | "safe";
   label: string;
-  distance: number;
-  duration: number;
+  distanceKm: number | null;
+  durationMin: number | null;
   note: string;
 }) {
   const critical = tone === "critical";
@@ -529,13 +663,13 @@ function RouteSummary({
             critical ? "text-critical-red" : "text-safe-green"
           }`}
         >
-          {critical ? "Blocked" : "Feasible"}
+          {critical ? "Blocked" : "Computed"}
         </span>
       </div>
       <div className="mt-1 flex items-baseline gap-3 text-[11px] tabular text-text-secondary">
-        <span>{distance.toFixed(2)} km</span>
+        <span>{distanceKm === null ? "—" : `${distanceKm.toFixed(2)} km`}</span>
         <span className="text-text-muted">·</span>
-        <span>{duration} min</span>
+        <span>{durationMin === null ? "—" : `${durationMin} min`}</span>
       </div>
       <div className="mt-0.5 text-[9px] uppercase tracking-[0.08em] text-text-muted">{note}</div>
     </div>
@@ -565,19 +699,15 @@ function ResultRow({
 
 function ConfirmReroute({
   generating,
+  remainingMin,
   onCancel,
   onConfirm,
 }: {
   generating: boolean;
+  remainingMin: number | null;
   onCancel: () => void;
   onConfirm: () => void;
 }) {
-  const dialogRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    dialogRef.current?.focus();
-  }, []);
-
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape" && !generating) onCancel();
@@ -595,13 +725,11 @@ function ConfirmReroute({
         onClick={onCancel}
       />
       <div
-        ref={dialogRef}
-        tabIndex={-1}
         role="dialog"
         aria-modal="true"
         aria-labelledby="reroute-title"
         aria-describedby="reroute-description"
-        className="panel relative w-full max-w-md border-critical-red/40 bg-surface1 p-5 shadow-2xl outline-none"
+        className="panel relative w-full max-w-md border-critical-red/40 bg-surface1 p-5 shadow-2xl"
       >
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-start gap-2.5">
@@ -629,21 +757,23 @@ function ConfirmReroute({
         </div>
 
         <p id="reroute-description" className="mt-3 text-xs leading-relaxed text-text-secondary">
-          The current route will be marked blocked and a demonstration detour will be calculated.
-          This scenario is simulated and does not command the rover or query an observed hazard
-          service.
+          A simulated point blockage will be injected at the midpoint of the mission route. The
+          backend A* planner will compute a detour. This scenario is simulated and does not command
+          the rover or query an observed hazard service.
         </p>
 
         <dl className="mt-3 grid grid-cols-2 gap-2 rounded-control border border-line/60 bg-surface2/40 p-2.5 text-[10px]">
           <div>
             <dt className="text-[9px] uppercase tracking-[0.08em] text-text-muted">Blocked</dt>
-            <dd className="mt-0.5 text-text-secondary">Mid-traverse segment</dd>
+            <dd className="mt-0.5 text-text-secondary">Midpoint point + {BLOCKAGE_BUFFER_M} m buffer</dd>
           </div>
           <div>
             <dt className="text-[9px] uppercase tracking-[0.08em] text-text-muted">
               Remaining time
             </dt>
-            <dd className="mt-0.5 tabular text-text-secondary">{SCENARIO.remainingMin} min</dd>
+            <dd className="mt-0.5 tabular text-text-secondary">
+              {remainingMin === null ? "unavailable" : `${remainingMin} min`}
+            </dd>
           </div>
         </dl>
 
@@ -664,4 +794,97 @@ function ConfirmReroute({
       </div>
     </div>
   );
+}
+
+function FitRoute({ route }: { route: [number, number][] }) {
+  const map = useMap();
+  useEffect(() => {
+    if (route.length > 1) {
+      map.fitBounds(L.latLngBounds(route.map(([lat, lon]) => L.latLng(lat, lon))), {
+        padding: [20, 20],
+        maxZoom: 9,
+      });
+    }
+  }, [map, route]);
+  return null;
+}
+
+async function planDefaultMission(): Promise<MissionPlanResponse> {
+  return endpoints.missionPlan({
+    region_id: REGION_ID,
+    start: { x: DEFAULT_START.lon, y: DEFAULT_START.lat, crs: "urn:ogc:def:crs:IAU2000::104905" },
+    destination: { x: DEFAULT_DEST.lon, y: DEFAULT_DEST.lat, crs: "urn:ogc:def:crs:IAU2000::104905" },
+    time_limit_min: DEFAULT_TIME_LIMIT,
+    exploration_time_min: 30,
+    reserve_time_min: 30,
+    route_strategy: "balanced",
+  });
+}
+
+async function ensureMission(): Promise<MissionPlanResponse> {
+  const stored = loadMission();
+  if (stored) return stored;
+  const planned = await planDefaultMission();
+  saveMission(planned);
+  return planned;
+}
+
+function blockedPoint(route: Route) {
+  const coordinates = route.geometry?.coordinates;
+  if (!coordinates || coordinates.length === 0) return null;
+  const midpoint = coordinates[Math.floor(coordinates.length / 2)];
+  return { type: "Point", coordinates: midpoint };
+}
+
+function asRoute(value: RerouteResponse["alternative_route"] | undefined): Route | null {
+  const candidate = value as Route | undefined;
+  return candidate && Array.isArray(candidate.geometry?.coordinates) ? candidate : null;
+}
+
+function routePositions(route: Route): [number, number][] {
+  return route.geometry.coordinates.map(([lon, lat]) => [lat, lon] as [number, number]);
+}
+
+function groundDistanceM(
+  a: { x?: number; y?: number } | undefined,
+  b: { x?: number; y?: number } | undefined,
+): number {
+  if (
+    !a ||
+    !b ||
+    typeof a.x !== "number" ||
+    typeof a.y !== "number" ||
+    typeof b.x !== "number" ||
+    typeof b.y !== "number"
+  ) {
+    return 0;
+  }
+  const toRad = (value: number) => (value * Math.PI) / 180;
+  const dLat = toRad(b.y - a.y);
+  const dLon = toRad(b.x - a.x);
+  const lat1 = toRad(a.y);
+  const lat2 = toRad(b.y);
+  const h =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
+  return 2 * MARS_RADIUS_M * Math.asin(Math.min(1, Math.sqrt(h)));
+}
+
+function formatDelta(value: number | null | undefined, unit: string, digits: number): string {
+  if (value === null || value === undefined) return "unavailable";
+  const sign = value > 0 ? "+" : "";
+  return `${sign}${value.toFixed(digits)} ${unit}`;
+}
+
+function deltaTone(value: number | null | undefined): "neutral" | "warning" | "safe" {
+  if (value === null || value === undefined) return "neutral";
+  return value > 0 ? "warning" : "safe";
+}
+
+function fmtMin(value: number | null | undefined): string {
+  return value === null || value === undefined ? "—" : `${value} min`;
+}
+
+function fmt(value: number | null | undefined): string {
+  return value === null || value === undefined ? "—" : String(value);
 }

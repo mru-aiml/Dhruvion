@@ -65,7 +65,7 @@ def _discover_in_directory(directory: Path, category: str) -> List[DatasetInfo]:
             continue
         
         # Skip metadata files and hidden files
-        if file_path.name.startswith(".") or file_path.name == "metadata.json":
+        if file_path.name.startswith(".") or file_path.name == "metadata.json" or file_path.name.endswith("_metadata.json"):
             continue
         
         # Determine dataset type
@@ -76,8 +76,12 @@ def _discover_in_directory(directory: Path, category: str) -> List[DatasetInfo]:
         else:
             continue  # Skip unsupported formats
         
-        # Look for associated metadata.json
-        metadata_path = file_path.parent / "metadata.json"
+        # Look for associated metadata file
+        # First check for stem-specific metadata (e.g., slope_metadata.json for slope.tif)
+        metadata_path = file_path.parent / f"{file_path.stem}_metadata.json"
+        if not metadata_path.exists():
+            # Then check for generic metadata.json in same directory
+            metadata_path = file_path.parent / "metadata.json"
         if not metadata_path.exists():
             # Check parent directories up to 2 levels
             for parent in file_path.parents:

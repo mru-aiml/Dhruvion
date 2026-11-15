@@ -6,6 +6,7 @@ import {
   BellOff,
   ChevronDown,
   FileText,
+  Home,
   LogOut,
   Menu,
   Settings as SettingsIcon,
@@ -368,6 +369,15 @@ export default function TopBar({ onMenu }: { onMenu: () => void }) {
       </div>
 
       <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+        <button
+          type="button"
+          onClick={() => navigate("/")}
+          className="grid h-9 w-9 place-items-center rounded-control border border-line/70 bg-surface1/60 text-text-secondary transition-colors hover:border-mars-orange/60 hover:text-text-primary"
+          aria-label="Back to landing page"
+          title="Back to landing page"
+        >
+          <Home size={16} />
+        </button>
         <div className="hidden items-center gap-2 rounded-control border border-line/60 bg-surface1/60 px-2.5 py-1.5 xl:flex">
           <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-mars-orange" />
           <span className="text-[9px] font-medium uppercase tracking-[0.12em] text-text-secondary">

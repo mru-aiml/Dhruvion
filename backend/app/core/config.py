@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from pydantic_settings import BaseSettings
-from typing import List
+from typing import List, Optional
 
 
 class Settings(BaseSettings):
@@ -30,6 +30,30 @@ class Settings(BaseSettings):
     DATA_DIR: Path = Path(__file__).resolve().parents[3] / "data"
     PROCESSED_DIR: Path = Path(__file__).resolve().parents[3] / "data" / "processed"
     REPORTS_DIR: Path = Path(__file__).resolve().parents[3] / "data" / "processed" / "reports"
+
+    # NASA handover dataset (processed terrain / CTX / REMS / RAD).
+    # Leave unset to use the resolver in app/data_pipeline/dataset_paths.py.
+    DHRUVION_DATA_DIR: Optional[str] = None
+    DATASET_STATIC_MOUNT: str = "/static/dhruvion"
+
+    # Planning assumptions (not rover-verified telemetry)
+    DEFAULT_TRAVEL_SPEED_M_PER_MIN: float = 60.0
+
+    # AI assistant (Groq preferred, Ollama optional local fallback).
+    LLM_ENABLED: bool = True
+    LLM_PROVIDER: str = "groq"
+    GROQ_API_KEY: Optional[str] = None
+    GROQ_MODEL: str = "llama-3.3-70b-versatile"
+    GROQ_BASE_URL: str = "https://api.groq.com/openai/v1"
+    LLM_TIMEOUT_S: float = 20.0
+    LLM_ANSWER_TIMEOUT_S: float = 30.0
+    LLM_HEALTH_TIMEOUT_S: float = 2.0
+    LLM_MAX_TOOL_ROUNDS: int = 3
+    LLM_MAX_TOKENS: int = 100
+
+    # Local fallback provider.
+    OLLAMA_BASE_URL: str = "http://127.0.0.1:11434"
+    LLM_MODEL: str = "qwen2.5-coder:3b"
 
     class Config:
         env_file = ".env"

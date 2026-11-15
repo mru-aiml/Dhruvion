@@ -21,6 +21,28 @@ def test_terrain_outside_coverage():
     body = r.json()
     assert body["availability"] == "unavailable"
 
-def test_tile_proxy():
+def test_tile_proxy(monkeypatch):
+    class FakeResponse:
+        headers = {"Content-Type": "image/png"}
+        body = b"\x89PNG\r\n\x1a\nfake-tile"
+
+        def read(self):
+            return self.body
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+    requested = {}
+
+    def fake_urlopen(url, timeout=None):
+        requested["url"] = url
+        return FakeResponse()
+
+    monkeypatch.setattr("app.api.routes.urllib.request.urlopen", fake_urlopen)
     r = client.get("/api/tiles/mars_trek_mola_colorshade/0/0/0.png")
     assert r.status_code == 200
+    assert r.content == FakeResponse.body
+    assert requested["url"].startswith("https://trek.nasa.gov/tiles/Mars/EQ/")

@@ -9,6 +9,7 @@ import SignupPage from "./features/auth/SignupPage";
 
 // Lazy-load dashboard pages for code splitting
 const OverviewPage = lazy(() => import("./features/overview/OverviewPage"));
+const MissionsPage = lazy(() => import("./features/missions/MissionsPage"));
 const MartianMapPage = lazy(() => import("./features/martian-map/MartianMapPage"));
 const RoutePlannerPage = lazy(() => import("./features/route-planner/RoutePlannerPage"));
 const ScienceExplorerPage = lazy(() => import("./features/science-explorer/ScienceExplorerPage"));
@@ -42,6 +43,14 @@ export default function App() {
             element={
               <LazyRoute>
                 <OverviewPage />
+              </LazyRoute>
+            }
+          />
+          <Route
+            path="/missions"
+            element={
+              <LazyRoute>
+                <MissionsPage />
               </LazyRoute>
             }
           />

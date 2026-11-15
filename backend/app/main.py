@@ -8,10 +8,15 @@ from app.core.config import settings
 from app.core.logging_config import setup_logging
 from app.core.exceptions import register_exception_handlers
 from app.api.routes import router
+from app.api.routes_assistant import router as routes_assistant_router
+from app.api.routes_missions import router as routes_missions_router
+from app.api.routes_environment import router as routes_environment_router
+from app.api.routes_planning import router as routes_planning_router
 from app.api.routes_v2 import router as routes_v2_router
 from app.api.auth import router as auth_router
 from app.core.database import Base, engine
 from app.core import models  # noqa: F401
+from app.data_pipeline.dataset_paths import get_dataset_paths
 
 # Setup logging first
 setup_logging()
@@ -46,15 +51,29 @@ app.add_middleware(
 # Register exception handlers
 register_exception_handlers(app)
 
-# Static files for processed data
+# Static files for processed data. The NASA handover package is mounted under a
+# dedicated prefix so package-relative URLs never depend on a developer path.
+# Mount the more specific prefix first: Starlette resolves mounts in order.
+dataset_paths = get_dataset_paths()
+if dataset_paths is not None and dataset_paths.processed_dir.is_dir():
+    app.mount(
+        settings.DATASET_STATIC_MOUNT,
+        StaticFiles(directory=str(dataset_paths.processed_dir)),
+        name="dhruvion-dataset",
+    )
+
 static_dir = settings.PROCESSED_DIR
 static_dir.mkdir(parents=True, exist_ok=True)
 app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
 # Include routers with API version prefix
 app.include_router(router, prefix=settings.API_PREFIX)
+app.include_router(routes_planning_router, prefix=settings.API_PREFIX)
+app.include_router(routes_environment_router, prefix=settings.API_PREFIX)
 app.include_router(routes_v2_router, prefix=settings.API_PREFIX)
+app.include_router(routes_assistant_router, prefix=settings.API_PREFIX)
 app.include_router(auth_router, prefix=settings.API_PREFIX)
+app.include_router(routes_missions_router, prefix=settings.API_PREFIX)
 
 # Create database tables
 Base.metadata.create_all(bind=engine)

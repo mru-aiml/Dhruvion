@@ -5,6 +5,7 @@ import {
   Bot,
   ChevronLeft,
   ChevronRight,
+  ClipboardList,
   FileText,
   LayoutDashboard,
   Map,
@@ -28,6 +29,7 @@ const NAV_SECTIONS: { label: string; items: NavItem[] }[] = [
     label: "Operations",
     items: [
       { to: "/overview", label: "Mission Overview", shortLabel: "Overview", icon: LayoutDashboard },
+      { to: "/missions", label: "Mission Management", shortLabel: "Missions", icon: ClipboardList },
       { to: "/map", label: "Martian Map", shortLabel: "Map", icon: Map },
       { to: "/routes", label: "Route Planner", shortLabel: "Routes", icon: Route },
     ],
