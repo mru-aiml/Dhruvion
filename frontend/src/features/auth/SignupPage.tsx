@@ -107,14 +107,35 @@ export default function SignupPage() {
       await register(fullName.trim(), email, password);
       navigate("/overview", { replace: true });
     } catch (err: any) {
-      const detail = err?.response?.data?.detail;
+      const responseData = err?.response?.data;
       let message = "Registration failed. Please try again.";
-      if (Array.isArray(detail)) {
-        message = detail.map((d: any) => d?.msg ?? JSON.stringify(d)).join("; ");
-      } else if (typeof detail === "string") {
-        message = detail;
-      } else if (detail?.message) {
-        message = detail.message;
+
+      // Handle standardized error response format: { error: { code, message, details }, request_id }
+      if (responseData?.error) {
+        const { code, message: errMessage } = responseData.error;
+        if (err?.response?.status === 409) {
+          // Conflict: duplicate email
+          if (code === "HTTP_ERROR" && errMessage?.includes("Email")) {
+            message = "An account with this email already exists. Please sign in.";
+          } else if (code === "HTTP_ERROR" && errMessage?.includes("username")) {
+            message = "This username is already taken.";
+          } else {
+            message = "An account with this information already exists. Please sign in.";
+          }
+        } else if (code === "INVALID_INPUT" || code === "HTTP_ERROR") {
+          // Validation errors
+          message = errMessage || message;
+        } else {
+          message = errMessage || message;
+        }
+      } else if (Array.isArray(responseData?.detail)) {
+        // FastAPI validation error array
+        message = responseData.detail.map((d: any) => d?.msg ?? JSON.stringify(d)).join("; ");
+      } else if (typeof responseData?.detail === "string") {
+        // Plain string detail
+        message = responseData.detail;
+      } else if (responseData?.detail?.message) {
+        message = responseData.detail.message;
       }
       setError(message);
     } finally {
