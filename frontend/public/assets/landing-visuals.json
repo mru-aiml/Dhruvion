@@ -1,0 +1,55 @@
+{
+  "terrain": {
+    "asset": "/assets/gale-ctx-mosaic.jpg",
+    "source": "NASA Mars Trek \u2014 Gale Crater CTX Block Adjacency mosaic",
+    "product_id": "Gale_CTX_BlockAdj_dd",
+    "provider": "NASA Mars Trek / JPL",
+    "zoom": 8,
+    "tile_range": {
+      "x": [
+        448,
+        453
+      ],
+      "y": [
+        133,
+        136
+      ]
+    },
+    "bounds": {
+      "lon_min": 135.17852783203125,
+      "lon_max": 139.21875,
+      "lat_max": -3.515625,
+      "lat_min": -6.328125
+    },
+    "mosaic_px": [
+      1471,
+      1024
+    ],
+    "m_per_px": 162.8,
+    "coverage": 0.9993,
+    "fetched_utc": "2026-11-14T13:49:55+00:00",
+    "note": "Panchromatic CTX mosaic; slight warm bias applied for display only."
+  },
+  "elevation": {
+    "asset": "/assets/gale-elevation-relief.jpg",
+    "source": "MGS MOLA MEGDR topography tile megt00n090hb",
+    "provider": "NASA PDS Geosciences",
+    "coverage": {
+      "lon_min": 135.5,
+      "lon_max": 139.5,
+      "lat_min": -6.8,
+      "lat_max": -4.2
+    },
+    "source_px": [
+      512,
+      332
+    ],
+    "pixel_size_m": 463.0576672,
+    "min_m": -4648,
+    "max_m": 1412,
+    "nodata": 0.0,
+    "nodata_pixels": 52,
+    "provenance": "observed MOLA elevation; hillshade and colour ramp are derived",
+    "note": "NoData pixels are excluded from the elevation range and rendered dark."
+  }
+}

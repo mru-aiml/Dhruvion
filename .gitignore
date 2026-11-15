@@ -1,0 +1,107 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+dist/
+build/
+*.local
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+
+# Caches
+.cache/
+.npm-cache/
+.eslintcache
+.stylelintcache
+
+# Backend
+backend/dhruvion.db
+backend/__pycache__/
+backend/**/__pycache__/
+backend/*.pyc
+backend/.pytest_cache/
+backend/.venv/
+backend/venv/
+backend/.env
+
+# Data - Raw source files (downloaded at build time)
+data/raw/
+data/raw/**/*
+
+# Data - Processed outputs (generated at build time)
+data/processed/
+data/processed/**/*
+
+# Data - Vector outputs
+data/vectors/
+data/vectors/**/*
+
+# Misc
+*.tgz
+*.local
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDE
+*.swp
+*.swo
+*~
+
+# Large verification assets (use Git LFS or external storage)
+docs/landing-verification/*.png
+docs/landing-verification/*.json
+docs/landing-verification/*.txt
+docs/landing-verification/*.log
+docs/landing-verification/*.err
+docs/landing-verification/*.mjs
+docs/landing-verification/*.py
+docs/landing-verification/*-report.json
+docs/landing-verification/hero-clip-*
+docs/landing-verification/hero-*
+docs/landing-verification/tablet-*
+docs/landing-verification/mobile-*
+docs/landing-verification/laptop-*
+docs/landing-verification/desktop-*
+docs/landing-verification/fullpage-*
+docs/landing-verification/globe-*
+docs/landing-verification/view-*
+docs/landing-verification/mission-*
+docs/landing-verification/telemetry-*
+docs/landing-verification/cta-*
+docs/landing-verification/verify-*
+docs/landing-verification/analyze_*
+docs/landing-verification/summarize_*
+docs/landing-verification/measure-*
+docs/landing-verification/dev-server.*data/raw/mola/megtoon0090hb.img
