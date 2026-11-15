@@ -309,6 +309,7 @@ export default function ReportsPage() {
                       zoomControl={false}
                       attributionControl={false}
                       containerHeight="100%"
+                      proxyBaseUrl={API_ORIGIN}
                       tileLayers={[
                         {
                           id: "mola_basemap",
@@ -317,6 +318,9 @@ export default function ReportsPage() {
                           maxZoom: 8,
                           tileSize: 256,
                           visible: true,
+                          // Use backend proxy for NASA Trek layers to avoid CORS issues
+                          useProxy: true,
+                          proxyLayerId: "mars_trek_mola_colorshade",
                         },
                       ]}
                       polylines={[

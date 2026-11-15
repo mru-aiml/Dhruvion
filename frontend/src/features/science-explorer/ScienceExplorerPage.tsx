@@ -26,6 +26,7 @@ import {
   MOLA_ATTRIBUTION,
   MOLA_BASEMAP_URL,
   GALE_BOUNDS,
+  API_ORIGIN,
 } from "../../components/map/mars";
 import { MarsMap } from "../../components/map/MarsMap";
 import { DEMO_TARGETS } from "../../data/demo";
@@ -359,6 +360,7 @@ export default function ScienceExplorerPage() {
                 zoomControl={false}
                 attributionControl={true}
                 containerHeight="100%"
+                proxyBaseUrl={API_ORIGIN}
                 tileLayers={[
                   {
                     id: "mola_basemap",
@@ -367,6 +369,9 @@ export default function ScienceExplorerPage() {
                     maxZoom: 8,
                     tileSize: 256,
                     visible: true,
+                    // Use backend proxy for NASA Trek layers to avoid CORS issues
+                    useProxy: true,
+                    proxyLayerId: "mars_trek_mola_colorshade",
                   },
                 ]}
                 markers={DEMO_TARGETS.map((target) => {

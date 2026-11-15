@@ -13,6 +13,10 @@ interface TileLayerConfig {
   tileSize?: number;
   opacity?: number;
   visible?: boolean;
+  /** Use backend tile proxy to avoid CORS issues with NASA Trek */
+  useProxy?: boolean;
+  /** Layer ID for the backend proxy (e.g., "mars_trek_mola_colorshade") */
+  proxyLayerId?: string;
 }
 
 interface ImageOverlayConfig {
@@ -93,6 +97,8 @@ interface MarsMapProps {
   containerWidth?: string | number;
   /** Trigger fitBounds on demand (increment to re-trigger) */
   fitBoundsTrigger?: number;
+  /** Base URL for backend tile proxy (e.g., "https://dhruvion.onrender.com") */
+  proxyBaseUrl?: string;
 }
 
 /**
@@ -191,6 +197,57 @@ function StandardTileLayer({
       }
     };
   }, [map, url, attribution, maxZoom, tileSize, opacity, visible]);
+
+  return null;
+}
+
+/**
+ * TileLayer that uses the backend proxy to avoid CORS issues with NASA Trek.
+ * The proxy uses standard {z}/{x}/{y} format.
+ */
+function ProxyTileLayer({
+  url: _url,
+  attribution,
+  maxZoom,
+  tileSize = 256,
+  opacity = 1,
+  visible = true,
+  proxyLayerId,
+  proxyBaseUrl,
+}: TileLayerConfig & { proxyBaseUrl: string }) {
+  const layerRef = useRef<L.TileLayer | null>(null);
+  const map = useMap();
+
+  useEffect(() => {
+    if (!visible) {
+      if (layerRef.current) {
+        map.removeLayer(layerRef.current);
+        layerRef.current = null;
+      }
+      return;
+    }
+
+    // Use backend proxy URL with standard {z}/{x}/{y} format
+    // Proxy endpoint: /api/tiles/{layer}/{z}/{x}/{y}.png
+    const proxyUrl = `${proxyBaseUrl}/api/tiles/${proxyLayerId}/{z}/{x}/{y}.png`;
+
+    const tileLayer = L.tileLayer(proxyUrl, {
+      attribution,
+      maxZoom,
+      tileSize,
+      opacity,
+    });
+
+    tileLayer.addTo(map);
+    layerRef.current = tileLayer;
+
+    return () => {
+      if (layerRef.current) {
+        map.removeLayer(layerRef.current);
+        layerRef.current = null;
+      }
+    };
+  }, [map, proxyLayerId, proxyBaseUrl, attribution, maxZoom, tileSize, opacity, visible]);
 
   return null;
 }
@@ -436,6 +493,7 @@ export function MarsMap({
   containerHeight = "100%",
   containerWidth = "100%",
   fitBoundsTrigger = 0,
+  proxyBaseUrl,
 }: MarsMapProps) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
@@ -522,6 +580,16 @@ export function MarsMap({
         />
 
         {tileLayers.map((layer) => {
+          // Use backend proxy if specified (avoids CORS issues with NASA Trek)
+          if (layer.useProxy && proxyBaseUrl && layer.proxyLayerId) {
+            return (
+              <ProxyTileLayer
+                key={layer.id}
+                {...layer}
+                proxyBaseUrl={proxyBaseUrl}
+              />
+            );
+          }
           const isNasaTrek = layer.url.includes("trek.nasa.gov");
           return isNasaTrek ? (
             <NasaTileLayer key={layer.id} {...layer} />

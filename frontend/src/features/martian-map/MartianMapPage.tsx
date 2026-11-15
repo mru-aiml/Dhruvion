@@ -17,6 +17,7 @@ import {
   GALE_BOUNDS,
   MOLA_ATTRIBUTION,
   MOLA_BASEMAP_URL,
+  API_ORIGIN,
   assetUrl,
   boundsCenter,
   layerLeafletBounds,
@@ -240,17 +241,32 @@ export default function MartianMapPage() {
     warnings: undefined,
   };
 
+  // NASA Trek layer IDs that support the backend tile proxy
+  const PROXIED_LAYER_IDS = new Set([
+    "mars_trek_mola_colorshade",
+    "mola_roughness",
+    "mars_mola_hrsc_blend",
+    "gale_ctx",
+    "viking_mdim",
+  ]);
+
   const tileLayerConfigs = [
     baseTileLayer,
     ...tileLayers,
-  ].map((layer) => ({
-    id: layer.id,
-    url: layer.url,
-    attribution: layer.id === "mars_trek_mola_colorshade" ? MOLA_ATTRIBUTION : "NASA Mars Trek",
-    maxZoom: layer.maxZoom,
-    tileSize: 256,
-    visible: enabled[layer.id] ?? false,
-  }));
+  ].map((layer) => {
+    const isProxied = PROXIED_LAYER_IDS.has(layer.id);
+    return {
+      id: layer.id,
+      url: layer.url,
+      attribution: layer.id === "mars_trek_mola_colorshade" ? MOLA_ATTRIBUTION : "NASA Mars Trek",
+      maxZoom: layer.maxZoom,
+      tileSize: 256,
+      visible: enabled[layer.id] ?? false,
+      // Use backend proxy for NASA Trek layers to avoid CORS issues
+      useProxy: isProxied,
+      proxyLayerId: isProxied ? layer.id : undefined,
+    };
+  });
 
   const overlayConfigs = overlays.map((layer) => ({
     id: layer.id,
@@ -325,6 +341,7 @@ export default function MartianMapPage() {
             scrollWheelZoom={false}
             zoomControl={false}
             attributionControl={true}
+            proxyBaseUrl={API_ORIGIN}
             tileLayers={tileLayerConfigs}
             imageOverlays={overlayConfigs}
             markers={demoTargetMarkers}

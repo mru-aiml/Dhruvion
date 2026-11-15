@@ -10,7 +10,7 @@ import StatusPill from "../../components/common/StatusPill";
 import { ErrorState } from "../../components/common/States";
 import { TextInput } from "../../components/common/Field";
 import { FeasibilityBadge, ProvenanceBadge } from "../../components/common/StatusBadge";
-import { LAYER_TILE_URLS, MOLA_ATTRIBUTION, MOLA_BASEMAP_URL } from "../../components/map/mars";
+import { LAYER_TILE_URLS, MOLA_ATTRIBUTION, MOLA_BASEMAP_URL, API_ORIGIN } from "../../components/map/mars";
 import { MarsMap } from "../../components/map/MarsMap";
 import { endpoints } from "../../services/api/endpoints";
 import { apiErrorMessage } from "../../services/api/client";
@@ -311,6 +311,7 @@ export default function RoutePlannerPage() {
               zoomControl={false}
               attributionControl={true}
               containerHeight="100%"
+              proxyBaseUrl={API_ORIGIN}
               tileLayers={[
                 {
                   id: basemap,
@@ -319,6 +320,9 @@ export default function RoutePlannerPage() {
                   maxZoom: 8,
                   tileSize: 256,
                   visible: true,
+                  // Use backend proxy for NASA Trek layers to avoid CORS issues
+                  useProxy: basemap !== "mola_roughness" && LAYER_TILE_URLS[basemap]?.includes("trek.nasa.gov"),
+                  proxyLayerId: basemap,
                 },
               ]}
               markers={[

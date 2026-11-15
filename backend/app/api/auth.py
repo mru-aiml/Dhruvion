@@ -19,12 +19,16 @@ def get_current_user(request: Request, db: Session = Depends(get_db)) -> User:
     return user
 
 def _set_cookie(response: Response, token: str):
+    # In production (HTTPS), cookies need secure=True and samesite="none" for cross-site requests
+    # The frontend (vercel.app) and backend (render.com) are on different domains
+    import os
+    is_production = os.getenv("RENDER") == "true" or os.getenv("VERCEL") == "1"
     response.set_cookie(
         key=COOKIE_NAME,
         value=token,
         httponly=True,
-        secure=False,
-        samesite="lax",
+        secure=is_production,
+        samesite="none" if is_production else "lax",
         max_age=60 * 60,
         path="/",
     )

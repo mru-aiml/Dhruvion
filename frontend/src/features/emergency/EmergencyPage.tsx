@@ -19,7 +19,7 @@ import StatCard from "../../components/common/StatCard";
 import StatusPill from "../../components/common/StatusPill";
 import Button from "../../components/common/Button";
 import { FeasibilityBadge, ProvenanceBadge, SimulatedLabel } from "../../components/common/StatusBadge";
-import { MOLA_ATTRIBUTION, MOLA_BASEMAP_URL } from "../../components/map/mars";
+import { MOLA_ATTRIBUTION, MOLA_BASEMAP_URL, API_ORIGIN } from "../../components/map/mars";
 import { MarsMap } from "../../components/map/MarsMap";
 import { endpoints } from "../../services/api/endpoints";
 import { apiErrorMessage } from "../../services/api/client";
@@ -579,6 +579,7 @@ function RouteMap({
           scrollWheelZoom={false}
           zoomControl={false}
           attributionControl={true}
+          proxyBaseUrl={API_ORIGIN}
           tileLayers={[
             {
               id: "mola_basemap",
@@ -587,6 +588,9 @@ function RouteMap({
               maxZoom: 8,
               tileSize: 256,
               visible: true,
+              // Use backend proxy for NASA Trek layers to avoid CORS issues
+              useProxy: true,
+              proxyLayerId: "mars_trek_mola_colorshade",
             },
           ]}
           polylines={
